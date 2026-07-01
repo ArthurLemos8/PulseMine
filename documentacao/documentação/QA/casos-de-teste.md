@@ -1,96 +1,120 @@
 # Casos de Teste - PulseMine
 
-**Projeto:** PulseMine – Sistema de Monitoramento de Vibração 
+## Projeto
+
+**PulseMine – Sistema de Monitoramento de Vibração**
 
 ---
-# CT01 - Recebimento de dados do Arduino
+
+## CT01 - Comunicação entre Arduino e Backend
 
 **Objetivo:**
-Validar a comunicação entre Arduino e backend.
+Verificar se o Arduino envia corretamente os dados do sensor para o Backend.
 
 **Pré-condição:**
-Arduino conectado e enviando dados.
+Arduino conectado ao computador e sensor ADXL345 em funcionamento.
 
 **Passos:**
+
 1. Iniciar o Arduino.
-2. Observar a leitura dos dados.
+2. Executar o Backend.
+3. Verificar se os dados são recebidos pelo servidor.
 
 **Resultado esperado:**
-O backend recebe continuamente os valores dos eixos X, Y e Z enviados pelo sensor ADXL345.
+O Backend recebe continuamente os valores dos eixos X, Y e Z enviados pelo sensor.
 
-**Status:** Aprovado
+**Status:** Aprovado (teste realizado pelo integrante responsável pelo Backend).
 
 ---
 
-# CT02 - Consulta da última leitura
+## CT02 - Consulta da API
 
 **Objetivo:**
-Validar a rota de consulta da última leitura do sensor.
+Verificar se a API retorna a última leitura recebida do sensor.
 
 **Pré-condição:**
-Pelo menos uma leitura recebida.
+Backend em execução e recebendo dados do Arduino.
 
 **Passos:**
-1. Acessar:
-   http://localhost:3000/sensor
+
+1. Executar o Backend.
+2. Acessar a rota `/sensor`.
 
 **Resultado esperado:**
-Retornar o último registro contendo os valores de X, Y e Z.
+A API retorna o último registro contendo os valores dos eixos X, Y e Z.
 
-**Status:** Aprovado
+**Status:** Aprovado.
 
 ---
 
-# CT03 - Consulta do histórico
+## CT03 - Revisão da modelagem do banco de dados
 
 **Objetivo:**
-Validar a recuperação do histórico de leituras.
-
-**Pré-condição:**
-Existirem registros armazenados no banco de dados.
+Verificar se a modelagem atende aos requisitos do sistema.
 
 **Passos:**
-1. Acessar:
-   http://localhost:3000/historico
+
+1. Revisar o modelo conceitual.
+2. Revisar o modelo lógico.
+3. Comparar a estrutura do banco com as funcionalidades do sistema.
 
 **Resultado esperado:**
-A API retorna a lista das leituras armazenadas.
+Identificar possíveis melhorias ou entidades que ainda precisem ser implementadas.
 
-**Status:** Aprovado
+**Status:** Concluído.
+
+**Observação:**
+Durante a revisão foi sugerida a criação de uma estrutura específica para armazenamento dos alertas do sistema.
 
 ---
 
-# CT04 - Tratamento de erro na consulta do histórico
+## CT04 - Revisão das telas
 
 **Objetivo:**
-Validar o tratamento de erro durante a consulta ao banco.
-
-**Pré-condição:**
-Falha de conexão com o banco de dados.
+Verificar a padronização da interface do sistema.
 
 **Passos:**
-1. Simular indisponibilidade do banco.
-2. Acessar:
-   http://localhost:3000/historico
+
+1. Revisar Login.
+2. Revisar Cadastro.
+3. Revisar Dashboard.
+4. Revisar Alertas.
+5. Revisar Conta.
+6. Revisar Configuração.
 
 **Resultado esperado:**
-A API retorna erro 500 com a mensagem:
+Todas as telas seguem o mesmo padrão visual, utilizando a identidade visual definida para o projeto.
 
-{
-  "erro": "Falha ao consultar histórico."
-}
-
-**Status:** Não executado
+**Status:** Concluído.
 
 ---
 
-## Issues registradas durante o desenvolvimento
+## CT05 - Revisão do código
 
-Durante a execução dos testes e revisão do projeto, foram registradas as seguintes issues no GitHub:
+**Objetivo:**
+Realizar uma revisão do código do Arduino e do Backend em busca de possíveis melhorias.
 
-- Revisão e padronização das telas do sistema PulseMine;
-- Implementação da estrutura de alertas no banco de dados;
-- Criação da entidade Alerta na modelagem do banco;
-- Correção do cálculo da vibração utilizando intervalo de tempo real.
+**Passos:**
 
-As issues foram utilizadas para organizar melhorias e evoluções do projeto durante o desenvolvimento.
+1. Analisar o código do Arduino.
+2. Analisar a comunicação com o Backend.
+3. Registrar possíveis melhorias encontradas.
+
+**Resultado esperado:**
+Registrar sugestões para melhorar a precisão da leitura dos dados e a organização do sistema.
+
+**Status:** Concluído.
+
+---
+
+## Observações
+
+Durante a etapa de QA também foram registradas Issues no GitHub relacionadas a melhorias identificadas durante o desenvolvimento, como:
+
+- Revisão e ajustes das telas do sistema;
+- Criação da estrutura de Alertas no banco de dados;
+- Revisão da modelagem do banco de dados;
+- Sugestão de melhoria no cálculo da vibração;
+- Revisão do código do Arduino e do Gateway.
+
+Esses registros foram utilizados para organizar e acompanhar as melhorias propostas para o projeto.
