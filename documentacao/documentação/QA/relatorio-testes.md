@@ -1,15 +1,16 @@
-
 # Relatório de Testes - PulseMine
 
-**Projeto:** PulseMine
---
-# Objetivo
+## Projeto
+
+**PulseMine**
+
+## Objetivo
 
 Realizar alguns testes nas funcionalidades desenvolvidas até o momento, verificar possíveis problemas e registrar sugestões de melhorias durante o desenvolvimento do projeto.
 
 ---
 
-# Testes realizados
+## Testes realizados
 
 Durante o desenvolvimento foram realizados testes nos seguintes componentes:
 
@@ -22,17 +23,17 @@ Durante o desenvolvimento foram realizados testes nos seguintes componentes:
 
 ---
 
-# Observações
+## Observações
 
 Como o Arduino permaneceu a maior parte do tempo com o integrante responsável pelo Backend, nem todos os testes puderam ser executados diretamente por mim.
 
 Alguns testes relacionados à leitura do sensor ADXL345 e à comunicação com a API foram realizados e confirmados pelo integrante responsável pelo Backend, que informou que o funcionamento estava correto.
 
-Já a parte de revisão das telas, modelagem do banco e documentação foi acompanhada e revisada por mim durante o desenvolvimento.
+Já a parte de revisão das telas, modelagem do banco, codigos com possiveis erro e documentação foi acompanhada e revisada por mim durante o desenvolvimento.
 
 ---
 
-# Revisão da modelagem do banco
+## Revisão da modelagem do banco
 
 Foi realizada uma conferência dos modelos conceitual e lógico.
 
@@ -42,7 +43,7 @@ Essa sugestão foi registrada no GitHub para análise da equipe.
 
 ---
 
-# Revisão do código
+## Revisão do código
 
 Também foi realizada uma revisão do código do Arduino.
 
@@ -52,18 +53,27 @@ A sugestão também foi registrada como Issue no GitHub.
 
 ---
 
-# Issues registradas
+## Issues registradas durante a revisão
 
-Durante a revisão do projeto foram abertas Issues relacionadas a parte de QA:
+Durante a etapa de QA foram registradas algumas Issues no GitHub para documentar melhorias e possíveis correções identificadas durante o desenvolvimento.
 
-- Revisão e padronização das telas do sistema;
-- Criação da entidade de Alertas no banco de dados;
-- Estrutura para armazenamento de alertas;
-- Sugestão de melhoria no cálculo da vibração.
+Entre elas:
+
+- Revisão e ajustes das telas do sistema PulseMine;
+- Revisão da estrutura da tabela `leitura_vibracao` para suportar alertas;
+- Criação da entidade de Alertas no modelo do banco de dados;
+- Criação da estrutura para armazenamento de Alertas no banco de dados;
+- Sugestão de melhoria no cálculo da vibração para obter valores mais precisos;
+- Revisão do código do Arduino e do Gateway para identificação de possíveis erros.
+
+As Issues registradas serviram para organizar as melhorias identificadas durante a revisão do projeto e facilitar o acompanhamento das tarefas pela equipe.
 
 ---
 
-# Considerações finais
+## Considerações finais
 
 Os testes realizados até o momento indicam que as funcionalidades implementadas estão funcionando conforme esperado.
-As revisões realizadas ajudaram na identificação de melhorias e na organização das tarefas da equipe por meio das Issues registradas no GitHub.
+
+As revisões realizadas contribuíram para identificar oportunidades de melhoria na interface, na modelagem do banco de dados e no código do sistema.
+
+Todas as observações relevantes foram registradas no GitHub por meio de Issues, auxiliando a equipe na organização e acompanhamento das atividades.
