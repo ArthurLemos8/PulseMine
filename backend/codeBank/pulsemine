@@ -1,0 +1,125 @@
+CREATE TABLE usuario(
+
+id_usuario INT AUTO_INCREMENT,
+
+PRIMARY KEY (id_usuario),
+
+nome VARCHAR(40) NOT NULL,
+
+email VARCHAR(40) NOT NULL,
+
+senha VARCHAR(16) NOT NULL,
+
+sexo ENUM('M','F')
+
+);
+
+CREATE TABLE plantamineracao(
+
+id_planta INT AUTO_INCREMENT,
+
+PRIMARY KEY(id_planta),
+
+areaOpera VARCHAR(50),
+
+setor VARCHAR(50),
+
+cidade VARCHAR(50),
+
+estado CHAR(2),
+
+id_usuario_fk INT,
+
+FOREIGN KEY(id_usuario_fk) REFERENCES usuario(id_usuario)
+
+ON DELETE CASCADE
+
+ON UPDATE CASCADE
+
+);
+
+CREATE TABLE equipamento(
+
+id_equipamento INT AUTO_INCREMENT,
+
+PRIMARY KEY(id_equipamento),
+
+nome_equipamento VARCHAR(100) NOT NULL, 
+
+tipo VARCHAR(50),                       
+
+status_equi VARCHAR(30),                 
+
+id_planta_fk INT,
+
+FOREIGN KEY(id_planta_fk) REFERENCES plantamineracao(id_planta)
+
+ON DELETE CASCADE
+
+ON UPDATE CASCADE
+
+);
+
+CREATE TABLE sensor(
+
+id_sensor INT AUTO_INCREMENT,
+
+PRIMARY KEY(id_sensor),
+
+tipo_sensor VARCHAR(20),
+
+situaçao BOOLEAN NOT NULL,
+
+id_planta_fk INT,
+
+FOREIGN KEY(id_planta_fk) REFERENCES plantamineracao(id_planta)
+
+ON DELETE CASCADE
+
+ON UPDATE CASCADE
+
+);
+
+CREATE TABLE leituras_sensores (
+
+id INT AUTO_INCREMENT PRIMARY KEY,
+
+dispositivo VARCHAR(100) DEFAULT 'Arduino Uno',
+
+numero_leitura INT DEFAULT 0,
+
+valor_vibracao DECIMAL(10, 2) NOT NULL, 
+
+id_sensor_fk INT NOT NULL,
+
+data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+FOREIGN KEY(id_sensor_fk) REFERENCES sensor(id_sensor)
+
+ON DELETE CASCADE
+
+ON UPDATE CASCADE
+
+);
+
+CREATE TABLE alerta(
+
+id_alerta INT AUTO_INCREMENT,
+
+PRIMARY KEY(id_alerta),
+
+tipo_alerta VARCHAR(30),
+
+mensagem VARCHAR(100) NOT NULL,
+
+status_resoluçao VARCHAR(20),
+
+id_leitura_fk INT,
+
+FOREIGN KEY(id_leitura_fk) REFERENCES leituras_sensores(id) 
+
+ON DELETE CASCADE
+
+ON UPDATE CASCADE
+
+);

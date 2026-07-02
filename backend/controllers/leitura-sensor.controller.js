@@ -1,93 +1,79 @@
-
 import { 
     salvarLeituraSensor, 
     buscarUltimaLeituraSensor, 
-    buscarLeiturasSensoresModel,
-    emissorLeituras 
+    buscarLeiturasSensoresModel 
 } from '../models/leitura-sensor.model.js';
 
-function validarDadosSensor(dadosSensor) {
-    if (!dadosSensor.dispositivo || dadosSensor.valor_vibracao === undefined || !dadosSensor.id_sensor_fk) {
-        return false;
-    }
-    return true;
-}
-
-export async function receberLeituraSensor(requisicao, resposta) {
+export async function receberLeituraSensor(req, res) {
     try {
-        const dadosSensor = requisicao.body;
+        const dados = req.body;
 
-        console.log('Dados recebidos no backend:', dadosSensor);
-
-        if (!validarDadosSensor(dadosSensor)) {
-            return resposta.status(400).json({
-                mensagem: 'Dados inválidos. Verifique o formato da leitura enviada.'
+        if (!dados.valor_vibracao || !dados.id_sensor_fk) {
+            return res.status(400).json({
+                success: false,
+                message: 'valor_vibracao e id_sensor_fk são obrigatórios'
             });
         }
 
-        const leituraSalva = await salvarLeituraSensor(dadosSensor);
+        const leitura = await salvarLeituraSensor(dados);
 
-        return resposta.status(201).json({
-            mensagem: 'Leitura salva no banco de dados com sucesso',
-            dados: leituraSalva
+        res.status(201).json({
+            success: true,
+            message: 'Leitura salva',
+            data: leitura
         });
 
-    } catch (erro) {
-        console.error('Erro ao salvar leitura no banco de dados:', erro.message);
-        return resposta.status(500).json({
-            mensagem: 'Erro interno ao salvar leitura no banco de dados'
+    } catch (error) {
+        console.error('Erro:', error.message);
+        res.status(500).json({
+            success: false,
+            message: 'Erro ao salvar leitura'
         });
     }
 }
 
-export async function buscarUltimaLeitura(requisicao, resposta) {
+export async function buscarUltimaLeitura(req, res) {
     try {
-        const ultimaLeitura = await buscarUltimaLeituraSensor();
+        const leitura = await buscarUltimaLeituraSensor();
 
-        return resposta.status(200).json({
-            mensagem: 'Última leitura consultada com sucesso',
-            dados: ultimaLeitura
+        if (!leitura) {
+            return res.status(404).json({
+                success: false,
+                message: 'Nenhuma leitura encontrada'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Última leitura',
+            data: leitura
         });
 
-    } catch (erro) {
-        console.error('Erro ao buscar última leitura:', erro.message);
-        return resposta.status(500).json({
-            mensagem: 'Erro interno ao buscar última leitura'
+    } catch (error) {
+        console.error('Erro:', error.message);
+        res.status(500).json({
+            success: false,
+            message: 'Erro ao buscar leitura'
         });
     }
 }
 
-export async function buscarLeiturasSensores(requisicao, resposta) {
+export async function buscarLeiturasSensores(req, res) {
     try {
         const leituras = await buscarLeiturasSensoresModel();
 
-        return resposta.status(200).json({
-            mensagem: 'Leituras consultadas com sucesso',
+        res.status(200).json({
+            success: true,
+            message: 'Leituras encontradas',
             total: leituras.length,
-            dados: leituras
+            data: leituras
         });
 
-    } catch (erro) {
-        console.error('Erro ao buscar leituras dos sensores:', erro.message);
-        return resposta.status(500).json({
-            mensagem: 'Erro interno ao buscar leituras dos sensores'
+    } catch (error) {
+        console.error('Erro:', error.message);
+        res.status(500).json({
+            success: false,
+            message: 'Erro ao buscar leituras'
         });
     }
-}
-
-export function acompanharLeiturasEmTempoReal(requisicao, resposta) {
-    resposta.setHeader('Content-Type', 'text/event-stream');
-    resposta.setHeader('Cache-Control', 'no-cache');
-    resposta.setHeader('Connection', 'keep-alive');
-
-    const enviarNovaLeitura = (leitura) => {
-        resposta.write(`data: ${JSON.stringify(leitura)}\n\n`);
-    };
-
-    emissorLeituras.on('nova-leitura', enviarNovaLeitura);
-
-    requisicao.on('close', () => {
-        emissorLeituras.off('nova-leitura', enviarNovaLeitura);
-        resposta.end();
-    });
 }
