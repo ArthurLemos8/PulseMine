@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="pt-Br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dash board</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="dasbord.css" />
+  </head>
+
+  <body>
+    <div class="dashboard">
+      <aside class="barra_lateral">
+        <div class="logo">
+          <img src="/logo/logo.png" alt="Logo PulseMine" class="logo_item" />
+          <div class="logo_item">
+            <i class="fa-solid fa-wave-square"></i>
+          </div>
+          <span>Pulse <span>Mine</span></span>
+        </div>
+        <nav class="menu">
+          <a href="#" class="menu_item ativo">
+            <i class="fa-solid fa-table-cells-large"></i>
+            <span>Dashboard</span>
+          </a>
+
+          <a href="#" class="menu_item">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>Alertas</span>
+          </a>
+
+          <a href="#" class="menu_item">
+            <i class="fa-regular fa-user"></i>
+            <span>Conta</span>
+          </a>
+
+          <a href="#" class="menu_item">
+            <i class="fa-solid fa-gear"></i>
+            <span>Configurações</span>
+          </a>
+        </nav>
+
+        <a href="#" class="sair">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Sair</span>
+        </a>
+      </aside>
+
+      <main class="conteudo">
+        <header class="topo">
+          <div class="marca">
+            <i class="fa-solid fa-wave-square"></i>
+            <strong>Pulse <span> Mine</span></strong>
+          </div>
+
+          <div class="informações">
+            <span>22/22/2222</span>
+
+            <span>
+              <i class="fa-regular fa-clock"></i>
+              16:16:16
+            </span>
+
+            <span class="notificação">
+              <i class="fa-regular fa-bell"></i>
+              <b>3</b>
+            </span>
+
+            <i class="fa-regular fa-user usuario"></i>
+          </div>
+          <header>
+            <section class="titulo">
+              <h1>DashBoard</h1>
+              <p>visão geral</p>
+            </section>
+
+            <section class="cards">
+              <div class="card">
+                <div class="card-topo">
+                  <span>Vibração atual</span>
+                  <i class="fa-solid fa-wave-square"> </i>
+                </div>
+
+                <div class="valor">
+                  2,45
+                  <small>mm/s</small>
+                </div>
+
+                <span class="status normal"> NORMAL </span>
+              </div>
+              <div class="card">
+                <div class="card-topo">
+                  <span>Alertas</span>
+
+                  <i class="fa-solid fa-triangle-exclamation alerta"></i>
+                </div>
+
+                <div class="valor">4</div>
+                <span class="status critico"> Critico </span>
+              </div>
+
+              <div class="card">
+                <div class="card-topo">
+                  <span> equipamentos</span>
+
+                  <i class="fa-solid fa-display"></i>
+                </div>
+
+                <div class="valor">5</div>
+                <span class="status normal"> Ativos </span>
+              </div>
+
+              <div class="card">
+                <div class="card-topo">
+                  <span> Sensores</span>
+
+                  <i class="fa-solid fa-wifi"></i>
+                </div>
+
+                <div class="valor">1</div>
+                <span class="status normal"> Ativos </span>
+              </div>
+            </section>
+
+            <section class="grafico-container">
+              <div class="grafico-header">
+                <div>
+                  <h2>MONITORAMENTO DE VIBRAÇÃO (TEMPO REAL)</h2>
+                  <span>mm/s</span>
+                </div>
+                <button>ultimos 10 min</button>
+              </div>
+              <div class="grafico">
+                <div class="eixo-y">
+                  <span>10</span>
+                  <span>9</span>
+                  <span>6</span>
+                  <span>3</span>
+                  <span>0</span>
+                </div>
+
+                <div class="area-grafico">
+                  <svg viewBox="0 0 1000 250" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient
+                        id="gradiente"
+                        x1="0"
+                        x2="0"
+                        y1="0"
+                        y2="1"
+                      >
+                        <stop offset="0%" stop-opacity=".35" />
+
+                        <stop offset="100%" stop-opacity="0" />
+                      </linearGradient>
+                    </defs>
+
+                    <path
+                      d="M0 210
+                       C80 210 100 205 150 175
+                       C200 145 230 195 280 185
+                       C330 175 350 145 400 165
+                       C450 185 470 175 510 160
+                       C550 145 570 210 620 205
+                       C680 200 700 180 740 170
+                       C790 150 820 185 860 175
+                       C910 160 920 125 960 150
+                       C980 160 990 170 1000 175
+                       L1000 250
+                       L0 250 Z"
+                      fill="url(#gradiente)"
+                    />
+
+                    <path
+                      class="linha"
+                      d="M0 210
+                       C80 210 100 205 150 175
+                       C200 145 230 195 280 185
+                       C330 175 350 145 400 165
+                       C450 185 470 175 510 160
+                       C550 145 570 210 620 205
+                       C680 200 700 180 740 170
+                       C790 150 820 185 860 175
+                       C910 160 920 125 960 150
+                       C980 160 990 170 1000 175"
+                    />
+                  </svg>
+
+                  <div class="eixo-x">
+                    <span>20:45</span>
+                    <span>20:50</span>
+                    <span>20:55</span>
+                    <span>21:00</span>
+                    <span>21:05</span>
+                    <span>21:10</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </header>
+        </header>
+      </main>
+    </div>
+  </body>
+</html>

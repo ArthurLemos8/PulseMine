@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Puksemine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="login.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="card">
+        <img src="./logo/logo.png" alt="Logo PulseMine" class="logo" />
+
+        <h1>Pulse <span>Mine</span></h1>
+
+        <h2>LOGIN</h2>
+
+        <form>
+          <label for="email"> Email </label>
+
+          <div class="input-box">
+            <i class="bi bi-envelope"></i>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Digite seu email"
+            />
+          </div>
+          <small id="erroEmail" class="erro"></small>
+
+          <label for="senha"> Senha </label>
+
+          <div class="input-box">
+            <i class="bi bi-lock"></i>
+
+            <input
+              type="password"
+              id="senha"
+              name="senha"
+              placeholder=" Digite sua senha"
+            />
+            <i class="bi bi-eye olho" id="olhoSenha"></i>
+          </div>
+
+          <small id="erroSenha" class="erro"></small>
+
+          <button type="submit">Login</button>
+        </form>
+        <p class="cadastrar">
+          Não possui conta ?
+          <a href="cadastro.html">Cadastre-se agora</a>
+        </p>
+        <p class="cadastrar">
+          Lembrar-me
+          <a href="INDEX.html"> Esquceu a sua senha?</a>
+        </p>
+      </div>
+    </div>
+    <script src="login.js"></script>
+  </body>
+</html>
