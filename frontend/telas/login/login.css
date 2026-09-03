@@ -5,16 +5,13 @@
   font-family: "Inter", sans-serif;
 }
 :root {
-  /* Azul Principal */
   --azul-primario: #086fd6;
 
-  /* Variações de Azul */
   --azul-500: #1a82e8;
   --azul-400: #4ca3f5;
   --azul-300: #7dbaf8;
   --azul-100: #e6f1ff;
 
-  /* Tons Escuros */
   --preto: #101820;
   --cinza-800: #2a2f36;
   --cinza-700: #51565f;
@@ -23,16 +20,12 @@
   --cinza-200: #e9ecef;
   --cinza-100: #f5f7fa;
 
-  /* Cores Gerais */
   --branco: #ffffff;
   --fundo: #f8fbff;
   --borda: #e3e8f0;
-
-  /* Texto */
   --texto: #101820;
   --texto-secundario: #64748b;
 
-  /* Alerta */
   --erro: #ff4d4f;
 }
 body {
