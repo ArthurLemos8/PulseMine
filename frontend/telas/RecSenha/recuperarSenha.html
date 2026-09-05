@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-Br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recuperar senha - Pulse mine</title>
+
+    <link rel="stylesheet" href="recuperarSenha.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Recuperar senha</h1>
+
+      <p>Digite seu e-mail para cadastrado para recuperar senha.</p>
+
+      <form id="formRecuperar">
+        <div class="input-box">
+          <input type="email" id="email" placeholder="E-mail" />
+        </div>
+
+        <span id="erroEmail" class="erro"></span>
+
+        <div class="input-box">
+          <input type="password" id="novaSenha" placeholder="Novs Senha" />
+        </div>
+
+        <span id="erroSenha" class="erro"></span>
+
+        <div class="input-box">
+          <input
+            type="password"
+            id="confirmarSenha"
+            placeholder="Confirmar nova senha"
+          />
+        </div>
+
+        <span id="erroConfirmarSenha" class="erro"></span>
+
+        <p id="mensagemSucesso" class="erro"></p>
+
+        <button type="submit">Alterar senha</button>
+
+        <p class="voltar">
+          <a href="../login/login.html">Voltar para login</a>
+        </p>
+      </form>
+    </div>
+
+    <script src="recuperarSenha.js"></script>
+  </body>
+</html>

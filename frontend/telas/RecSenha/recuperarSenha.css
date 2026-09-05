@@ -1,0 +1,156 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+:root {
+  --azul-primario: #086fd6;
+  --azul-500: #1a82e8;
+  --azul-400: #4ca3f5;
+  --azul-300: #7dbaf8;
+  --azul-100: #e6f1ff;
+  --preto: #101820;
+  --cinza-800: #2a2f36;
+  --cinza-700: #51565f;
+  --cinza-500: #7b8591;
+  --cinza-300: #adb5bd;
+  --cinza-200: #e9ecef;
+  --cinza-100: #f5f7fa;
+  --branco: #ffffff;
+  --fundo: #f8fbff;
+  --borda: #e3e8f0;
+  --texto: #101820;
+  --texto-secundario: #64748b;
+  --erro: #ff4d4f;
+  --sucesso: #28a745;
+}
+
+body {
+  background-color: var(--fundo);
+  color: var(--texto);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 430px;
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: 20px;
+  padding: 40px;
+  margin: 30px;
+  box-shadow: 0 15px 40px rgba(16, 24, 32, 0.08);
+}
+
+h1 {
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--texto);
+  font-size: 38px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+p {
+  color: var(--texto-secundario);
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-box {
+  position: relative;
+  width: 100%;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  color: var(--texto);
+  font-size: 15px;
+  background: transparent;
+  border: 2px solid var(--borda);
+  transition: 0.3s;
+}
+
+.input-box input::placeholder {
+  color: var(--cinza-500);
+}
+
+.input-box input:focus {
+  outline: none;
+  border-color: var(--azul-primario);
+  box-shadow: 0 0 0 4px var(--azul-100);
+}
+
+.erro {
+  display: block;
+  color: var(--erro);
+  font-size: 13px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.sucesso {
+  color: var(--sucesso);
+  font-weight: 600;
+  margin-top: 15px;
+  text-align: center;
+}
+
+button {
+  margin-top: 25px;
+  margin-bottom: 30px;
+  width: 100%;
+  padding: 16px;
+  background: var(--azul-primario);
+  color: var(--branco);
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: var(--azul-500);
+}
+
+button:active {
+  background: var(--azul-400);
+}
+
+.voltar {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.voltar a {
+  color: var(--azul-primario);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.voltar a:hover {
+  color: var(--azul-500);
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 32px;
+}
