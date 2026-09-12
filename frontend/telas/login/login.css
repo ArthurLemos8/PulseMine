@@ -186,6 +186,13 @@ button:active {
   font-size: 20px;
   cursor: pointer;
 }
+/*Isso remove o botão automático do navegador.*/
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  display: none !important;
+  visibility: hidden;
+}
 .erro {
   border: 2px solid #ff3b3b !important;
   background-color: #ffeaea !important;
