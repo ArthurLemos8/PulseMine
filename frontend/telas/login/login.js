@@ -1,3 +1,8 @@
+function validarEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
 const formulario = document.querySelector("form");
 
 const email = document.getElementById("email");
@@ -28,8 +33,6 @@ formulario.addEventListener("submit", (event) => {
   const emailValor = email.value.trim();
   const senhaValor = senha.value.trim();
 
-  const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
   erroEmail.textContent = "";
   erroSenha.textContent = "";
 
@@ -43,7 +46,7 @@ formulario.addEventListener("submit", (event) => {
     email.classList.add("erro");
 
     formularioValido = false;
-  } else if (!emailValido.test(emailValor)) {
+  } else if (!validarEmail(emailValor)) {
     erroEmail.textContent = "Digite um e-mail válido.";
     email.classList.add("erro");
 
@@ -96,7 +99,7 @@ formulario.addEventListener("submit", (event) => {
   email.classList.add("sucesso");
   senha.classList.add("sucesso");
 
-  localStorage.setItem("usuarios", JSON.stringify(usuarioEncontrado));
+  localStorage.setItem("usuariosLogado", JSON.stringify(usuarioEncontrado));
 
   window.location.href = "../dashbord/dasbord.html";
 });

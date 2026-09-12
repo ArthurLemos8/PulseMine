@@ -1,3 +1,8 @@
+function validarEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
 const formulario = document.querySelector("form");
 
 const nome = document.getElementById("nome");
@@ -40,8 +45,6 @@ formulario.addEventListener("submit", (event) => {
   const senhaValor = senha.value.trim();
   const confirmarSenhaValor = confirmarSenha.value.trim();
 
-  const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
   erroNome.textContent = "";
   erroEmail.textContent = "";
   erroSenha.textContent = "";
@@ -66,7 +69,7 @@ formulario.addEventListener("submit", (event) => {
     erroEmail.textContent = "Preencha o e-mail.";
     email.classList.add("erro");
     formularioValido = false;
-  } else if (!emailValido.test(emailValor)) {
+  } else if (!validarEmail(emailValor)) {
     erroEmail.textContent = "Digite um e-mail válido.";
     email.classList.add("erro");
     formularioValido = false;
