@@ -17,8 +17,6 @@ const erroEmail = document.getElementById("erroEmail");
 const erroSenha = document.getElementById("erroSenha");
 const erroConfirmarSenha = document.getElementById("erroConfirmarSenha");
 
-const mensagemSucesso = document.getElementById("mensagemSucesso");
-
 olhos.forEach((olho, index) => {
   olho.addEventListener("click", () => {
     const campo = index === 0 ? senha : confirmarSenha;
@@ -49,7 +47,6 @@ formulario.addEventListener("submit", (event) => {
   erroEmail.textContent = "";
   erroSenha.textContent = "";
   erroConfirmarSenha.textContent = "";
-  mensagemSucesso.textContent = "";
 
   nome.classList.remove("erro", "sucesso");
   email.classList.remove("erro", "sucesso");
@@ -126,8 +123,6 @@ formulario.addEventListener("submit", (event) => {
 
   localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
-  mensagemSucesso.textContent = "Cadastro realizado com sucesso!";
-
   formulario.reset();
 
   nome.classList.remove("erro");
@@ -147,4 +142,8 @@ formulario.addEventListener("submit", (event) => {
 
   senha.type = "password";
   confirmarSenha.type = "password";
+
+  localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+
+  window.location.href = "../dashbord/dasbord.html";
 });

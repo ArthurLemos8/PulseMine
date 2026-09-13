@@ -99,7 +99,7 @@ formulario.addEventListener("submit", (event) => {
   email.classList.add("sucesso");
   senha.classList.add("sucesso");
 
-  localStorage.setItem("usuariosLogado", JSON.stringify(usuarioEncontrado));
+  localStorage.setItem("usuarioLogado", JSON.stringify(usuarioEncontrado));
 
   window.location.href = "../dashbord/dasbord.html";
 });
