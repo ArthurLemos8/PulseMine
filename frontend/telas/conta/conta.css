@@ -1,0 +1,402 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+:root {
+  --azul-primario: #086fd6;
+  --azul-500: #1a82e8;
+  --azul-400: #4ca3f5;
+  --azul-300: #7dbaf8;
+  --azul-100: #e6f1ff;
+  --preto: #101820;
+  --cinza-800: #2a2f36;
+  --cinza-700: #51565f;
+  --cinza-500: #7b8591;
+  --cinza-300: #adb5bd;
+  --cinza-200: #e9ecef;
+  --cinza-100: #f5f7fa;
+  --branco: #ffffff;
+  --fundo: #f8fbff;
+  --borda: #e3e8f0;
+  --texto: #101820;
+  --texto-secundario: #64748b;
+  --texto-sucesso: #28a745;
+  --erro: #ff4d4f;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--fundo);
+  color: var(--texto);
+}
+
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+}
+
+.barra-lateral {
+  width: 260px;
+  min-width: 260px;
+  min-height: 100vh;
+  background: var(--branco);
+  border-right: 1px solid var(--borda);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.logo {
+  height: 124px;
+  padding: 0 26px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--borda);
+}
+
+.logo img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.logo > span {
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--preto);
+}
+
+.logo > span span {
+  color: var(--azul-primario);
+}
+
+.menu {
+  padding: 25px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.item-menu {
+  width: 100%;
+  height: 51px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: 8px;
+  color: #60738e;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.item-menu i {
+  font-size: 20px;
+}
+
+.item-menu:hover {
+  background: var(--cinza-100);
+  color: var(--azul-primario);
+}
+
+.item-menu.ativo {
+  background: #e4f0ff;
+  color: var(--azul-primario);
+}
+
+.sair {
+  margin-top: auto;
+  margin-bottom: 0;
+  border-top: 1px solid var(--borda);
+  border-radius: 0;
+  height: 75px;
+  padding-left: 40px;
+}
+
+.conteudo {
+  width: calc(100% - 260px);
+  margin-left: 260px;
+  padding: 29px 36px 30px;
+  min-height: 100vh;
+}
+
+.cabecalho {
+  margin: 3px 0 33px;
+}
+
+.cabecalho h1 {
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.cabecalho p {
+  font-size: 14px;
+  color: #5f7898;
+}
+
+.card {
+  width: 100%;
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  box-shadow: 0 3px 7px rgba(29, 53, 87, 0.12);
+  padding: 46px 47px 46px;
+  margin-bottom: 31px;
+}
+
+.titulo-card {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.icone-titulo {
+  color: var(--azul-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icone-titulo i {
+  font-size: 22px;
+}
+
+.titulo-card h2 {
+  font-size: 18px;
+  color: var(--azul-500);
+  font-weight: 700;
+}
+
+.linha {
+  width: 100%;
+  height: 1px;
+  background: var(--borda);
+  margin: 18px 0 31px;
+}
+
+.grid-campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 23px;
+  row-gap: 43px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.campo label {
+  margin-bottom: 10px;
+  color: var(--texto);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.campo input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  background: var(--branco);
+  color: var(--texto);
+  padding: 0 15px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.campo input::placeholder {
+  color: #9bacc3;
+}
+
+.campo input:focus {
+  border-color: var(--azul-400);
+  box-shadow: 0 0 0 3px rgba(76, 163, 245, 0.12);
+}
+
+.acoes {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 50px;
+}
+
+.botao-principal,
+.botao-secundario {
+  height: 43px;
+  border-radius: 8px;
+  padding: 0 25px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.botao-principal {
+  background: var(--azul-primario);
+  color: var(--branco);
+  border: none;
+  box-shadow: 0 7px 15px rgba(8, 111, 214, 0.22);
+}
+
+.botao-principal:hover {
+  background: #075fb6;
+  transform: translateY(-1px);
+}
+
+.botao-secundario {
+  background: var(--branco);
+  color: var(--azul-primario);
+  border: 1px solid var(--azul-primario);
+}
+
+.botao-secundario:hover {
+  background: var(--azul-100);
+}
+
+.card-senha {
+  padding-bottom: 46px;
+}
+
+.grid-senha {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 23px;
+}
+
+.campo-senha {
+  position: relative;
+}
+
+.campo-senha input {
+  padding-right: 48px;
+}
+
+.olho {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: transparent;
+  color: #7387a3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.olho:hover {
+  color: var(--azul-primario);
+}
+
+.mensagem {
+  margin-top: 15px;
+  text-align: right;
+  font-size: 14px;
+  min-height: 18px;
+}
+
+.mensagem.sucesso {
+  color: var(--texto-sucesso);
+}
+
+.mensagem.erro {
+  color: var(--erro);
+}
+
+@media (max-width: 1000px) {
+  .barra-lateral {
+    width: 225px;
+    min-width: 225px;
+  }
+
+  .conteudo {
+    width: calc(100% - 225px);
+    margin-left: 225px;
+    padding: 25px;
+  }
+
+  .grid-senha {
+    grid-template-columns: 1fr;
+  }
+
+  .acoes-senha {
+    margin-top: 35px;
+  }
+}
+
+@media (max-width: 760px) {
+  .dashboard {
+    display: block;
+  }
+
+  .barra-lateral {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    min-height: auto;
+    position: relative;
+    border-right: none;
+    border-bottom: 1px solid var(--borda);
+  }
+
+  .logo {
+    height: 80px;
+  }
+
+  .menu {
+    padding: 10px 16px;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .item-menu {
+    min-width: max-content;
+  }
+
+  .sair {
+    margin: 0;
+    border-top: 1px solid var(--borda);
+    padding-left: 34px;
+  }
+
+  .conteudo {
+    width: 100%;
+    margin-left: 0;
+    padding: 25px 16px;
+  }
+
+  .grid-campos {
+    grid-template-columns: 1fr;
+    row-gap: 25px;
+  }
+
+  .card {
+    padding: 28px 22px;
+  }
+
+  .acoes {
+    margin-top: 30px;
+  }
+
+  .botao-principal,
+  .botao-secundario {
+    width: 100%;
+  }
+}
