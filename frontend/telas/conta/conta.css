@@ -39,87 +39,90 @@ body {
 }
 
 .barra-lateral {
-  width: 260px;
-  min-width: 260px;
+  width: 190px;
   min-height: 100vh;
-  background: var(--branco);
+  background-color: var(--branco);
   border-right: 1px solid var(--borda);
   display: flex;
   flex-direction: column;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  flex-shrink: 0;
 }
 
 .logo {
-  height: 124px;
-  padding: 0 26px;
+  height: 80px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  padding: 15px 20px;
   border-bottom: 1px solid var(--borda);
 }
 
 .logo img {
-  width: 34px;
-  height: 34px;
-  object-fit: contain;
+  width: 145px;
+  height: auto;
+  display: block;
 }
 
 .logo > span {
-  font-size: 21px;
-  font-weight: 700;
   color: var(--preto);
 }
 
-.logo > span span {
+.logo > span > span {
   color: var(--azul-primario);
 }
 
 .menu {
-  padding: 25px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
+  padding: 18px 12px;
 }
 
-.item-menu {
-  width: 100%;
-  height: 51px;
-  padding: 0 18px;
+.menu_item {
+  height: 42px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  padding: 0 14px;
+  margin-bottom: 8px;
   border-radius: 8px;
-  color: #60738e;
+  color: var(--cinza-700);
   text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  transition: 0.2s ease;
+  font-size: 13px;
+  transition: 0.3s;
 }
 
-.item-menu i {
-  font-size: 20px;
+.menu_item i {
+  width: 18px;
+  text-align: center;
+  font-size: 15px;
 }
 
-.item-menu:hover {
-  background: var(--cinza-100);
+.menu_item:hover {
+  background-color: var(--azul-100);
   color: var(--azul-primario);
 }
 
-.item-menu.ativo {
-  background: #e4f0ff;
+.menu_item.ativo {
+  background-color: var(--azul-100);
   color: var(--azul-primario);
+  font-weight: 600;
 }
 
 .sair {
   margin-top: auto;
-  margin-bottom: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
   border-top: 1px solid var(--borda);
-  border-radius: 0;
-  height: 75px;
-  padding-left: 40px;
+  color: var(--cinza-700);
+  text-decoration: none;
+  font-size: 13px;
+  transition: 0.3s;
+}
+
+.sair:hover {
+  background-color: var(--azul-100);
+  color: var(--azul-primario);
 }
 
 .conteudo {
