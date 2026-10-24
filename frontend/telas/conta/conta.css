@@ -403,3 +403,27 @@ body {
     width: 100%;
   }
 }
+
+/* Correção: sidebar utiliza .barra_lateral no HTML */
+.barra_lateral { width:240px; min-width:240px; min-height:100vh; background:var(--branco); border-right:1px solid var(--borda); display:flex; flex-direction:column; flex-shrink:0; transition:width .2s ease,min-width .2s ease; }
+.barra_lateral .logo { height:88px; padding:10px 12px; display:flex; align-items:center; justify-content:center; gap:9px; overflow:hidden; }
+.barra_lateral .logo img { width:55px; height:55px; object-fit:contain; flex-shrink:0; }
+.barra_lateral .logo > span { white-space:nowrap; font-weight:600; font-size:16px; }
+.barra_lateral .menu { padding:16px 12px; }
+.barra_lateral .menu_item { display:flex; align-items:center; gap:12px; height:44px; padding:0 14px; margin-bottom:8px; }
+.barra_lateral .sair { margin-top:auto; }
+.btn-recolher { display:flex; align-items:center; justify-content:center; gap:9px; width:calc(100% - 24px); margin:12px; padding:10px; border:0; border-radius:8px; background:var(--azul-100); color:var(--azul-primario); cursor:pointer; font:inherit; font-size:13px; }
+.btn-recolher:hover { background:#d8eaff; }
+.barra_lateral.recolhida { width:70px; min-width:70px; }
+.barra_lateral.recolhida .logo { padding:10px 5px; }
+.barra_lateral.recolhida .logo > span,
+.barra_lateral.recolhida .menu_item span,
+.barra_lateral.recolhida .sair span,
+.barra_lateral.recolhida .btn-recolher span { display:none; }
+.barra_lateral.recolhida .menu { padding:16px 6px; }
+.barra_lateral.recolhida .menu_item { padding:0; justify-content:center; }
+.barra_lateral.recolhida .sair { justify-content:center; padding:0; }
+.barra_lateral.recolhida .btn-recolher { width:calc(100% - 12px); margin:12px 6px; }
+/* O layout usa flexbox: não deslocar o conteúdo duas vezes */
+.dashboard > .conteudo { flex:1; min-width:0; width:auto; margin-left:0; }
+@media (max-width:700px) { .barra_lateral { width:70px; min-width:70px; } .barra_lateral .logo > span, .barra_lateral .menu_item span, .barra_lateral .sair span, .barra_lateral .btn-recolher span { display:none; } .barra_lateral .logo img { width:55px; height:55px; } .barra_lateral .menu { padding:16px 6px; } .barra_lateral .menu_item { padding:0; justify-content:center; } .barra_lateral .sair { justify-content:center; padding:0; } .barra_lateral .btn-recolher { width:calc(100% - 12px); margin:12px 6px; } }

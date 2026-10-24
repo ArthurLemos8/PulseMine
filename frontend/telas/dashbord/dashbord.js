@@ -24,26 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const listaNotificacoes = elemento("listaNotificacoes");
   const btnMarcarLidas = elemento("btnMarcarLidas");
 
-  const btnConfiguracoes = elemento("btnConfiguracoes");
-  const modalConfiguracoes = elemento("modalConfiguracoes");
-  const formConfiguracoes = elemento("formConfiguracoes");
-  const limiteAtencaoInput = elemento("limiteAtencao");
-  const limiteCriticoInput = elemento("limiteCritico");
-  const erroConfiguracao = elemento("erroConfiguracao");
-  const btnFecharConfiguracoes = elemento("btnFecharConfiguracoes");
-  const btnCancelarConfiguracoes = elemento("btnCancelarConfiguracoes");
-
-  const mensagemToast = elemento("mensagemToast");
-  const sensorSelecionado = elemento("sensorSelecionado");
-  const btnNovoSensor = elemento("btnNovoSensor");
-  const btnSalvarSensor = elemento("btnSalvarSensor");
-  const sensorNome = elemento("sensorNome");
-  const sensorLocal = elemento("sensorLocal");
-  const sensorStatus = elemento("sensorStatus");
-  const erroSensor = elemento("erroSensor");
-
-  let sensores = [];
-
   let limiteAtencao = 4;
   let limiteCritico = 7;
   let periodoMinutos = 10;
@@ -140,13 +120,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     statusVibracao.textContent = status.texto;
 
-    statusVibracao.classList.remove(
-      "status-normal",
-      "status-atencao",
-      "status-critico",
-    );
-
-    statusVibracao.classList.add(`status-${status.classe}`);
+    statusVibracao.classList.remove("normal", "atencao", "critico");
+    statusVibracao.classList.add(status.classe);
 
     const cores = {
       normal: "#28a745",
@@ -255,39 +230,14 @@ document.addEventListener("DOMContentLoaded", () => {
   function atualizarEixoX() {
     if (!eixoX) return;
 
-    const quantidadeMarcacoes = 6;
-    const marcacoesExistentes = Array.from(eixoX.querySelectorAll("text"));
-
-    while (marcacoesExistentes.length < quantidadeMarcacoes) {
-      const texto = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "text",
-      );
-
-      eixoX.appendChild(texto);
-      marcacoesExistentes.push(texto);
-    }
+    const marcacoes = Array.from(eixoX.querySelectorAll("span"));
+    const quantidadeMarcacoes = marcacoes.length;
+    if (quantidadeMarcacoes < 2) return;
 
     const intervalo = periodoMinutos / (quantidadeMarcacoes - 1);
-
-    marcacoesExistentes.forEach((marcacao, indice) => {
-      if (indice >= quantidadeMarcacoes) {
-        marcacao.remove();
-        return;
-      }
-
+    marcacoes.forEach((marcacao, indice) => {
       const minutosAtras = Math.round(periodoMinutos - intervalo * indice);
-
-      marcacao.textContent =
-        minutosAtras === 0 ? "Agora" : `-${minutosAtras} min`;
-
-      marcacao.setAttribute(
-        "x",
-        String((indice / (quantidadeMarcacoes - 1)) * 600),
-      );
-
-      marcacao.setAttribute("y", "215");
-      marcacao.setAttribute("text-anchor", "middle");
+      marcacao.textContent = minutosAtras === 0 ? "Agora" : `-${minutosAtras} min`;
     });
   }
 
@@ -354,10 +304,10 @@ document.addEventListener("DOMContentLoaded", () => {
       (notificacao) => !notificacao.lida,
     ).length;
 
-    if (notificacoesContagem) {
-      notificacoesContagem.textContent = naoLidas;
-      notificacoesContagem.hidden = naoLidas === 0;
-    }
+    const contador = document.getElementById("notificacoesContagem");
+
+    contador.textContent = naoLidas;
+    contador.hidden = naoLidas === 0; 
   }
 
   function marcarNotificacoesComoLidas() {
@@ -368,26 +318,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderizarNotificacoes();
     mostrarMensagem("Notificações marcadas como lidas.");
-  }
-
-  function abrirConfiguracoes() {
-    if (limiteAtencaoInput) {
-      limiteAtencaoInput.value = limiteAtencao;
-    }
-
-    if (limiteCriticoInput) {
-      limiteCriticoInput.value = limiteCritico;
-    }
-
-    if (erroConfiguracao) {
-      erroConfiguracao.textContent = "";
-    }
-
-    definirVisibilidade(modalConfiguracoes, true);
-  }
-
-  function fecharConfiguracoes() {
-    definirVisibilidade(modalConfiguracoes, false);
   }
 
   function carregarConfiguracoes() {
@@ -413,59 +343,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (erro) {
       console.error("Não foi possível carregar as configurações:", erro);
     }
-  }
-
-  function salvarConfiguracoes(evento) {
-    evento.preventDefault();
-
-    const novoLimiteAtencao = Number(limiteAtencaoInput?.value);
-
-    const novoLimiteCritico = Number(limiteCriticoInput?.value);
-
-    if (
-      !Number.isFinite(novoLimiteAtencao) ||
-      !Number.isFinite(novoLimiteCritico) ||
-      novoLimiteAtencao <= 0 ||
-      novoLimiteCritico <= novoLimiteAtencao
-    ) {
-      if (erroConfiguracao) {
-        erroConfiguracao.textContent =
-          "Informe limites positivos e faça o limite crítico ser maior que o de atenção.";
-      }
-
-      return;
-    }
-
-    limiteAtencao = novoLimiteAtencao;
-    limiteCritico = novoLimiteCritico;
-
-    try {
-      localStorage.setItem(
-        "pulseMineConfiguracoes",
-        JSON.stringify({
-          limiteAtencao,
-          limiteCritico,
-        }),
-      );
-    } catch (erro) {
-      console.error("Não foi possível salvar as configurações:", erro);
-    }
-
-    if (erroConfiguracao) {
-      erroConfiguracao.textContent = "";
-    }
-
-    atualizarIndicadores();
-    atualizarGrafico();
-    fecharConfiguracoes();
-
-    adicionarNotificacao(
-      "Configurações atualizadas",
-      `Atenção: ${limiteAtencao}. Crítico: ${limiteCritico}.`,
-      "info",
-    );
-
-    mostrarMensagem("Configurações salvas.");
   }
 
   function alternarPeriodo() {
@@ -543,32 +420,8 @@ document.addEventListener("DOMContentLoaded", () => {
     btnMarcarLidas.addEventListener("click", marcarNotificacoesComoLidas);
   }
 
-  if (btnConfiguracoes) {
-    btnConfiguracoes.addEventListener("click", abrirConfiguracoes);
-  }
-
-  if (btnFecharConfiguracoes) {
-    btnFecharConfiguracoes.addEventListener("click", fecharConfiguracoes);
-  }
-
-  if (btnCancelarConfiguracoes) {
-    btnCancelarConfiguracoes.addEventListener("click", fecharConfiguracoes);
-  }
-
-  if (formConfiguracoes) {
-    formConfiguracoes.addEventListener("submit", salvarConfiguracoes);
-  }
-
   if (btnPeriodo) {
     btnPeriodo.addEventListener("click", alternarPeriodo);
-  }
-
-  if (modalConfiguracoes) {
-    modalConfiguracoes.addEventListener("click", (evento) => {
-      if (evento.target === modalConfiguracoes) {
-        fecharConfiguracoes();
-      }
-    });
   }
 
   document.addEventListener("click", (evento) => {
@@ -584,23 +437,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("keydown", (evento) => {
     if (evento.key === "Escape") {
-      fecharConfiguracoes();
       definirVisibilidade(painelNotificacoes, false);
     }
   });
 
   carregarConfiguracoes();
 
-  if (limiteAtencaoInput) {
-    limiteAtencaoInput.value = limiteAtencao;
-  }
-
-  if (limiteCriticoInput) {
-    limiteCriticoInput.value = limiteCritico;
-  }
+  window.addEventListener("pageshow", () => {
+    carregarConfiguracoes();
+    atualizarIndicadores();
+    atualizarGrafico();
+  });
 
   definirVisibilidade(painelNotificacoes, false);
-  definirVisibilidade(modalConfiguracoes, false);
   definirVisibilidade(mensagemToast, false);
 
   atualizarDataHora();
@@ -619,157 +468,5 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(atualizarDataHora, 1000);
   setInterval(simularLeitura, 5000);
 
-  function carregarSensores() {
-    try {
-      const dados = localStorage.getItem("pulseMineSensores");
-      const resultado = dados ? JSON.parse(dados) : [];
 
-      sensores = Array.isArray(resultado) ? resultado : [];
-    } catch (erro) {
-      sensores = [];
-      console.error("Erro ao carregar sensores:", erro);
-    }
-  }
-
-  function persistirSensores() {
-    try {
-      localStorage.setItem("pulseMineSensores", JSON.stringify(sensores));
-
-      return true;
-    } catch (erro) {
-      console.error("Erro ao salvar sensores:", erro);
-      return false;
-    }
-  }
-
-  function renderizarSensores(idSelecionado = "") {
-    if (!sensorSelecionado) return;
-
-    sensorSelecionado.replaceChildren();
-
-    const opcaoNovo = document.createElement("option");
-    opcaoNovo.value = "";
-    opcaoNovo.textContent = "Novo sensor";
-    sensorSelecionado.appendChild(opcaoNovo);
-
-    sensores.forEach((sensor) => {
-      const opcao = document.createElement("option");
-      opcao.value = sensor.id;
-      opcao.textContent = sensor.nome;
-      sensorSelecionado.appendChild(opcao);
-    });
-
-    sensorSelecionado.value = idSelecionado;
-  }
-
-  function limparFormularioSensor() {
-    if (sensorSelecionado) sensorSelecionado.value = "";
-    if (sensorNome) sensorNome.value = "";
-    if (sensorLocal) sensorLocal.value = "";
-    if (sensorStatus) sensorStatus.value = "ativo";
-    if (erroSensor) erroSensor.textContent = "";
-  }
-
-  function preencherFormularioSensor() {
-    const id = sensorSelecionado.value;
-
-    if (!id) {
-      limparFormularioSensor();
-      return;
-    }
-
-    const sensor = sensores.find((item) => item.id === id);
-
-    if (!sensor) {
-      limparFormularioSensor();
-      return;
-    }
-
-    sensorNome.value = sensor.nome;
-    sensorLocal.value = sensor.localizacao;
-    sensorStatus.value = sensor.status;
-    erroSensor.textContent = "";
-  }
-
-  function salvarSensor() {
-    const id = sensorSelecionado.value;
-    const nome = sensorNome.value.trim();
-    const localizacao = sensorLocal.value.trim();
-    const status = sensorStatus.value;
-
-    if (!nome || !localizacao) {
-      erroSensor.textContent = "Preencha o nome e a localização do sensor.";
-      return;
-    }
-
-    if (!["ativo", "inativo"].includes(status)) {
-      erroSensor.textContent = "Selecione um estado válido.";
-      return;
-    }
-
-    const indice = sensores.findIndex((sensor) => sensor.id === id);
-    const sensoresAnteriores = [...sensores];
-
-    let idSalvo;
-    let mensagem;
-
-    if (id && indice !== -1) {
-      sensores[indice] = {
-        ...sensores[indice],
-        nome,
-        localizacao,
-        status,
-      };
-
-      idSalvo = id;
-      mensagem = "Sensor atualizado com sucesso.";
-    } else {
-      idSalvo = `sensor-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-
-      sensores.push({
-        id: idSalvo,
-        nome,
-        localizacao,
-        status,
-      });
-
-      mensagem = "Sensor cadastrado com sucesso.";
-    }
-
-    if (!persistirSensores()) {
-      sensores = sensoresAnteriores;
-      erroSensor.textContent = "Não foi possível salvar o sensor no navegador.";
-      return;
-    }
-
-    renderizarSensores(idSalvo);
-    erroSensor.textContent = "";
-
-    mostrarMensagem(mensagem);
-
-    adicionarNotificacao(
-      "Sensores atualizados",
-      `${nome} — ${status === "ativo" ? "Ativo" : "Inativo"}.`,
-      "info",
-    );
-  }
-
-  if (sensorSelecionado) {
-    sensorSelecionado.addEventListener("change", preencherFormularioSensor);
-  }
-
-  if (btnNovoSensor) {
-    btnNovoSensor.addEventListener("click", () => {
-      limparFormularioSensor();
-
-      if (sensorNome) sensorNome.focus();
-    });
-  }
-
-  if (btnSalvarSensor) {
-    btnSalvarSensor.addEventListener("click", salvarSensor);
-  }
-
-  carregarSensores();
-  renderizarSensores();
 });

@@ -21,49 +21,20 @@
     />
 
     <link rel="stylesheet" href="dasbord.css" />
-  </head>
+    <link rel="stylesheet" href="../componentes/barra-lateral/menu.css">
+  <script src="../componentes/barra-lateral/menu.js" defer></script>
+  <link rel="stylesheet" href="../componentes/tema/tema.css">
+  <script src="../componentes/tema/tema.js"></script>
+</head>
 
-  <body>
+  <body data-pagina="dashbord">
     <div class="dashboard">
-      <aside class="barra_lateral">
-        <div class="logo">
-          <img src="../logo/logo.png" alt="Logo PulseMine" class="logo_item" />
-          <span>Pulse<span>Mine</span></span>
-        </div>
-
-        <nav class="menu" aria-label="Menu principal">
-          <a href="dasbord.html" class="menu_item ativo" aria-current="page">
-            <i class="fa-solid fa-table-cells-large"></i>
-            <span>Dashboard</span>
-          </a>
-
-          <a href="../alertas/alertas.html" class="menu_item">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            <span>Alertas</span>
-          </a>
-
-          <a href="../conta/conta.html" class="menu_item">
-            <i class="fa-regular fa-user"></i>
-            <span>Conta</span>
-          </a>
-
-          <button type="button" class="menu_item" id="btnConfiguracoes">
-            <i class="fa-solid fa-gear"></i>
-            <span>Configurações</span>
-          </button>
-        </nav>
-
-        <a href="../login/login.html" class="sair">
-          <i class="fa-solid fa-arrow-right-from-bracket"></i>
-          <span>Sair</span>
-        </a>
-      </aside>
+      <div id="menu-container"></div>
 
       <main class="conteudo">
         <header class="topo">
           <div class="marca">
             <i class="fa-solid fa-wave-square"></i>
-            <strong>Pulse <span>Mine</span></strong>
           </div>
 
           <div class="informações">
@@ -80,18 +51,10 @@
               id="btnNotificacoes"
               aria-label="Abrir notificações"
               aria-expanded="false"
-            >
+>
               <i class="fa-regular fa-bell"></i>
-              <b id="notificacoesContagem">3</b>
+              <b id="notificacoesContagem" hidden>0</b>
             </button>
-
-            <a
-              href="../conta/conta.html"
-              class="usuario"
-              aria-label="Abrir conta"
-            >
-              <i class="fa-regular fa-user"></i>
-            </a>
           </div>
         </header>
 
@@ -175,7 +138,7 @@
 
               <div class="area-grafico">
                 <svg
-                  viewBox="0 0 1000 250"
+                  viewBox="0 0 600 250"
                   preserveAspectRatio="none"
                   role="img"
                   aria-label="Gráfico de vibração do equipamento"
@@ -196,11 +159,11 @@
                   </defs>
 
                   <g class="linhas-grade">
-                    <line x1="0" y1="0" x2="1000" y2="0" />
-                    <line x1="0" y1="62.5" x2="1000" y2="62.5" />
-                    <line x1="0" y1="125" x2="1000" y2="125" />
-                    <line x1="0" y1="187.5" x2="1000" y2="187.5" />
-                    <line x1="0" y1="250" x2="1000" y2="250" />
+                    <line x1="0" y1="0" x2="600" y2="0" />
+                    <line x1="0" y1="62.5" x2="600" y2="62.5" />
+                    <line x1="0" y1="125" x2="600" y2="125" />
+                    <line x1="0" y1="187.5" x2="600" y2="187.5" />
+                    <line x1="0" y1="250" x2="600" y2="250" />
                   </g>
 
                   <path
@@ -254,117 +217,6 @@
       <div class="lista-notificacoes" id="listaNotificacoes"></div>
     </section>
 
-    <div class="modal-fundo" id="modalConfiguracoes" hidden>
-      <section
-        class="modal-configuracoes"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="tituloConfiguracoes"
-      >
-        <div class="modal-topo">
-          <div>
-            <h2 id="tituloConfiguracoes">Configurações de vibração</h2>
-            <p>Defina os limites de monitoramento.</p>
-          </div>
-
-          <button
-            type="button"
-            class="fechar-modal"
-            id="btnFecharConfiguracoes"
-            aria-label="Fechar configurações"
-          >
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-
-        <form id="formConfiguracoes">
-          <label for="limiteAtencao"> Limite de atenção (mm/s) </label>
-
-          <input
-            type="number"
-            id="limiteAtencao"
-            name="limiteAtencao"
-            min="0.1"
-            max="100"
-            step="0.1"
-            value="4"
-            required
-          />
-
-          <label for="limiteCritico"> Limite crítico (mm/s) </label>
-
-          <input
-            type="number"
-            id="limiteCritico"
-            name="limiteCritico"
-            min="0.2"
-            max="100"
-            step="0.1"
-            value="7"
-            required
-          />
-          <section class="configuracao-sensores">
-            <h3>Gerenciar sensores</h3>
-
-            <label for="sensorSelecionado">Selecionar sensor</label>
-            <select id="sensorSelecionado">
-              <option value="">Novo sensor</option>
-            </select>
-
-            <button type="button" id="btnNovoSensor">
-              Cadastrar novo sensor
-            </button>
-
-            <label for="sensorNome">Nome do sensor</label>
-            <input
-              type="text"
-              id="sensorNome"
-              placeholder="Ex.: Sensor do motor"
-              maxlength="100"
-            />
-
-            <label for="sensorLocal">Localização</label>
-            <input
-              type="text"
-              id="sensorLocal"
-              placeholder="Ex.: Motor principal"
-              maxlength="150"
-            />
-
-            <label for="sensorStatus">Estado do sensor</label>
-            <select id="sensorStatus">
-              <option value="ativo">Ativo</option>
-              <option value="inativo">Inativo</option>
-            </select>
-
-            <p id="erroSensor" role="alert"></p>
-
-            <button type="button" id="btnSalvarSensor">Salvar sensor</button>
-          </section>
-
-          <p
-            class="erro-configuracao"
-            id="erroConfiguracao"
-            role="alert"
-            hidden
-          ></p>
-
-          <div class="modal-acoes">
-            <button
-              type="button"
-              class="botao-secundario"
-              id="btnCancelarConfiguracoes"
-            >
-              Cancelar
-            </button>
-
-            <button type="submit" class="botao-principal">
-              Salvar configurações
-            </button>
-          </div>
-        </form>
-      </section>
-    </div>
 
     <div
       class="mensagem-toast"
