@@ -1,0 +1,796 @@
+/* ==========================================================================
+   PulseMine - Apresentação Oficial
+   Paleta de Cores e Identidade Visual (Sistema de Design Oficial)
+   ========================================================================== */
+
+:root {
+  /* Cores Primária e Variações de Azul Oficiais */
+  --color-primary: #086FD6;
+  --color-blue-1: #086FD6;
+  --color-blue-2: #1A82E8;
+  --color-blue-3: #4CA3F5;
+  --color-blue-4: #7DBAF8;
+  --color-blue-5: #E6F1FF;
+
+  /* Azul Escuro / Preto */
+  --color-dark: #101820;
+
+  /* Variações de Cinza */
+  --color-gray-1: #2A2F36;
+  --color-gray-2: #51565F;
+  --color-gray-3: #7B8591;
+  --color-gray-4: #ADB5BD;
+  --color-gray-5: #E9ECEF;
+  --color-gray-6: #F5F7FA;
+  --color-text-sec: #64748B;
+
+  /* Estruturais e Alertas */
+  --color-white: #FFFFFF;
+  --color-bg-light: #F8FBFF;
+  --color-border: #E3E8F0;
+  --color-alert: #FF4D4F;
+
+  /* Fontes */
+  --font-title: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Transições e Sombras */
+  --transition-smooth: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-blue-glow: 0 0 30px rgba(8, 111, 214, 0.35);
+  --shadow-btn: 0 8px 24px -4px rgba(8, 111, 214, 0.45);
+}
+
+/* Reset Global */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   Efeitos de Fundo Tecnológico
+   ========================================================================== */
+.ambient-glow {
+  position: fixed;
+  top: -15%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(8, 111, 214, 0.16) 0%, rgba(76, 163, 245, 0.06) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(60px);
+}
+
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.016) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.016) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ==========================================================================
+   Layout Principal em Tela Cheia
+   ========================================================================== */
+.presentation-wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ==========================================================================
+   Painel Esquerdo (Conteúdo e Identidade)
+   ========================================================================== */
+.left-panel {
+  flex: 0 0 50%;
+  max-width: 52%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3rem 4rem 2.8rem 5rem;
+  background-color: var(--color-dark);
+  position: relative;
+  z-index: 2;
+}
+
+/* Topo: Logo Oficial e Nome PulseMine */
+.brand-header {
+  padding-bottom: 1.5rem;
+}
+
+.brand-logo-link {
+  display: inline-block;
+  text-decoration: none;
+  transition: transform 0.25s ease;
+}
+
+.brand-logo-link:hover {
+  transform: translateY(-2px);
+}
+
+.brand-identity {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+/* Wrapper para centralizar e ampliar o símbolo eliminando a borda transparente */
+.brand-logo-wrapper {
+  width: 90px;
+  height: 90px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 18px;
+}
+
+.brand-logo-img {
+  position: absolute;
+  width: 250px;
+  height: auto;
+  max-width: none;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 4px 18px rgba(8, 111, 214, 0.55));
+}
+
+.brand-text-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.1;
+}
+
+.brand-title {
+  font-family: var(--font-title);
+  font-size: 2.75rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--color-white);
+  line-height: 1;
+}
+
+.brand-title-accent {
+  color: var(--color-blue-3);
+  background: linear-gradient(135deg, var(--color-blue-2) 0%, var(--color-blue-3) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--color-gray-4);
+  margin-top: 0.35rem;
+}
+
+/* Corpo de Conteúdo */
+.content-body {
+  max-width: 580px;
+  margin: auto 0;
+  padding: 1.5rem 0 2.5rem 0;
+}
+
+/* Frase Superior (Eyebrow) */
+.eyebrow-container {
+  margin-bottom: 1.4rem;
+}
+
+.eyebrow-text {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  color: var(--color-blue-3);
+  text-transform: uppercase;
+  display: inline-block;
+  opacity: 0.95;
+}
+
+/* Título Principal */
+.main-title {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 4vw, 3.75rem);
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+  color: var(--color-white);
+  margin-bottom: 1.5rem;
+}
+
+.main-title .highlight-blue {
+  color: var(--color-blue-3);
+  background: linear-gradient(135deg, var(--color-blue-3) 20%, var(--color-blue-4) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline;
+}
+
+/* Descrição Breve */
+.main-description {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--color-gray-4);
+  max-width: 500px;
+  margin-bottom: 2.8rem;
+}
+
+/* Botões de Ação */
+.cta-group {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.88rem 2.2rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.98rem;
+  text-decoration: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* Botão Principal: Entrar (Azul Primário #086FD6) */
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-blue-1) 0%, var(--color-blue-2) 65%, var(--color-blue-3) 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 20px rgba(8, 111, 214, 0.45);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--color-blue-2) 0%, var(--color-blue-1) 100%);
+  box-shadow: 0 8px 28px rgba(8, 111, 214, 0.65), 0 0 16px rgba(76, 163, 245, 0.4);
+  color: #FFFFFF;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-arrow {
+  transition: transform 0.25s ease;
+}
+
+.btn-primary:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* Botão Secundário: Criar conta */
+.btn-secondary {
+  background: rgba(16, 24, 32, 0.7);
+  color: var(--color-blue-4);
+  border: 1.5px solid rgba(76, 163, 245, 0.5);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.btn-secondary:hover {
+  background: rgba(8, 111, 214, 0.16);
+  border-color: var(--color-blue-3);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(8, 111, 214, 0.3);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* Rodapé Discreto */
+.footer-banner {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-top: 2rem;
+}
+
+.footer-line {
+  display: block;
+  width: 44px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-blue-1), var(--color-blue-3));
+  border-radius: 2px;
+}
+
+.footer-text {
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--color-gray-3);
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Painel Direito (Fotografia Industrial com Recorte e Efeitos)
+   ========================================================================== */
+.right-panel {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+  background-color: var(--color-dark);
+}
+
+/* Card Visual com Corte Diagonal e Chanfrado Tecnológico */
+.visual-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+/* Moldura Poligonal com cantos e corte diagonal */
+.polygon-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  clip-path: polygon(
+    14% 0%,       /* Topo inicia após leve chanfro */
+    100% 0%,      /* Canto superior direito */
+    100% 100%,    /* Canto inferior direito */
+    0% 100%,      /* Canto inferior esquerdo */
+    0% 58%        /* Ponto médio inferior esquerdo */
+  );
+  background-color: #0b1117;
+}
+
+/* Borda luminosa em torno do polígono com pseudo-elemento */
+.visual-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  border-left: 2px solid rgba(76, 163, 245, 0.4);
+  box-shadow: inset 1px 0 15px rgba(8, 111, 214, 0.2);
+}
+
+/* Foto da Planta de Mineração */
+.mine-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% center;
+  display: block;
+  transform: scale(1.02);
+  transition: transform 3.5s ease-out;
+}
+
+.visual-card:hover .mine-photo {
+  transform: scale(1.05);
+}
+
+/* Camada Azulada para integração com o layout PulseMine */
+.image-blue-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg, 
+    rgba(16, 24, 32, 0.82) 0%, 
+    rgba(8, 111, 214, 0.38) 45%, 
+    rgba(76, 163, 245, 0.2) 100%
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Vinheta e escurecimento das bordas */
+.vignette-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(to right, rgba(16, 24, 32, 0.95) 0%, rgba(16, 24, 32, 0.2) 20%, transparent 60%),
+    linear-gradient(to top, rgba(16, 24, 32, 0.85) 0%, transparent 30%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ==========================================================================
+   Linha de Sinal de Vibração e Radar Focal
+   ========================================================================== */
+.sensor-wave-container {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.waveform-svg {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 180px;
+  transform: translateY(-50%);
+  overflow: visible;
+}
+
+.wave-path {
+  fill: none;
+  stroke: url(#blueGlow);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 0;
+  animation: pulseScan 6s linear infinite;
+}
+
+@keyframes pulseScan {
+  0% {
+    stroke-dashoffset: 1200;
+    opacity: 0.6;
+  }
+  50% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -1200;
+    opacity: 0.6;
+  }
+}
+
+/* Alvo do Sensor de Vibração (Radar / Sonar Pulse) */
+.sensor-target {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sensor-core {
+  width: 12px;
+  height: 12px;
+  background: var(--color-blue-3);
+  border-radius: 50%;
+  box-shadow: 0 0 14px var(--color-blue-3), 0 0 24px var(--color-blue-1);
+  z-index: 4;
+}
+
+.sonar-ring {
+  position: absolute;
+  border: 1.5px solid rgba(76, 163, 245, 0.7);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.ring-1 {
+  width: 32px;
+  height: 32px;
+  animation: ripple 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.ring-2 {
+  width: 58px;
+  height: 58px;
+  animation: ripple 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  animation-delay: 0.9s;
+}
+
+.ring-3 {
+  width: 84px;
+  height: 84px;
+  animation: ripple 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  animation-delay: 1.8s;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   Responsividade Completa (Tablets e Smartphones)
+   No mobile, a imagem da planta atua como plano de fundo imersivo
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .left-panel {
+    flex: 0 0 54%;
+    max-width: 54%;
+    padding: 2.5rem 2.5rem 2.2rem 3rem;
+  }
+
+  .main-title {
+    font-size: 2.45rem;
+  }
+
+  .polygon-frame {
+    clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 70%);
+  }
+
+  .brand-logo-img {
+    height: 72px;
+  }
+
+  .brand-title {
+    font-size: 1.85rem;
+  }
+}
+
+/* Telas Tablets e Celulares: Imagem como Fundo */
+@media (max-width: 860px) {
+  .presentation-wrapper {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  /* Painel Direito se torna Plano de Fundo em Tela Cheia */
+  .right-panel {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .visual-card {
+    width: 100%;
+    height: 100%;
+  }
+
+  .polygon-frame {
+    clip-path: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  .visual-card::before {
+    display: none;
+  }
+
+  /* Foto de fundo com opacidade equilibrada */
+  .mine-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 70% center;
+    opacity: 0.38;
+    transform: none;
+  }
+
+  /* Overlay escuro em degradê para garantir leitura perfeita dos textos */
+  .image-blue-overlay {
+    background: linear-gradient(
+      180deg, 
+      rgba(16, 24, 32, 0.88) 0%, 
+      rgba(16, 24, 32, 0.72) 40%, 
+      rgba(16, 24, 32, 0.95) 100%
+    );
+    mix-blend-mode: normal;
+  }
+
+  .vignette-overlay {
+    background: radial-gradient(
+      circle at center, 
+      transparent 20%, 
+      rgba(16, 24, 32, 0.85) 100%
+    );
+  }
+
+  /* Linha de vibração no fundo */
+  .sensor-wave-container {
+    opacity: 0.55;
+  }
+
+  .waveform-svg {
+    top: 45%;
+  }
+
+  .sensor-target {
+    left: 70% !important;
+    top: 45% !important;
+  }
+
+  /* Painel Esquerdo com Conteúdo sobreposto ao Fundo */
+  .left-panel {
+    position: relative;
+    z-index: 5;
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    background: transparent;
+    padding: 2.2rem 2rem 2.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .brand-header {
+    padding-bottom: 1.5rem;
+  }
+
+  .brand-identity {
+    gap: 1.1rem;
+  }
+
+  .brand-logo-wrapper {
+    width: 76px;
+    height: 76px;
+  }
+
+  .brand-logo-img {
+    width: 210px;
+  }
+
+  .brand-title {
+    font-size: 2.15rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.82rem;
+  }
+
+  .content-body {
+    margin: 2rem 0;
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .eyebrow-text {
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+  }
+
+  .main-title {
+    font-size: clamp(2rem, 7vw, 2.75rem);
+    line-height: 1.18;
+    margin-bottom: 1.25rem;
+  }
+
+  .main-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2.2rem;
+    max-width: 540px;
+    color: var(--color-gray-4);
+  }
+
+  .cta-group {
+    gap: 1rem;
+  }
+
+  .footer-banner {
+    padding-top: 1.5rem;
+  }
+}
+
+/* Telas Pequenas (Smartphones menores que 520px) */
+@media (max-width: 520px) {
+  .left-panel {
+    padding: 1.8rem 1.25rem 1.8rem;
+  }
+
+  .brand-identity {
+    gap: 0.95rem;
+  }
+
+  .brand-logo-wrapper {
+    width: 64px;
+    height: 64px;
+  }
+
+  .brand-logo-img {
+    width: 175px;
+  }
+
+  .brand-title {
+    font-size: 1.85rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .main-title {
+    font-size: 1.95rem;
+  }
+
+  .main-description {
+    font-size: 0.95rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .cta-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 0.92rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .footer-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .footer-line {
+    width: 36px;
+  }
+
+  .footer-text {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+  }
+}
