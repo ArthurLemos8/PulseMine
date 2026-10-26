@@ -1,39 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="PulseMine - Sistema acadêmico de monitoramento de vibração industrial em equipamentos de mineração." />
+  <meta name="description"
+    content="PulseMine - Sistema acadêmico de monitoramento de vibração industrial em equipamentos de mineração." />
   <title>PulseMine — Monitoramento de Vibração Industrial</title>
-  
-  <!-- Fontes Google: Space Grotesk e Inter -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
+    rel="stylesheet">
+
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <!-- Fundo com grid sutil e ambient lights -->
+
   <div class="ambient-glow"></div>
   <div class="grid-overlay"></div>
 
   <main class="presentation-wrapper">
-    <!-- ==============================================
-         LADO ESQUERDO: Identidade, Textos e Ações
-         ============================================== -->
     <section class="left-panel">
-      <!-- Topo: Logo oficial do PulseMine e Nome da Marca -->
       <header class="brand-header">
         <a href="#" class="brand-logo-link" title="PulseMine">
           <div class="brand-identity">
             <div class="brand-logo-wrapper">
-              <img 
-                src="LOGO VERSAO 1.png" 
-                alt="PulseMine Ícone" 
-                class="brand-logo-img" 
-                id="main-logo"
-              />
+              <img src="img/LOGO VERSAO 1.png" alt="PulseMine Ícone" class="brand-logo-img" id="main-logo" />
             </div>
             <div class="brand-text-block">
               <span class="brand-title">Pulse<span class="brand-title-accent">Mine</span></span>
@@ -43,78 +38,58 @@
         </a>
       </header>
 
-      <!-- Conteúdo Central -->
+
       <div class="content-body">
-        <!-- Frase Superior -->
         <div class="eyebrow-container">
           <span class="eyebrow-text">MAIS SEGURANÇA PARA A SUA OPERAÇÃO</span>
         </div>
 
-        <!-- Título Principal -->
         <h1 class="main-title">
           Monitoramento de <span class="highlight-blue">vibração</span> com arduino
         </h1>
 
-        <!-- Descrição Breve -->
         <p class="main-description">
-          O PulseMine ajuda a acompanhar as vibrações dos equipamentos e identificar possíveis alterações durante o monitoramento.
+          O PulseMine ajuda a acompanhar as vibrações dos equipamentos e identificar possíveis alterações durante o
+          monitoramento.
         </p>
-
-        <!-- Ações Principais: Botões Entrar e Criar conta -->
         <div class="cta-group">
-          <!-- Botão Principal: Entrar -->
+
           <a href="../login/login.html" class="btn btn-primary" id="btn-entrar" role="button">
             <span class="btn-text">Entrar</span>
-            <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
           </a>
-
-          <!-- Botão Secundário: Criar conta -->
           <a href="../cadastro/cadastro.html" class="btn btn-secondary" id="btn-cadastro" role="button">
             <span class="btn-text">Criar conta</span>
           </a>
         </div>
       </div>
-
-      <!-- Rodapé Discreto -->
       <footer class="footer-banner">
         <span class="footer-line"></span>
         <p class="footer-text">TECNOLOGIA &nbsp;•&nbsp; CONFIABILIDADE &nbsp;•&nbsp; EFICIÊNCIA</p>
       </footer>
     </section>
-
-    <!-- ==============================================
-         LADO DIREITO: Fotografia Industrial com Corte
-         Diagonal, Sinal de Vibração e Ponto de Medição
-         ============================================== -->
     <section class="right-panel">
-      <!-- Container com corte chanfrado/diagonal e borda tecnológica -->
       <div class="visual-card">
-        <!-- Moldura com corte poligonal -->
         <div class="polygon-frame">
-          <!-- Imagem da Planta de Mineração -->
-          <img 
-            src="planta de mineraçao .png" 
-            alt="Planta de mineração industrial com esteira transportadora" 
-            class="mine-photo" 
-            id="mine-image"
-          />
-          <!-- Camada de tonalização azulada para harmonização visual -->
+
+          <img src="img/planta de mineraçao .png" alt="Planta de mineração industrial com esteira transportadora"
+            class="mine-photo" id="mine-image" />
           <div class="image-blue-overlay"></div>
           <div class="vignette-overlay"></div>
 
-          <!-- Linha dinâmica de sinal de vibração e ponto de monitoramento -->
           <div class="sensor-wave-container">
-            <!-- SVG da onda senoidal/pulso de vibração industrial -->
+
             <svg class="waveform-svg" viewBox="0 0 800 200" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#086FD6" stop-opacity="0.2"/>
-                  <stop offset="35%" stop-color="#1A82E8" stop-opacity="0.95"/>
-                  <stop offset="65%" stop-color="#4CA3F5" stop-opacity="1"/>
-                  <stop offset="100%" stop-color="#086FD6" stop-opacity="0.25"/>
+                  <stop offset="0%" stop-color="#086FD6" stop-opacity="0.2" />
+                  <stop offset="35%" stop-color="#1A82E8" stop-opacity="0.95" />
+                  <stop offset="65%" stop-color="#4CA3F5" stop-opacity="1" />
+                  <stop offset="100%" stop-color="#086FD6" stop-opacity="0.25" />
                 </linearGradient>
                 <filter id="blueFilter" x="-20%" y="-20%" width="140%" height="140%">
                   <feGaussianBlur stdDeviation="3" result="blur" />
@@ -125,15 +100,11 @@
                 </filter>
               </defs>
 
-              <!-- Linha de vibração com pulsos e picos de sinal -->
-              <path 
-                class="wave-path" 
-                d="M 0,100 L 210,100 L 225,82 L 238,118 L 250,60 L 265,140 L 280,75 L 295,115 L 310,100 L 460,100 L 475,80 L 488,125 L 500,45 L 515,155 L 530,68 L 545,120 L 560,100 L 800,100" 
-                filter="url(#blueFilter)"
-              />
+              <path class="wave-path"
+                d="M 0,100 L 210,100 L 225,82 L 238,118 L 250,60 L 265,140 L 280,75 L 295,115 L 310,100 L 460,100 L 475,80 L 488,125 L 500,45 L 515,155 L 530,68 L 545,120 L 560,100 L 800,100"
+                filter="url(#blueFilter)" />
             </svg>
 
-            <!-- Ponto focal do sensor (radar / sonar pulse concêntrico sobre a esteira) -->
             <div class="sensor-target" style="left: 63.5%; top: 50%;">
               <div class="sonar-ring ring-1"></div>
               <div class="sonar-ring ring-2"></div>
@@ -148,4 +119,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>

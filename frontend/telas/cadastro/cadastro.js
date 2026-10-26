@@ -1,5 +1,5 @@
 function validarEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+[^\s@]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
@@ -103,6 +103,10 @@ formulario.addEventListener("submit", (event) => {
   }
 
   let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+  if (!Array.isArray(usuarios)) {
+    usuarios = [];
+  }
 
   const existe = usuarios.some((user) => user.email === emailValor);
 
