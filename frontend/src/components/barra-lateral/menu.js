@@ -3,7 +3,7 @@
   const destino = document.getElementById("menu-container");
   if (!destino) return;
   try {
-    const resposta = await fetch("../../componentes/barra-lateral/menu.html");
+    const resposta = await fetch("../../components/barra-lateral/menu.html");
     if (!resposta.ok) throw new Error("HTTP " + resposta.status);
     destino.outerHTML = await resposta.text();
     const barra = document.querySelector(".barra_lateral");
