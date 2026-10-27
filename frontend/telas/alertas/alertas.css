@@ -733,3 +733,92 @@ body {
     bottom: 20px;
   }
 }
+
+
+/* Padronização da barra lateral PulseMine */
+.barra_lateral {
+  width: 240px;
+  min-width: 240px;
+  height: 100vh;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-y: auto;
+  transition: width .3s ease, min-width .3s ease;
+}
+.logo {
+  height: 80px;
+  min-height: 80px;
+  margin: 0;
+  padding: 10px 12px;
+  gap: 8px;
+  justify-content: center;
+  border-bottom: 1px solid var(--borda);
+}
+.logo_item { width: 65px; height: auto; max-height: 70px; object-fit: contain; flex-shrink: 0; }
+.logo > span, .barra_lateral:not(.recolhida) .logo > span {
+  display: inline;
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.logo > span > span { font-size: inherit; font-weight: inherit; }
+.btn-recolher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: calc(100% - 20px);
+  min-height: 40px;
+  margin: 12px 10px;
+  padding: 10px;
+  border: 0;
+  border-radius: 8px;
+  background: #eef5ff;
+  color: var(--azul-primario);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-recolher:hover { background: var(--azul-100); }
+.menu { padding: 8px 12px; }
+.menu_item { font-family: inherit; text-align: left; background: transparent; border: 0; cursor: pointer; }
+.sair { margin-top: auto; margin-bottom: 12px; }
+.alertas-container {
+  width: calc(100% - 240px);
+  min-width: 0;
+  margin-left: 240px;
+  transition: width .3s ease, margin-left .3s ease;
+}
+.barra_lateral.recolhida { width: 70px; min-width: 70px; }
+.barra_lateral.recolhida .logo { justify-content: center; padding: 12px 5px; }
+.barra_lateral.recolhida .logo_item { width: 55px; height: auto; max-height: 60px; }
+.barra_lateral.recolhida .logo > span,
+.barra_lateral.recolhida .menu_item span,
+.barra_lateral.recolhida .sair span,
+.barra_lateral.recolhida .btn-recolher span { display: none; }
+.barra_lateral.recolhida .menu { padding: 8px 6px; }
+.barra_lateral.recolhida .menu_item,
+.barra_lateral.recolhida .sair { justify-content: center; padding: 0; }
+.barra_lateral.recolhida .btn-recolher { width: calc(100% - 12px); margin: 12px 6px; }
+.barra_lateral.recolhida .sair { margin-left: 6px; width: calc(100% - 12px); }
+.dashboard.menu-recolhido .alertas-container { width: calc(100% - 70px); margin-left: 70px; }
+@media (max-width: 850px) {
+  .barra_lateral, .barra_lateral:not(.recolhida) { width: 240px; min-width: 240px; padding: 0; }
+  .barra_lateral.recolhida { width: 70px; min-width: 70px; padding: 0; }
+  .barra_lateral:not(.recolhida) .logo { justify-content: center; padding: 10px 12px; }
+  .barra_lateral:not(.recolhida) .menu_item,
+  .barra_lateral:not(.recolhida) .sair { justify-content: flex-start; padding: 0 14px; }
+  .barra_lateral:not(.recolhida) .menu_item span,
+  .barra_lateral:not(.recolhida) .sair span { display: inline; }
+  .alertas-container { width: calc(100% - 240px); margin-left: 240px; }
+  .dashboard.menu-recolhido .alertas-container { width: calc(100% - 70px); margin-left: 70px; }
+}
+@media (max-width: 450px) {
+  .barra_lateral, .barra_lateral:not(.recolhida) { width: 240px; min-width: 240px; padding: 0; }
+  .barra_lateral.recolhida { width: 70px; min-width: 70px; padding: 0; }
+  .barra_lateral.recolhida .logo_item { width: 55px; }
+  .alertas-container { width: calc(100% - 240px); margin-left: 240px; }
+  .dashboard.menu-recolhido .alertas-container { width: calc(100% - 70px); margin-left: 70px; }
+}
