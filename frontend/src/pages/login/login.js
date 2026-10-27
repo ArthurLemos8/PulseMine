@@ -101,5 +101,5 @@ formulario.addEventListener("submit", (event) => {
 
   localStorage.setItem("usuarioLogado", JSON.stringify(usuarioEncontrado));
 
-  window.location.href = "../dashbord/dasbord.html";
+  window.location.href = "../dashboard/dashboard.html";
 });

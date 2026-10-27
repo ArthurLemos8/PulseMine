@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configurações - PulseMine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="configuracoes.css">
+  <script src="configuracoes.js" defer></script>
+  <link rel="stylesheet" href="../../componentes/barra-lateral/menu.css">
+  <script src="../../componentes/barra-lateral/menu.js" defer></script>
+  <link rel="stylesheet" href="../../componentes/tema/tema.css">
+  <script src="../../componentes/tema/tema.js"></script>
+</head>
+
+<body data-pagina="configuracoes">
+  <div class="dashboard">
+    <div id="menu-container"></div>
+    <main class="conteudo">
+      <header class="cabecalho">
+        <div class="eyebrow">PULSEMINE / SISTEMA</div>
+        <h1>Configurações</h1>
+        <p>Personalize os limites de monitoramento e gerencie os sensores cadastrados.</p>
+      </header>
+      <div class="layout">
+        <nav class="indice" aria-label="Seções de configurações">
+          <a href="#monitoramento" class="selecionado"><i class="fa-solid fa-wave-square"></i> Monitoramento</a>
+          <a href="#sensores"><i class="fa-solid fa-microchip"></i> Sensores</a>
+          <a href="#notificacoes"><i class="fa-regular fa-bell"></i> Notificações</a>
+          <a href="#aparencia"><i class="fa-solid fa-palette"></i> Aparência</a>
+        </nav>
+        <div class="paineis">
+          <section class="painel" id="monitoramento">
+            <div class="painel-topo">
+              <div class="icone"><i class="fa-solid fa-wave-square"></i></div>
+              <div>
+                <h2>Limites de vibração</h2>
+                <p>Defina quando uma leitura deve ser classificada como atenção ou crítica.</p>
+              </div>
+            </div>
+            <form id="formConfiguracoes">
+              <div class="campos">
+                <label>Limite de atenção <span>mm/s</span><input id="limiteAtencao" type="number" min="0.1" max="100"
+                    step="0.1" value="4" required><small>Valores a partir deste limite exigem atenção.</small></label>
+                <label>Limite crítico <span>mm/s</span><input id="limiteCritico" type="number" min="0.2" max="100"
+                    step="0.1" value="7" required><small>Deve ser maior que o limite de atenção.</small></label>
+              </div>
+              <p class="erro" id="erroConfiguracao" role="alert" hidden></p>
+              <div class="acoes"><button type="submit" class="principal"><i class="fa-solid fa-check"></i> Salvar
+                  limites</button></div>
+            </form>
+          </section>
+          <section class="painel" id="sensores">
+            <div class="painel-topo">
+              <div class="icone"><i class="fa-solid fa-microchip"></i></div>
+              <div>
+                <h2>Gerenciar sensores</h2>
+                <p>Cadastre ou edite os sensores utilizados no monitoramento.</p>
+              </div>
+            </div>
+            <div class="linha-sensor"><label for="sensorSelecionado">Sensor cadastrado</label><select
+                id="sensorSelecionado">
+                <option value="">Novo sensor</option>
+              </select></div>
+            <form id="formSensor">
+              <div class="campos">
+                <label>Nome do sensor<input id="sensorNome" type="text" maxlength="100"
+                    placeholder="Ex.: Sensor do motor" required></label>
+                <label>Localização<input id="sensorLocal" type="text" maxlength="150" placeholder="Ex.: Motor principal"
+                    required></label>
+                <label>Estado do sensor<select id="sensorStatus">
+                    <option value="ativo">Ativo</option>
+                    <option value="inativo">Inativo</option>
+                  </select></label>
+              </div>
+              <p class="erro" id="erroSensor" role="alert" hidden></p>
+              <div class="acoes"><button type="button" id="btnNovoSensor" class="secundario">Novo sensor</button><button
+                  type="submit" class="principal"><i class="fa-solid fa-floppy-disk"></i> Salvar sensor</button></div>
+            </form>
+          </section>
+          <section class="painel em-breve" id="notificacoes">
+            <div class="painel-topo">
+              <div class="icone"><i class="fa-regular fa-bell"></i></div>
+              <div>
+                <h2>Notificações</h2>
+                <p>Preferências de avisos e alertas do sistema.</p>
+              </div>
+            </div>
+            <span class="etiqueta">Planejado para uma próxima etapa</span>
+          </section>
+          <section class="painel em-breve" id="aparencia">
+            <div class="painel-topo">
+              <div class="icone"><i class="fa-solid fa-palette"></i></div>
+              <div>
+                <h2>Aparência</h2>
+                <p>Escolha o tema que fica mais confortável para você.</p>
+              </div>
+            </div>
+            <div class="tema-escolhas" role="group" aria-label="Selecionar tema">
+              <label class="tema-opcao"><input type="radio" name="temaVisual" value="escuro"> <i
+                  class="fa-solid fa-moon"></i> Escuro</label>
+              <label class="tema-opcao"><input type="radio" name="temaVisual" value="claro"> <i
+                  class="fa-solid fa-sun"></i> Claro</label>
+            </div>
+            <p>A preferência é salva neste navegador e aplicada às quatro telas.</p>
+          </section>
+        </div>
+      </div>
+      <p class="rodape">As configurações e os sensores são armazenados neste navegador. A integração com o backend ainda
+        será necessária.</p>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+
+</html>

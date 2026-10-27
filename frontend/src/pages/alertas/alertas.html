@@ -1,34 +1,32 @@
 <!doctype html>
 <html lang="pt-Br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alerta - PulseMine</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alerta - PulseMine</title>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-    <link rel="stylesheet" href="alertas.css" />
-    <link rel="stylesheet" href="../componentes/barra-lateral/menu.css">
-  <script src="../componentes/barra-lateral/menu.js" defer></script>
-  <link rel="stylesheet" href="../componentes/tema/tema.css">
-  <script src="../componentes/tema/tema.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="alertas.css" />
+  <link rel="stylesheet" href="../../componentes/barra-lateral/menu.css">
+  <script src="../../componentes/barra-lateral/menu.js" defer></script>
+  <link rel="stylesheet" href="../../componentes/tema/tema.css">
+  <script src="../../componentes/tema/tema.js"></script>
 </head>
-  <body data-pagina="alertas">
-     <div class="dashboard">
 
-      <div id="menu-container"></div>
+<body data-pagina="alertas">
+  <div class="dashboard">
+
+    <div id="menu-container"></div>
     <main class="alertas-container">
       <section class="cabecalho-alertas">
         <h1>Alertas</h1>
@@ -76,12 +74,7 @@
         <div class="campo-pesquisa">
           <i class="bi bi-search"></i>
 
-          <input
-            type="text"
-            id="buscarAlertas"
-            placeholder="Buscar alertas..."
-            autocomplete="off"
-          />
+          <input type="text" id="buscarAlertas" placeholder="Buscar alertas..." autocomplete="off" />
         </div>
 
         <div>
@@ -226,9 +219,10 @@
         </div>
       </section>
     </main>
-    </div>
+  </div>
 
-    <script src="alertas.js"></script>
-    <script src="../sair/sair.js"></script>
-  </body>
+  <script src="alertas.js"></script>
+  <script src="../sair/sair.js"></script>
+</body>
+
 </html>

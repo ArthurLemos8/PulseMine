@@ -1,0 +1,265 @@
+html[data-tema="escuro"] {
+  color-scheme: dark;
+  --azul-primario: #65b6ff;
+  --azul-500: #83c5ff;
+  --azul-400: #8bccff;
+  --azul-300: #a9d8ff;
+  --azul-100: #243c57;
+  --preto: #f2f6fc;
+  --cinza-800: #d5dfec;
+  --cinza-700: #b7c5d7;
+  --cinza-500: #a7b7cb;
+  --cinza-300: #879bb4;
+  --cinza-200: #334153;
+  --cinza-100: #1b2532;
+  --branco: #222c3a;
+  --fundo: #151b26;
+  --borda: #39485a;
+  --texto: #f2f6fc;
+  --texto-secundario: #a7b7cb;
+  --texto-sucesso: #64d5a2;
+}
+html[data-tema="escuro"] body {
+  background: #151b26;
+  color: #f2f6fc;
+}
+html[data-tema="escuro"] input,
+html[data-tema="escuro"] select,
+html[data-tema="escuro"] textarea {
+  background-color: #1b2532;
+  color: #f2f6fc;
+  border-color: #48586c;
+}
+html[data-tema="escuro"] input::placeholder,
+html[data-tema="escuro"] textarea::placeholder {
+  color: #92a5bc;
+}
+html[data-tema="escuro"] canvas {
+  color-scheme: dark;
+}
+
+/* dashbord/dasbord.css */
+html[data-tema="escuro"] .status.critico {
+  background-color: #3a2631;
+}
+html[data-tema="escuro"] .btn-recolher {
+  background: #243c57;
+}
+html[data-tema="escuro"] .status.atencao {
+  background-color: #3a3326;
+}
+
+/* alertas/alertas.css */
+html[data-tema="escuro"] .sair:hover {
+  background: #3a2631;
+}
+html[data-tema="escuro"] .nivel.critico {
+  background: #3a2631;
+}
+html[data-tema="escuro"] .btn-recolher {
+  background: #243c57;
+}
+
+/* conta/conta.css */
+html[data-tema="escuro"] .cabecalho p {
+  color: #a7b7cb;
+}
+html[data-tema="escuro"] .campo input::placeholder {
+  color: #a7b7cb;
+}
+html[data-tema="escuro"] .botao-principal:hover {
+  background: #65b6ff;
+}
+html[data-tema="escuro"] .olho {
+  color: #a7b7cb;
+}
+html[data-tema="escuro"] .btn-recolher:hover {
+  background: #29415d;
+}
+
+/* configuracoes/configuracoes.css */
+html[data-tema="escuro"] body {
+  background: #151b26;
+  color: #f2f6fc;
+}
+html[data-tema="escuro"] .barra_lateral {
+  background: #222c3a;
+  border-right: 1px solid #39485a;
+}
+html[data-tema="escuro"] .logo {
+  border-bottom: 1px solid #39485a;
+}
+html[data-tema="escuro"] .logo > span > span {
+  color: #65b6ff;
+}
+html[data-tema="escuro"] .btn-recolher {
+  border-bottom: 1px solid #39485a;
+  background: #222c3a;
+  color: #a7b7cb;
+}
+html[data-tema="escuro"] .menu_item,
+html[data-tema="escuro"] .sair {
+  color: #a7b7cb;
+}
+html[data-tema="escuro"] .menu_item:hover,
+html[data-tema="escuro"] .menu_item.ativo {
+  color: #65b6ff;
+  background: #243c57;
+}
+html[data-tema="escuro"] .sair:hover {
+  background: #3a2631;
+}
+html[data-tema="escuro"] .eyebrow {
+  color: #65b6ff;
+}
+html[data-tema="escuro"] .cabecalho p,
+html[data-tema="escuro"] .painel-topo p,
+html[data-tema="escuro"] .rodape {
+  color: #a7b7cb;
+}
+html[data-tema="escuro"] .indice a {
+  color: #a7b7cb;
+}
+html[data-tema="escuro"] .indice a.selecionado,
+html[data-tema="escuro"] .indice a:hover {
+  background: #243c57;
+  color: #65b6ff;
+}
+html[data-tema="escuro"] .painel {
+  background: #222c3a;
+  border: 1px solid #39485a;
+}
+html[data-tema="escuro"] .painel-topo {
+  border-bottom: 1px solid #334153;
+}
+html[data-tema="escuro"] .icone {
+  background: #243c57;
+  color: #65b6ff;
+}
+html[data-tema="escuro"] .campos label span {
+  color: #a7b7cb;
+}
+html[data-tema="escuro"] .campos input,
+html[data-tema="escuro"] .campos select,
+html[data-tema="escuro"] .linha-sensor select {
+  border: 1px solid #39485a;
+  background: #222c3a;
+  color: #f2f6fc;
+}
+html[data-tema="escuro"] .campos input:focus,
+html[data-tema="escuro"] .campos select:focus,
+html[data-tema="escuro"] .linha-sensor select:focus {
+  border-color: #65b6ff;
+}
+html[data-tema="escuro"] .campos small {
+  color: #a7b7cb;
+}
+html[data-tema="escuro"] button.principal {
+  border: 1px solid #65b6ff;
+  background: #65b6ff;
+  color: #222c3a;
+}
+html[data-tema="escuro"] button.principal:hover {
+  background: #65b6ff;
+}
+html[data-tema="escuro"] button.secundario {
+  border: 1px solid #39485a;
+  background: #222c3a;
+  color: #b7c5d7;
+}
+html[data-tema="escuro"] button.secundario:hover {
+  background: #1b2532;
+}
+html[data-tema="escuro"] .etiqueta {
+  background: #1b2532;
+  color: #a7b7cb;
+}
+html[data-tema="escuro"] .toast {
+  background: #f2f6fc;
+}
+
+/* componentes/barra-lateral/menu.css */
+html[data-tema="escuro"] .dashboard .barra_lateral {
+  background: #222c3a;
+  border-right: 1px solid #39485a;
+}
+html[data-tema="escuro"] .dashboard .barra_lateral .logo > span {
+  color: #65b6ff;
+}
+html[data-tema="escuro"] .dashboard .barra_lateral .logo > span > span {
+  color: #f2f6fc;
+}
+html[data-tema="escuro"] .dashboard .barra_lateral .btn-recolher {
+  background: #243c57;
+  color: #65b6ff;
+}
+html[data-tema="escuro"] .dashboard .barra_lateral .menu_item:hover {
+  color: #65b6ff;
+}
+html[data-tema="escuro"] .dashboard .barra_lateral .menu_item.ativo {
+  color: #65b6ff;
+}
+html[data-tema="escuro"] .dashboard .barra_lateral .sair:hover {
+  color: #65b6ff;
+}
+
+/* Uniformidade em elementos de formulário e gráficos */
+html[data-tema="escuro"] .dashboard,
+html[data-tema="escuro"] .conteudo {
+  background-color: #151b26;
+}
+html[data-tema="escuro"] .dashboard .barra_lateral {
+  background-color: #1b2532;
+  border-color: #39485a;
+}
+html[data-tema="escuro"] .dashboard .barra_lateral .logo > span > span {
+  color: #f2f6fc;
+}
+html[data-tema="escuro"] .dashboard .barra_lateral .btn-recolher {
+  background-color: #243c57;
+  color: #83c5ff;
+}
+html[data-tema="escuro"] .dashboard .barra_lateral .menu_item:hover,
+html[data-tema="escuro"] .dashboard .barra_lateral .menu_item.ativo {
+  background-color: #243c57;
+  color: #83c5ff;
+}
+html[data-tema="escuro"] input:focus-visible,
+html[data-tema="escuro"] button:focus-visible,
+html[data-tema="escuro"] a:focus-visible {
+  outline: 2px solid #83c5ff;
+  outline-offset: 2px;
+}
+.tema-escolhas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 16px 0 8px;
+}
+.tema-opcao {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border: 1px solid var(--borda, #e3e8f0);
+  border-radius: 12px;
+  cursor: pointer;
+  background: var(--branco, #fff);
+  color: var(--texto, #101820);
+  font-weight: 600;
+}
+.tema-opcao:has(input:checked) {
+  border-color: var(--azul-primario, #086fd6);
+  box-shadow: 0 0 0 1px var(--azul-primario, #086fd6);
+}
+.tema-opcao input {
+  accent-color: var(--azul-primario, #086fd6);
+}
+html[data-tema="escuro"] .tema-opcao {
+  background: #222c3a;
+  border-color: #39485a;
+  color: #f2f6fc;
+}
+html[data-tema="escuro"] .tema-opcao:has(input:checked) {
+  border-color: #65b6ff;
+}
