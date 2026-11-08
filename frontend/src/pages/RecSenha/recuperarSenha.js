@@ -39,7 +39,7 @@ formulario.addEventListener("submit", (event) => {
   let valido = true;
 
   if (email.value.trim() === "") {
-    erroEmail.textContent = "Digite uma nova senha.";
+    erroEmail.textContent = "Digite seu Email.";
     valido = false;
   }
 
@@ -52,7 +52,7 @@ formulario.addEventListener("submit", (event) => {
   }
 
   if (confirmarSenha.value.trim() === "") {
-    erroConfirmacaoSenha.textContent = "Confirme sua nova senha.";
+    erroConfirmacaoSenha.textContent = "Confirme sua nova Senha.";
     valido = false;
   } else if (confirmarSenha.value !== novaSenha.value) {
     erroConfirmacaoSenha.textContent = "As senhas não coincidem.";

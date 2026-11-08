@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const painelNotificacoes = elemento("painelNotificacoes");
   const listaNotificacoes = elemento("listaNotificacoes");
   const btnMarcarLidas = elemento("btnMarcarLidas");
+  const mensagemToast = elemento("mensagemToast");
 
   let limiteAtencao = 4;
   let limiteCritico = 7;
@@ -237,7 +238,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const intervalo = periodoMinutos / (quantidadeMarcacoes - 1);
     marcacoes.forEach((marcacao, indice) => {
       const minutosAtras = Math.round(periodoMinutos - intervalo * indice);
-      marcacao.textContent = minutosAtras === 0 ? "Agora" : `-${minutosAtras} min`;
+      marcacao.textContent =
+        minutosAtras === 0 ? "Agora" : `-${minutosAtras} min`;
     });
   }
 
@@ -307,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const contador = document.getElementById("notificacoesContagem");
 
     contador.textContent = naoLidas;
-    contador.hidden = naoLidas === 0; 
+    contador.hidden = naoLidas === 0;
   }
 
   function marcarNotificacoesComoLidas() {
@@ -467,6 +469,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setInterval(atualizarDataHora, 1000);
   setInterval(simularLeitura, 5000);
-
-
 });
