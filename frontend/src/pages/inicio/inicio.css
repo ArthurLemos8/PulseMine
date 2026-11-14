@@ -5,34 +5,34 @@
 
 :root {
   /* Cores Primária e Variações de Azul Oficiais */
-  --color-primary: #086FD6;
-  --color-blue-1: #086FD6;
-  --color-blue-2: #1A82E8;
-  --color-blue-3: #4CA3F5;
-  --color-blue-4: #7DBAF8;
-  --color-blue-5: #E6F1FF;
+  --color-primary: #086fd6;
+  --color-blue-1: #086fd6;
+  --color-blue-2: #1a82e8;
+  --color-blue-3: #4ca3f5;
+  --color-blue-4: #7dbaf8;
+  --color-blue-5: #e6f1ff;
 
   /* Azul Escuro / Preto */
   --color-dark: #101820;
 
   /* Variações de Cinza */
-  --color-gray-1: #2A2F36;
-  --color-gray-2: #51565F;
-  --color-gray-3: #7B8591;
-  --color-gray-4: #ADB5BD;
-  --color-gray-5: #E9ECEF;
-  --color-gray-6: #F5F7FA;
-  --color-text-sec: #64748B;
+  --color-gray-1: #2a2f36;
+  --color-gray-2: #51565f;
+  --color-gray-3: #7b8591;
+  --color-gray-4: #adb5bd;
+  --color-gray-5: #e9ecef;
+  --color-gray-6: #f5f7fa;
+  --color-text-sec: #64748b;
 
   /* Estruturais e Alertas */
-  --color-white: #FFFFFF;
-  --color-bg-light: #F8FBFF;
-  --color-border: #E3E8F0;
-  --color-alert: #FF4D4F;
+  --color-white: #ffffff;
+  --color-bg-light: #f8fbff;
+  --color-border: #e3e8f0;
+  --color-alert: #ff4d4f;
 
   /* Fontes */
-  --font-title: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-title: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Transições e Sombras */
   --transition-smooth: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
@@ -41,13 +41,16 @@
 }
 
 /* Reset Global */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   min-height: 100vh;
   background-color: var(--color-dark);
@@ -69,7 +72,12 @@ html, body {
   left: -10%;
   width: 50vw;
   height: 50vw;
-  background: radial-gradient(circle, rgba(8, 111, 214, 0.16) 0%, rgba(76, 163, 245, 0.06) 45%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(8, 111, 214, 0.16) 0%,
+    rgba(76, 163, 245, 0.06) 45%,
+    transparent 70%
+  );
   pointer-events: none;
   z-index: 0;
   filter: blur(60px);
@@ -78,7 +86,7 @@ html, body {
 .grid-overlay {
   position: fixed;
   inset: 0;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(255, 255, 255, 0.016) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.016) 1px, transparent 1px);
   background-size: 60px 60px;
@@ -175,7 +183,11 @@ html, body {
 
 .brand-title-accent {
   color: var(--color-blue-3);
-  background: linear-gradient(135deg, var(--color-blue-2) 0%, var(--color-blue-3) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-blue-2) 0%,
+    var(--color-blue-3) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -225,7 +237,11 @@ html, body {
 
 .main-title .highlight-blue {
   color: var(--color-blue-3);
-  background: linear-gradient(135deg, var(--color-blue-3) 20%, var(--color-blue-4) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-blue-3) 20%,
+    var(--color-blue-4) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline;
@@ -269,8 +285,13 @@ html, body {
 
 /* Botão Principal: Entrar (Azul Primário #086FD6) */
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-blue-1) 0%, var(--color-blue-2) 65%, var(--color-blue-3) 100%);
-  color: #FFFFFF;
+  background: linear-gradient(
+    135deg,
+    var(--color-blue-1) 0%,
+    var(--color-blue-2) 65%,
+    var(--color-blue-3) 100%
+  );
+  color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 4px 20px rgba(8, 111, 214, 0.45);
   position: relative;
@@ -278,21 +299,32 @@ html, body {
 }
 
 .btn-primary::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
   transition: left 0.5s ease;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  background: linear-gradient(135deg, var(--color-blue-2) 0%, var(--color-blue-1) 100%);
-  box-shadow: 0 8px 28px rgba(8, 111, 214, 0.65), 0 0 16px rgba(76, 163, 245, 0.4);
-  color: #FFFFFF;
+  background: linear-gradient(
+    135deg,
+    var(--color-blue-2) 0%,
+    var(--color-blue-1) 100%
+  );
+  box-shadow:
+    0 8px 28px rgba(8, 111, 214, 0.65),
+    0 0 16px rgba(76, 163, 245, 0.4);
+  color: #ffffff;
 }
 
 .btn-primary:hover::before {
@@ -385,18 +417,18 @@ html, body {
   height: 100%;
   overflow: hidden;
   clip-path: polygon(
-    14% 0%,       /* Topo inicia após leve chanfro */
-    100% 0%,      /* Canto superior direito */
-    100% 100%,    /* Canto inferior direito */
-    0% 100%,      /* Canto inferior esquerdo */
-    0% 58%        /* Ponto médio inferior esquerdo */
+    14% 0%,
+    /* Topo inicia após leve chanfro */ 100% 0%,
+    /* Canto superior direito */ 100% 100%,
+    /* Canto inferior direito */ 0% 100%,
+    /* Canto inferior esquerdo */ 0% 58% /* Ponto médio inferior esquerdo */
   );
   background-color: #0b1117;
 }
 
 /* Borda luminosa em torno do polígono com pseudo-elemento */
 .visual-card::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   z-index: 10;
@@ -425,9 +457,9 @@ html, body {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    135deg, 
-    rgba(16, 24, 32, 0.82) 0%, 
-    rgba(8, 111, 214, 0.38) 45%, 
+    135deg,
+    rgba(16, 24, 32, 0.82) 0%,
+    rgba(8, 111, 214, 0.38) 45%,
     rgba(76, 163, 245, 0.2) 100%
   );
   mix-blend-mode: multiply;
@@ -439,8 +471,13 @@ html, body {
 .vignette-overlay {
   position: absolute;
   inset: 0;
-  background: 
-    linear-gradient(to right, rgba(16, 24, 32, 0.95) 0%, rgba(16, 24, 32, 0.2) 20%, transparent 60%),
+  background:
+    linear-gradient(
+      to right,
+      rgba(16, 24, 32, 0.95) 0%,
+      rgba(16, 24, 32, 0.2) 20%,
+      transparent 60%
+    ),
     linear-gradient(to top, rgba(16, 24, 32, 0.85) 0%, transparent 30%);
   pointer-events: none;
   z-index: 3;
@@ -508,7 +545,9 @@ html, body {
   height: 12px;
   background: var(--color-blue-3);
   border-radius: 50%;
-  box-shadow: 0 0 14px var(--color-blue-3), 0 0 24px var(--color-blue-1);
+  box-shadow:
+    0 0 14px var(--color-blue-3),
+    0 0 24px var(--color-blue-1);
   z-index: 4;
 }
 
@@ -627,9 +666,9 @@ html, body {
   /* Overlay escuro em degradê para garantir leitura perfeita dos textos */
   .image-blue-overlay {
     background: linear-gradient(
-      180deg, 
-      rgba(16, 24, 32, 0.88) 0%, 
-      rgba(16, 24, 32, 0.72) 40%, 
+      180deg,
+      rgba(16, 24, 32, 0.88) 0%,
+      rgba(16, 24, 32, 0.72) 40%,
       rgba(16, 24, 32, 0.95) 100%
     );
     mix-blend-mode: normal;
@@ -637,8 +676,8 @@ html, body {
 
   .vignette-overlay {
     background: radial-gradient(
-      circle at center, 
-      transparent 20%, 
+      circle at center,
+      transparent 20%,
       rgba(16, 24, 32, 0.85) 100%
     );
   }
