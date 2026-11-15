@@ -6,6 +6,20 @@
     const resposta = await fetch("../../components/barra-lateral/menu.html");
     if (!resposta.ok) throw new Error("HTTP " + resposta.status);
     destino.outerHTML = await resposta.text();
+
+    const btnSair = document.querySelector(".barra_lateral .sair");
+
+    if (btnSair) {
+      btnSair.addEventListener("click", (evento) => {
+        evento.preventDefault();
+
+        localStorage.removeItem("usuarioLogado");
+        localStorage.removeItem("tipo");
+
+        window.location.href = btnSair.href;
+      });
+    }
+
     const barra = document.querySelector(".barra_lateral");
     const painel = document.querySelector(".dashboard");
     const botao = document.getElementById("btnRecolher");

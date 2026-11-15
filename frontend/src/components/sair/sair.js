@@ -1,12 +1,12 @@
-const btnSair = document.getElementById("btnSair");
+document.addEventListener("click", function (event) {
+  const btnSair = event.target.closest(".sair");
 
-if (btnSair) {
-  btnSair.addEventListener("click", function (event) {
-    event.preventDefault();
+  if (!btnSair) return;
 
-    localStorage.removeItem("usuarioLogado");
-    localStorage.removeItem("tipo");
+  event.preventDefault();
 
-    window.location.href = "../login/login.html";
-  });
-}
+  localStorage.removeItem("usuarioLogado");
+  localStorage.removeItem("tipo");
+
+  window.location.href = btnSair.href;
+});
