@@ -80,17 +80,45 @@ document.addEventListener("DOMContentLoaded", () => {
       document.createTextNode(` ${obterTextoNivel(nivelValido)}`),
     );
   }
-
   function aplicarSensor(linha, identificacaoCompleta) {
     const partes = String(
       identificacaoCompleta || "Sensor não identificado",
     ).split(/\s+—\s+/);
 
-    linha.querySelector(".sensor strong").textContent = partes[0].trim();
-    linha.querySelector(".sensor p").textContent =
+    let sensor = linha.querySelector(".sensor");
+
+    if (!sensor) {
+      sensor = document.createElement("div");
+      sensor.className = "sensor";
+
+      const valor = linha.querySelector(".valor");
+
+      if (valor) {
+        linha.insertBefore(sensor, valor);
+      } else {
+        linha.appendChild(sensor);
+      }
+    }
+
+    let identificacao = sensor.querySelector("strong");
+
+    if (!identificacao) {
+      identificacao = document.createElement("strong");
+      sensor.appendChild(identificacao);
+    }
+
+    let descricao = sensor.querySelector("p");
+
+    if (!descricao) {
+      descricao = document.createElement("p");
+      sensor.appendChild(descricao);
+    }
+
+    identificacao.textContent = partes[0].trim();
+
+    descricao.textContent =
       partes.slice(1).join(" — ").trim() || "Sensor de origem";
   }
-
   function atualizarBotoesMenu(linha) {
     const resolvido = linha.dataset.nivel === "normal";
     const botaoResolver = linha.querySelector('[data-acao="resolver"]');
@@ -360,6 +388,18 @@ document.addEventListener("DOMContentLoaded", () => {
       linha.remove();
       return;
     }
+    const sensorExistente =
+      linha.querySelector(".sensor strong")?.textContent.trim() || "";
+
+    const descricaoSensor =
+      linha.querySelector(".sensor p")?.textContent.trim() || "";
+
+    aplicarSensor(
+      linha,
+      sensorExistente
+        ? `${sensorExistente} — ${descricaoSensor || "Sensor de origem"}`
+        : "Sensor não identificado",
+    );
 
     const alteracao = alteracoesSalvas[id];
 
