@@ -40,5 +40,13 @@
 
       return api.post("/auth/recuperar-senha", { email });
     },
+
+    redefinirSenha(dados) {
+      if (!dados.email || !dados.token || !dados.novaSenha) {
+        throw new Error("Preencha os dados da recuperação.");
+      }
+
+      return api.post("/auth/redefinir-senha", dados);
+    },
   };
 })();

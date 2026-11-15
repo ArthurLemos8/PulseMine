@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-Br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,8 +8,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-
-    <link rel="stylesheet" href="recuperarSenha.css" />
 
     <link rel="stylesheet" href="recuperarSenha.css" />
   </head>
@@ -26,6 +24,20 @@
         </div>
 
         <span id="erroEmail" class="erro"></span>
+        <div class="input-box">
+          <input
+            type="text"
+            id="token"
+            placeholder="Código recebido por e-mail"
+            autocomplete="one-time-code"
+          />
+        </div>
+
+        <span id="erroToken" class="erro"></span>
+
+        <button type="button" id="btnEnviarCodigo">
+          Enviar código de recuperação
+        </button>
 
         <div class="input-box">
           <i class="bi bi-lock"></i>
@@ -61,6 +73,8 @@
       </form>
     </div>
 
+    <script src="../../services/api.js"></script>
+    <script src="../../services/usuarioService.js"></script>
     <script src="recuperarSenha.js"></script>
   </body>
 </html>
