@@ -5,11 +5,22 @@ import { alertaService } from './services/alerta.service.js';
 import { salvarLeituraSensor } from './models/leitura-sensor.model.js';
 import { leituraService } from './services/numero_leitura.js';
 import rotasLeituraSensor from './routes/leitura-sensor.route.js';
+import rotasAlerta from './routes/alerta.route.js';
+import cors from 'cors';
 
 const app = express();
 
+app.use(cors({
+    origin: [
+        'http://127.0.0.1:5500',
+        'http://localhost:5500'
+    ]
+}));
+
 app.use(express.json());
+
 app.use(rotasLeituraSensor);
+app.use(rotasAlerta);
 
 leitorLinhas.on("data", async (dadosBrutos) => {
     try {
@@ -38,15 +49,16 @@ leitorLinhas.on("data", async (dadosBrutos) => {
         const dados = {
             dispositivo: "Planta Vibraçao Vale",
             numero_leitura: await leituraService.processarDadosSerial(dadosBrutos),
-            valor_vibracao: (moduloVetor.toFixed(4)),
+            valor_vibracao: Number(moduloVetor.toFixed(4)),
             id_sensor_fk: 1
         };
 
-        alertaService.analisarLeitura(dados);
+       
+            const registro = await salvarLeituraSensor(dados);
+            console.log("Leitura salva com sucesso:", registro);
 
-        const registro = await salvarLeituraSensor(dados);
-        
-        console.log("Leitura salva com sucesso:", registro);
+
+            await alertaService.analisarLeitura(registro);
 
     } catch (erro) {
         console.error("Erro no processamento da serial:", erro.message);

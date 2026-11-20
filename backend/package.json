@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "express": "^4.19.2",
-    "mysql2": "^3.9.7"
-    
+    "@serialport/parser-readline": "^13.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^4.22.3",
+    "mysql2": "^3.24.6",
+    "serialport": "^13.0.0"
   }
 }

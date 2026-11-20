@@ -3,34 +3,56 @@ import {
     buscarUltimaLeituraSensor, 
     buscarLeiturasSensoresModel 
 } from '../models/leitura-sensor.model.js';
+import { alertaService } from '../services/alerta.service.js';
 
 export async function receberLeituraSensor(req, res) {
     try {
-        const dados = req.body;
+        const dados = req.body ?? {};
 
-        if (!dados.valor_vibracao || !dados.id_sensor_fk) {
+        const vibracao = Number(dados.valor_vibracao);
+        const idSensor = Number(dados.id_sensor_fk);
+
+        // Validar os dados recebidos
+        if (
+            dados.valor_vibracao === undefined ||
+            dados.valor_vibracao === null ||
+            dados.valor_vibracao === '' ||
+            !Number.isFinite(vibracao) ||
+            !Number.isSafeInteger(idSensor) ||
+            idSensor <= 0
+        ) {
             return res.status(400).json({
                 success: false,
-                message: 'valor_vibracao e id_sensor_fk são obrigatórios'
+                message: 'valor_vibracao ou id_sensor_fk inválidos'
             });
         }
 
-        const leitura = await salvarLeituraSensor(dados);
+        // Salvar leitura no MySQL
+        const leitura = await salvarLeituraSensor({
+            ...dados,
+            valor_vibracao: vibracao,
+            id_sensor_fk: idSensor
+        });
 
-        res.status(201).json({
+        // Analisar se a vibração é crítica
+        await alertaService.analisarLeitura(leitura);
+
+        return res.status(201).json({
             success: true,
-            message: 'Leitura salva',
+            message: 'Leitura salva e analisada',
             data: leitura
         });
 
     } catch (error) {
-        console.error('Erro:', error.message);
-        res.status(500).json({
+        console.error('Erro ao processar leitura:', error);
+
+        return res.status(500).json({
             success: false,
-            message: 'Erro ao salvar leitura'
+            message: 'Erro ao processar leitura'
         });
     }
 }
+
 
 export async function buscarUltimaLeitura(req, res) {
     try {
