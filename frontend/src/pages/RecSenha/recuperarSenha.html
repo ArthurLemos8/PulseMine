@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Recuperar senha - Pulse mine</title>
+    <title>Recuperar senha - PulseMine</title>
+
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
@@ -16,54 +17,109 @@
     <div class="container">
       <h1>Recuperar senha</h1>
 
-      <p>Digite seu e-mail para cadastrado para recuperar senha.</p>
+      <p>Digite seu e-mail cadastrado para recuperar sua senha.</p>
 
       <form id="formRecuperar">
-        <div class="input-box">
-          <input type="email" id="email" placeholder="E-mail" />
+        <div class="campo">
+          <label for="email">E-mail cadastrado</label>
+
+          <div class="input-box">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Digite seu e-mail"
+              autocomplete="email"
+              aria-describedby="erroEmail"
+              required
+            />
+          </div>
+
+          <span id="erroEmail" class="erro" aria-live="polite"></span>
         </div>
 
-        <span id="erroEmail" class="erro"></span>
-        <div class="input-box">
-          <input
-            type="text"
-            id="token"
-            placeholder="Código recebido por e-mail"
-            autocomplete="one-time-code"
-          />
-        </div>
+        <div class="campo">
+          <label for="token">Código de recuperação</label>
 
-        <span id="erroToken" class="erro"></span>
+          <div class="input-box">
+            <input
+              type="text"
+              id="token"
+              name="token"
+              placeholder="Digite o código recebido por e-mail"
+              autocomplete="one-time-code"
+              aria-describedby="erroToken"
+              required
+            />
+          </div>
+
+          <span id="erroToken" class="erro" aria-live="polite"></span>
+        </div>
 
         <button type="button" id="btnEnviarCodigo">
           Enviar código de recuperação
         </button>
 
-        <div class="input-box">
-          <i class="bi bi-lock"></i>
+        <div class="campo">
+          <label for="novaSenha">Nova senha</label>
 
-          <input type="password" id="novaSenha" placeholder="Nova Senha" />
+          <div class="input-box">
+            <i class="bi bi-lock"></i>
 
-          <i class="bi bi-eye olho"></i>
+            <input
+              type="password"
+              id="novaSenha"
+              name="novaSenha"
+              placeholder="Digite sua nova senha"
+              autocomplete="new-password"
+              aria-describedby="erroSenha"
+              required
+            />
+
+            <i
+              class="bi bi-eye olho"
+              role="button"
+              tabindex="0"
+              aria-label="Mostrar nova senha"
+            ></i>
+          </div>
+
+          <span id="erroSenha" class="erro" aria-live="polite"></span>
         </div>
 
-        <span id="erroSenha" class="erro"></span>
+        <div class="campo">
+          <label for="confirmarSenha">Confirmar nova senha</label>
 
-        <div class="input-box">
-          <i class="bi bi-lock"></i>
+          <div class="input-box">
+            <i class="bi bi-lock"></i>
 
-          <input
-            type="password"
-            id="confirmarSenha"
-            placeholder="Confirmar nova senha"
-          />
+            <input
+              type="password"
+              id="confirmarSenha"
+              name="confirmarSenha"
+              placeholder="Confirme sua nova senha"
+              autocomplete="new-password"
+              aria-describedby="erroConfirmarSenha"
+              required
+            />
 
-          <i class="bi bi-eye olho"></i>
+            <i
+              class="bi bi-eye olho"
+              role="button"
+              tabindex="0"
+              aria-label="Mostrar confirmação da senha"
+            ></i>
+          </div>
+
+          <span id="erroConfirmarSenha" class="erro" aria-live="polite"></span>
         </div>
 
-        <span id="erroConfirmarSenha" class="erro"></span>
-
-        <p id="mensagemSucesso" class="erro"></p>
+        <p
+          id="mensagemSucesso"
+          class="sucesso"
+          role="status"
+          aria-live="polite"
+        ></p>
 
         <button type="submit">Alterar senha</button>
 

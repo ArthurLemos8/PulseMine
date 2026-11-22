@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="pt-Br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alerta - PulseMine</title>
+    <title>Alertas - PulseMine</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,9 +22,11 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
+
     <link rel="stylesheet" href="alertas.css" />
     <link rel="stylesheet" href="../../components/barra-lateral/menu.css" />
     <script src="../../components/barra-lateral/menu.js" defer></script>
+
     <link rel="stylesheet" href="../../components/tema/tema.css" />
     <script src="../../components/tema/tema.js"></script>
   </head>
@@ -32,10 +34,10 @@
   <body data-pagina="alertas">
     <div class="dashboard">
       <div id="menu-container"></div>
+
       <main class="alertas-container">
         <section class="cabecalho-alertas">
           <h1>Alertas</h1>
-
           <p>Monitore e acompanhe todos os alertas ativos do sistema</p>
         </section>
 
@@ -47,12 +49,10 @@
 
             <div class="informacoes-alerta">
               <h3>Alertas Críticos</h3>
-
-              <strong class="numero critico-texto" id="alertasCriticos">
-                4
-              </strong>
-
-              <p>Requerem atençao imediata</p>
+              <strong class="numero critico-texto" id="alertasCriticos"
+                >3</strong
+              >
+              <p>Requerem atenção imediata</p>
             </div>
 
             <i class="bi bi-activity grafico critico-grafico"></i>
@@ -65,9 +65,7 @@
 
             <div class="informacoes-alerta">
               <h3>Total de Alertas</h3>
-
-              <strong class="numero" id="totalAlertas"> 14 </strong>
-
+              <strong class="numero" id="totalAlertas">4</strong>
               <p>Todos os alertas</p>
             </div>
 
@@ -83,12 +81,13 @@
               id="buscarAlertas"
               placeholder="Buscar alertas..."
               autocomplete="off"
+              aria-label="Buscar alertas"
             />
           </div>
 
           <div class="campo-filtro">
             <i class="bi bi-funnel"></i>
-            <select id="filtronivel">
+            <select id="filtronivel" aria-label="Filtrar por nível">
               <option value="todos">Todos</option>
               <option value="critico">Crítico</option>
               <option value="aviso">Aviso</option>
@@ -101,18 +100,14 @@
             Excluir todos
           </button>
         </section>
+
         <section class="lista-alertas">
           <div class="cabecalho-tabela">
             <span>NÍVEL</span>
-
             <span>MENSAGEM</span>
-
             <span>VALOR</span>
-
             <span>SENSOR</span>
-
             <span>HORA</span>
-
             <span></span>
           </div>
 
@@ -120,56 +115,26 @@
             <div>
               <span class="nivel critico">
                 <i class="bi bi-exclamation-triangle"></i>
-
                 Crítico
               </span>
             </div>
 
             <div class="mensagem">
-              <strong> Vibraçao acima do limite crítico </strong>
-
+              <strong>Vibração acima do limite crítico</strong>
               <p>Nível de vibração excedeu o limite seguro</p>
             </div>
 
             <div class="valor">
-              <strong> 12,45 mm/s </strong>
-
-              <p>Limite : 10,00 mm/s</p>
+              <strong>12,45 mm/s</strong>
+              <p>Limite: 10,00 mm/s</p>
             </div>
+
             <div class="sensor">
               <strong>Sensor SN-001</strong>
               <p>Motor Principal</p>
             </div>
 
             <div class="hora">14:28:15</div>
-
-            <button class="btn-menu" type="button" aria-label="Mais opcoes">
-              <i class="bi bi-three-dots-vertical"></i>
-            </button>
-          </div>
-
-          <div class="linha-alerta" data-nivel="critico">
-            <div>
-              <span class="nivel critico">
-                <i class="bi bi-exclamation-triangle"></i>
-
-                Crítico
-              </span>
-            </div>
-
-            <div class="mensagem">
-              <strong> Vibração crítica detectada </strong>
-
-              <p>Valor acima do limite configurado</p>
-            </div>
-
-            <div class="valor">
-              <strong> 15,20 mm/s RMS </strong>
-
-              <p>Limite : 10,00mm/s</p>
-            </div>
-
-            <div class="hora">13:45:33</div>
 
             <button class="btn-menu" type="button" aria-label="Mais opções">
               <i class="bi bi-three-dots-vertical"></i>
@@ -180,25 +145,48 @@
             <div>
               <span class="nivel critico">
                 <i class="bi bi-exclamation-triangle"></i>
-
-                Critico
+                Crítico
               </span>
             </div>
 
             <div class="mensagem">
-              <strong> Vibração acima do limite </strong>
-
-              <p>Vibração excedeu o limite seguro</p>
+              <strong>Vibração crítica detectada</strong>
+              <p>Valor acima do limite configurado</p>
             </div>
 
             <div class="valor">
-              <strong> 4 mm/s RMS</strong>
+              <strong>15,20 mm/s RMS</strong>
+              <p>Limite: 10,00 mm/s RMS</p>
+            </div>
 
+            <div class="hora">13:45:33</div>
+
+            <button class="btn-menu" type="button" aria-label="Mais opções">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+          </div>
+
+          <div class="linha-alerta" data-nivel="normal">
+            <div>
+              <span class="nivel normal">
+                <i class="bi bi-check-circle"></i>
+                Normal
+              </span>
+            </div>
+
+            <div class="mensagem">
+              <strong>Vibração dentro do limite seguro</strong>
+              <p>Nível de vibração está abaixo do limite configurado</p>
+            </div>
+
+            <div class="valor">
+              <strong>4 mm/s RMS</strong>
               <p>Limite: 5 mm/s RMS</p>
             </div>
+
             <div class="hora">11:10:42</div>
 
-            <button class="btn-menu" type="button" aria-label="Mais opcoes">
+            <button class="btn-menu" type="button" aria-label="Mais opções">
               <i class="bi bi-three-dots-vertical"></i>
             </button>
           </div>
@@ -207,20 +195,17 @@
             <div>
               <span class="nivel critico">
                 <i class="bi bi-exclamation-triangle"></i>
-
                 Crítico
               </span>
             </div>
 
             <div class="mensagem">
-              <strong> Pressão acima do limite crítico </strong>
-
+              <strong>Pressão acima do limite crítico</strong>
               <p>Pressão excedeu o valor permitido</p>
             </div>
 
             <div class="valor">
-              <strong> 8,75 bar </strong>
-
+              <strong>8,75 bar</strong>
               <p>Limite: 7,00 bar</p>
             </div>
 

@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Pulsemine</title>
+    <title>Login - PulseMine</title>
 
-    <link rel="icon" href="../../public/logo.png " type="image/png" />
+    <link rel="icon" href="../../public/logo.png" type="image/png" />
+
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data:;"
@@ -13,15 +14,19 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="login.css" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
+
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
@@ -37,8 +42,8 @@
 
         <h2>LOGIN</h2>
 
-        <form>
-          <label for="email"> Email </label>
+        <form id="formLogin">
+          <label for="email">E-mail</label>
 
           <div class="input-box">
             <i class="bi bi-envelope"></i>
@@ -47,12 +52,16 @@
               type="email"
               id="email"
               name="email"
-              placeholder="Digite seu email"
+              placeholder="Digite seu e-mail"
+              autocomplete="username"
+              aria-describedby="erroEmail"
+              required
             />
           </div>
-          <small id="erroEmail" class="erro"></small>
 
-          <label for="senha"> Senha </label>
+          <small id="erroEmail" class="erro" aria-live="polite"></small>
+
+          <label for="senha">Senha</label>
 
           <div class="input-box">
             <i class="bi bi-lock"></i>
@@ -61,25 +70,37 @@
               type="password"
               id="senha"
               name="senha"
-              placeholder=" Digite sua senha"
+              placeholder="Digite sua senha"
+              autocomplete="current-password"
+              aria-describedby="erroSenha"
+              required
             />
+
             <i class="bi bi-eye olho" id="olhoSenha"></i>
           </div>
 
-          <small id="erroSenha" class="erro"></small>
+          <small id="erroSenha" class="erro" aria-live="polite"></small>
+
+          <div class="lembrar-me">
+            <input type="checkbox" id="lembrarMe" name="lembrarMe" />
+
+            <label for="lembrarMe">Lembrar-me</label>
+          </div>
 
           <button type="submit">Login</button>
         </form>
+
         <p class="cadastrar">
-          Não possui conta ?
+          Não possui uma conta?
           <a href="../cadastro/cadastro.html">Cadastre-se agora</a>
         </p>
+
         <p class="cadastrar">
-          Lembrar-me
-          <a href="../RecSenha/recuperarSenha.html"> Esquceu a sua senha?</a>
+          <a href="../RecSenha/recuperarSenha.html"> Esqueceu sua senha? </a>
         </p>
       </div>
     </div>
+
     <script src="../../services/api.js"></script>
     <script src="../../services/usuarioService.js"></script>
     <script src="login.js"></script>

@@ -239,3 +239,58 @@ button:active {
 
   text-decoration: none;
 }
+
+.campo {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.campo label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--texto);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.campo .input-box {
+  margin-bottom: 0;
+}
+
+.campo .erro {
+  min-height: 0;
+}
+
+.input-box input.erro {
+  border-color: var(--erro);
+}
+
+.input-box input.sucesso {
+  border-color: var(--sucesso);
+}
+
+.input-box input.erro:focus {
+  box-shadow: 0 0 0 4px rgba(255, 77, 79, 0.12);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.olho:focus-visible {
+  outline: 2px solid var(--azul-primario);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 25px;
+    margin: 15px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+}

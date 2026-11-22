@@ -7,11 +7,35 @@ const formulario = document.querySelector("form");
 
 const email = document.getElementById("email");
 const senha = document.getElementById("senha");
+const lembrarMe = document.getElementById("lembrarMe");
 
 const olho = document.querySelector(".olho");
 
 const erroEmail = document.getElementById("erroEmail");
 const erroSenha = document.getElementById("erroSenha");
+
+document.addEventListener("DOMContentLoaded", () => {
+  const emailSalvo = localStorage.getItem("pulseMineEmail");
+
+  if (emailSalvo) {
+    email.value = emailSalvo;
+    lembrarMe.checked = true;
+  }
+});
+
+lembrarMe.addEventListener("change", () => {
+  if (lembrarMe.checked) {
+    localStorage.setItem("pulseMineEmail", email.value.trim());
+  } else {
+    localStorage.removeItem("pulseMineEmail");
+  }
+});
+
+email.addEventListener("input", () => {
+  if (lembrarMe.checked) {
+    localStorage.setItem("pulseMineEmail", email.value.trim());
+  }
+});
 
 olho.addEventListener("click", () => {
   if (senha.type === "password") {
@@ -94,6 +118,12 @@ formulario.addEventListener("submit", (event) => {
     senha.classList.add("erro");
 
     return;
+  }
+
+  if (lembrarMe.checked) {
+    localStorage.setItem("pulseMineEmail", emailValor);
+  } else {
+    localStorage.removeItem("pulseMineEmail");
   }
 
   email.classList.add("sucesso");

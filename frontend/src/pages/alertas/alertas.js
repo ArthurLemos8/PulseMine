@@ -121,11 +121,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   function atualizarBotoesMenu(linha) {
     const resolvido = linha.dataset.nivel === "normal";
+    const normalDeOrigem = linha.dataset.nivelOriginal === "normal";
+
     const botaoResolver = linha.querySelector('[data-acao="resolver"]');
     const botaoReabrir = linha.querySelector('[data-acao="reabrir"]');
 
-    if (botaoResolver) botaoResolver.hidden = resolvido;
-    if (botaoReabrir) botaoReabrir.hidden = !resolvido;
+    if (botaoResolver) {
+      botaoResolver.hidden = resolvido;
+    }
+
+    if (botaoReabrir) {
+      botaoReabrir.hidden = !resolvido || normalDeOrigem;
+    }
   }
 
   function criarMenuAcoes(linha) {

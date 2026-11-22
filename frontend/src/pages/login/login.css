@@ -218,3 +218,23 @@ small.erro {
   margin-top: 15px;
   text-align: center;
 }
+
+.lembrar-me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 18px;
+}
+
+.lembrar-me input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #086fd6;
+}
+
+.lembrar-me label {
+  margin: 0;
+  cursor: pointer;
+  font-size: 14px;
+}
