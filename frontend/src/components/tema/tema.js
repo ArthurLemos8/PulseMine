@@ -1,32 +1,63 @@
 (() => {
-  const temaInicial = "escuro";
+  const CHAVE_TEMA = "pulseMineTemaVisual";
+  const TEMA_PADRAO = "escuro";
 
-  document.documentElement.dataset.tema = temaInicial;
+  function obterTemaSalvo() {
+    try {
+      const tema = localStorage.getItem(CHAVE_TEMA);
 
-  document.documentElement.style.colorScheme = "dark";
+      if (tema === "claro" || tema === "escuro") {
+        return tema;
+      }
+    } catch (erro) {
+      console.warn("Não foi possível recuperar o tema salvo.", erro);
+    }
+
+    return TEMA_PADRAO;
+  }
 
   function atualizarControles() {
-    const atual = document.documentElement.dataset.tema;
+    const temaAtual = document.documentElement.dataset.tema;
 
     document.querySelectorAll('input[name="temaVisual"]').forEach((campo) => {
-      campo.checked = campo.value === atual;
+      campo.checked = campo.value === temaAtual;
     });
 
     document.querySelectorAll("[data-tema-atual]").forEach((elemento) => {
-      elemento.textContent = atual === "escuro" ? "Escuro" : "Claro";
+      elemento.textContent = temaAtual === "escuro" ? "Escuro" : "Claro";
     });
   }
 
+  function aplicarTema(novoTema, salvar = true) {
+    if (!["claro", "escuro"].includes(novoTema)) {
+      return;
+    }
+
+    document.documentElement.dataset.tema = novoTema;
+
+    document.documentElement.style.colorScheme =
+      novoTema === "escuro" ? "dark" : "light";
+
+    if (salvar) {
+      try {
+        localStorage.setItem(CHAVE_TEMA, novoTema);
+      } catch (erro) {
+        console.warn("Não foi possível salvar a preferência de tema.", erro);
+      }
+    }
+
+    atualizarControles();
+  }
+
+  aplicarTema(obterTemaSalvo(), false);
+
   window.PulseMineTema = {
     definir(novoTema) {
-      if (!["claro", "escuro"].includes(novoTema)) return;
+      aplicarTema(novoTema);
+    },
 
-      document.documentElement.dataset.tema = novoTema;
-
-      document.documentElement.style.colorScheme =
-        novoTema === "escuro" ? "dark" : "light";
-
-      atualizarControles();
+    obter() {
+      return document.documentElement.dataset.tema;
     },
   };
 
