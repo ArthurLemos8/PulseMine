@@ -1,14 +1,26 @@
 (() => {
-  const API_BASE_URL = (window.PULSEMINE_API_URL || "").replace(/\/+$/, "");
+  const API_BASE_URL = String(window.PULSEMINE_API_URL || "")
+    .trim()
+    .replace(/\/+$/, "");
+
+  function obterToken() {
+    try {
+      return sessionStorage.getItem("pulseMineToken") || "";
+    } catch {
+      return "";
+    }
+  }
 
   async function requisicao(endpoint, opcoes = {}) {
     if (!API_BASE_URL) {
-      throw new Error("O endereço do servidor ainda não foi configurado.");
+      throw new Error(
+        "O endereço da API ainda não foi configurado em services/config.js.",
+      );
     }
 
     const caminho = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
 
-    const token = sessionStorage.getItem("pulseMineToken");
+    const token = obterToken();
 
     const configuracao = {
       method: opcoes.method || "GET",
@@ -18,7 +30,7 @@
           ? { "Content-Type": "application/json" }
           : {}),
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        ...opcoes.headers,
+        ...(opcoes.headers || {}),
       },
     };
 
@@ -53,7 +65,9 @@
             ? dados.message || dados.mensagem || dados.error || dados.erro
             : null;
 
-        throw new Error(mensagem || `Erro na API: ${resposta.status}`);
+        throw new Error(
+          mensagem || `Erro HTTP ${resposta.status} na rota ${caminho}.`,
+        );
       }
 
       return dados;
@@ -63,7 +77,9 @@
       }
 
       if (erro instanceof TypeError) {
-        throw new Error("Não foi possível conectar ao servidor.");
+        throw new Error(
+          "Não foi possível acessar a API. Verifique o endereço, o servidor e a configuração de CORS.",
+        );
       }
 
       throw erro;
@@ -71,34 +87,42 @@
   }
 
   window.PulseMineAPI = {
-    get: (endpoint, opcoes = {}) =>
-      requisicao(endpoint, { ...opcoes, method: "GET" }),
+    get(endpoint, opcoes = {}) {
+      return requisicao(endpoint, {
+        ...opcoes,
+        method: "GET",
+      });
+    },
 
-    post: (endpoint, dados, opcoes = {}) =>
-      requisicao(endpoint, {
+    post(endpoint, dados, opcoes = {}) {
+      return requisicao(endpoint, {
         ...opcoes,
         method: "POST",
         body: dados,
-      }),
+      });
+    },
 
-    put: (endpoint, dados, opcoes = {}) =>
-      requisicao(endpoint, {
+    put(endpoint, dados, opcoes = {}) {
+      return requisicao(endpoint, {
         ...opcoes,
         method: "PUT",
         body: dados,
-      }),
+      });
+    },
 
-    patch: (endpoint, dados, opcoes = {}) =>
-      requisicao(endpoint, {
+    patch(endpoint, dados, opcoes = {}) {
+      return requisicao(endpoint, {
         ...opcoes,
         method: "PATCH",
         body: dados,
-      }),
+      });
+    },
 
-    delete: (endpoint, opcoes = {}) =>
-      requisicao(endpoint, {
+    delete(endpoint, opcoes = {}) {
+      return requisicao(endpoint, {
         ...opcoes,
         method: "DELETE",
-      }),
+      });
+    },
   };
 })();

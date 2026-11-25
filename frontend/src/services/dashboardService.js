@@ -2,7 +2,9 @@
   const api = window.PulseMineAPI;
 
   if (!api) {
-    console.error("PulseMineAPI não foi carregada.");
+    console.error(
+      "PulseMineAPI não foi carregada. Verifique o arquivo api.js.",
+    );
     return;
   }
 
@@ -24,7 +26,7 @@
         return resposta.data;
       }
 
-      return [];
+      throw new Error("O servidor retornou um formato de leituras inválido.");
     },
 
     async obterUltimaLeitura() {

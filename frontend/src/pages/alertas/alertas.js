@@ -13,7 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const tipo = String(alerta.tipo_alerta || alerta.nivel || "").toLowerCase();
 
     if (tipo.includes("crit")) return "critico";
-    if (tipo.includes("aviso") || tipo.includes("alerta")) return "aviso";
+    if (tipo.includes("aviso") || tipo.includes("alerta")) {
+      return "aviso";
+    }
 
     return "normal";
   }
@@ -21,23 +23,47 @@ document.addEventListener("DOMContentLoaded", () => {
   function criarElemento(tag, classe, texto) {
     const elemento = document.createElement(tag);
 
-    if (classe) elemento.className = classe;
+    if (classe) {
+      elemento.className = classe;
+    }
 
     elemento.textContent = texto ?? "—";
 
     return elemento;
   }
 
+  function obterData(alerta) {
+    const valor =
+      alerta.data_criacao ||
+      alerta.data_hora ||
+      alerta.data_leitura ||
+      alerta.created_at;
+
+    if (!valor) return null;
+
+    const data =
+      typeof valor === "string" &&
+      /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(valor)
+        ? new Date(valor.replace(" ", "T"))
+        : new Date(valor);
+
+    return Number.isNaN(data.getTime()) ? null : data;
+  }
+
   function renderizar() {
+    if (!lista) return;
+
     lista.replaceChildren();
 
-    const termo = campoBusca.value.trim().toLowerCase();
-    const nivelSelecionado = filtroNivel.value;
+    const termo = campoBusca?.value.trim().toLowerCase() || "";
+    const nivelSelecionado = filtroNivel?.value || "todos";
 
     const filtrados = alertas.filter((alerta) => {
       const nivel = obterNivel(alerta);
 
-      const texto = String(alerta.mensagem || "").toLowerCase();
+      const texto = [alerta.mensagem, alerta.dispositivo, alerta.id_sensor_fk]
+        .join(" ")
+        .toLowerCase();
 
       return (
         texto.includes(termo) &&
@@ -53,44 +79,45 @@ document.addEventListener("DOMContentLoaded", () => {
       linha.dataset.nivel = nivel;
 
       const colunaNivel = document.createElement("div");
+
       const etiqueta = criarElemento(
         "span",
         `nivel ${nivel}`,
-        nivel === "critico"
-          ? "Crítico"
-          : nivel === "aviso"
-            ? "Aviso"
-            : "Normal",
+        nivel === "critico" ? "Crítico" : "Aviso",
       );
 
       colunaNivel.appendChild(etiqueta);
 
       const colunaMensagem = criarElemento("div", "mensagem", "");
+
       colunaMensagem.appendChild(
         criarElemento("strong", "", alerta.mensagem || "Alerta"),
       );
 
+      const valor = Number(alerta.valor_vibracao);
+
       const colunaValor = criarElemento(
         "div",
         "valor",
-        alerta.valor_vibracao ? `${alerta.valor_vibracao} mm/s` : "—",
+        Number.isFinite(valor)
+          ? `${valor.toFixed(2).replace(".", ",")} mm/s`
+          : "—",
       );
 
-      const colunaSensor = criarElemento(
-        "div",
-        "sensor",
-        alerta.id_sensor_fk
+      const nomeSensor =
+        alerta.dispositivo ||
+        (alerta.id_sensor_fk
           ? `Sensor ${alerta.id_sensor_fk}`
-          : alerta.id_leitura_fk
-            ? `Leitura ${alerta.id_leitura_fk}`
-            : "Não identificado",
-      );
+          : "Não identificado");
 
-      const data = alerta.data_criacao ? new Date(alerta.data_criacao) : null;
+      const colunaSensor = criarElemento("div", "sensor", nomeSensor);
 
-      const horario =
-        data && !Number.isNaN(data.getTime())
-          ? data.toLocaleTimeString("pt-BR")
+      const data = obterData(alerta);
+
+      const horario = data
+        ? data.toLocaleTimeString("pt-BR")
+        : alerta.numero_leitura
+          ? `Leitura ${alerta.numero_leitura}`
           : "—";
 
       const colunaHora = criarElemento("div", "hora", horario);
@@ -101,56 +128,59 @@ document.addEventListener("DOMContentLoaded", () => {
         colunaValor,
         colunaSensor,
         colunaHora,
+        document.createElement("div"),
       );
 
       lista.appendChild(linha);
     });
 
-    contadorCriticos.textContent = alertas.filter(
-      (alerta) => obterNivel(alerta) === "critico",
-    ).length;
-
-    contadorTotal.textContent = alertas.length;
-
-    estado.hidden = filtrados.length > 0;
-
-    if (!filtrados.length && alertas.length) {
-      estado.textContent = "Nenhum alerta corresponde à pesquisa.";
-    } else if (!alertas.length) {
-      estado.textContent = "Nenhum alerta disponível.";
+    if (contadorCriticos) {
+      contadorCriticos.textContent = alertas.filter(
+        (alerta) => obterNivel(alerta) === "critico",
+      ).length;
     }
 
-    btnExcluirTodos.disabled = alertas.length === 0;
+    if (contadorTotal) {
+      contadorTotal.textContent = alertas.length;
+    }
+
+    if (estado) {
+      estado.hidden = filtrados.length > 0;
+
+      if (!filtrados.length && alertas.length) {
+        estado.textContent = "Nenhum alerta corresponde à pesquisa.";
+      } else if (!alertas.length) {
+        estado.textContent = "Nenhuma leitura acima do limite de atenção.";
+      }
+    }
   }
 
   async function carregarAlertas() {
     try {
-      const resposta = await window.PulseMineAlertasService.listar();
-
-      alertas = Array.isArray(resposta)
-        ? resposta
-        : Array.isArray(resposta?.data)
-          ? resposta.data
-          : [];
+      alertas = await window.PulseMineAlertasService.listar();
 
       renderizar();
     } catch (erro) {
       alertas = [];
       renderizar();
 
-      estado.hidden = false;
-      estado.textContent = `Não foi possível carregar os alertas: ${erro.message}`;
+      if (estado) {
+        estado.hidden = false;
+        estado.textContent = `Não foi possível carregar os avisos: ${erro.message}`;
+      }
     }
   }
 
-  campoBusca.addEventListener("input", renderizar);
-  filtroNivel.addEventListener("change", renderizar);
+  campoBusca?.addEventListener("input", renderizar);
+  filtroNivel?.addEventListener("change", renderizar);
 
-  btnExcluirTodos.addEventListener("click", () => {
-    window.alert(
-      "A exclusão não está disponível porque o Back-end ainda não possui uma rota para essa operação.",
-    );
-  });
+  if (btnExcluirTodos) {
+    btnExcluirTodos.disabled = true;
+    btnExcluirTodos.title =
+      "O backend atual ainda não possui uma rota para excluir alertas.";
+  }
 
   carregarAlertas();
+
+  setInterval(carregarAlertas, 10000);
 });
