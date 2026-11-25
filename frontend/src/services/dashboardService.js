@@ -7,16 +7,36 @@
   }
 
   window.PulseMineDashboardService = {
-    obterResumo() {
-      return api.get("/dashboard/resumo");
+    async obterLeituras() {
+      const resposta = await api.get("/leituras-sensores");
+
+      if (resposta?.success === false) {
+        throw new Error(
+          resposta.message || "Não foi possível buscar as leituras.",
+        );
+      }
+
+      if (Array.isArray(resposta)) {
+        return resposta;
+      }
+
+      if (Array.isArray(resposta?.data)) {
+        return resposta.data;
+      }
+
+      return [];
     },
 
-    obterLeituras() {
-      return api.get("/dashboard/leituras");
-    },
+    async obterUltimaLeitura() {
+      const resposta = await api.get("/leituras-sensores/ultima");
 
-    obterSensores() {
-      return api.get("/sensores");
+      if (resposta?.success === false) {
+        throw new Error(
+          resposta.message || "Não foi possível buscar a última leitura.",
+        );
+      }
+
+      return resposta?.data || resposta;
     },
   };
 })();

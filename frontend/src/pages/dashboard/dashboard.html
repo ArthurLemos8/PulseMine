@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="dashboard.css" />
     <link rel="stylesheet" href="../../components/barra-lateral/menu.css" />
     <script src="../../components/barra-lateral/menu.js" defer></script>
+
     <link rel="stylesheet" href="../../components/tema/tema.css" />
     <script src="../../components/tema/tema.js"></script>
   </head>
@@ -72,11 +73,13 @@
               </div>
 
               <div class="valor">
-                <span id="valorVibracao">2,45</span>
+                <span id="valorVibracao">—</span>
                 <small>mm/s</small>
               </div>
 
-              <span class="status normal" id="statusVibracao"> NORMAL </span>
+              <span class="status normal" id="statusVibracao">
+                Aguardando dados
+              </span>
             </article>
 
             <article class="card">
@@ -85,10 +88,10 @@
                 <i class="fa-solid fa-triangle-exclamation alerta"></i>
               </div>
 
-              <div class="valor" id="valorAlertas">4</div>
+              <div class="valor" id="valorAlertas">—</div>
 
-              <span class="status critico" id="statusAlertas">
-                Em acompanhamento
+              <span class="status normal" id="statusAlertas">
+                Aguardando dados
               </span>
             </article>
 
@@ -98,10 +101,10 @@
                 <i class="fa-solid fa-display"></i>
               </div>
 
-              <div class="valor" id="valorEquipamentos">5</div>
+              <div class="valor" id="valorEquipamentos">—</div>
 
               <span class="status normal" id="statusEquipamentos">
-                Ativos
+                Aguardando dados
               </span>
             </article>
 
@@ -111,9 +114,11 @@
                 <i class="fa-solid fa-wifi"></i>
               </div>
 
-              <div class="valor" id="valorSensores">1</div>
+              <div class="valor" id="valorSensores">—</div>
 
-              <span class="status normal" id="statusSensores"> Ativos </span>
+              <span class="status normal" id="statusSensores">
+                Aguardando dados
+              </span>
             </article>
           </section>
 
@@ -166,34 +171,25 @@
                     <line x1="0" y1="250" x2="600" y2="250" />
                   </g>
 
-                  <path
-                    id="areaGrafico"
-                    fill="url(#gradiente)"
-                    d="M0 190 L200 170 L400 185 L600 140 L800 160 L1000 150 L1000 250 L0 250 Z"
-                  />
+                  <path id="areaGrafico" fill="url(#gradiente)" d="" />
 
-                  <path
-                    id="linhaGrafico"
-                    class="linha"
-                    d="M0 190 L200 170 L400 185 L600 140 L800 160 L1000 150"
-                  />
+                  <path id="linhaGrafico" class="linha" d="" />
                 </svg>
 
                 <div class="eixo-x" id="eixoX">
-                  <span>--:--</span>
-                  <span>--:--</span>
-                  <span>--:--</span>
-                  <span>--:--</span>
-                  <span>--:--</span>
-                  <span>Agora</span>
+                  <span>—</span>
+                  <span>—</span>
+                  <span>—</span>
+                  <span>—</span>
+                  <span>—</span>
+                  <span>—</span>
                 </div>
               </div>
             </div>
 
             <p class="aviso-dados">
               <i class="fa-solid fa-circle-info"></i>
-              Os valores serão simulados até a integração com a API e os
-              sensores reais.
+              Aguardando conexão com o servidor de monitoramento.
             </p>
           </section>
         </div>
@@ -225,6 +221,7 @@
       hidden
     ></div>
 
+    <script src="../../services/config.js"></script>
     <script src="../../services/api.js"></script>
     <script src="../../services/dashboardService.js"></script>
     <script src="dashboard.js"></script>
