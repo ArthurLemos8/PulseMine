@@ -1,135 +1,120 @@
 function validarEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+[^\s@]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
-const formulario = document.querySelector("form");
-
-const email = document.getElementById("email");
-const senha = document.getElementById("senha");
-const lembrarMe = document.getElementById("lembrarMe");
-
-const olho = document.querySelector(".olho");
-
-const erroEmail = document.getElementById("erroEmail");
-const erroSenha = document.getElementById("erroSenha");
-
 document.addEventListener("DOMContentLoaded", () => {
-  const emailSalvo = localStorage.getItem("pulseMineEmail");
+  const formulario = document.getElementById("formLogin");
+  const email = document.getElementById("email");
+  const senha = document.getElementById("senha");
+  const lembrarMe = document.getElementById("lembrarMe");
+  const olho = document.getElementById("olhoSenha");
+  const erroEmail = document.getElementById("erroEmail");
+  const erroSenha = document.getElementById("erroSenha");
+
+  const botao = formulario.querySelector('button[type="submit"]');
+
+  const mensagem = document.createElement("small");
+  mensagem.className = "erro";
+  mensagem.id = "mensagemLogin";
+  mensagem.setAttribute("aria-live", "polite");
+  formulario.appendChild(mensagem);
+
+  const emailSalvo = sessionStorage.getItem("pulseMineEmail");
 
   if (emailSalvo) {
     email.value = emailSalvo;
     lembrarMe.checked = true;
   }
-});
 
-lembrarMe.addEventListener("change", () => {
-  if (lembrarMe.checked) {
-    localStorage.setItem("pulseMineEmail", email.value.trim());
-  } else {
-    localStorage.removeItem("pulseMineEmail");
-  }
-});
+  lembrarMe.addEventListener("change", () => {
+    if (lembrarMe.checked) {
+      sessionStorage.setItem("pulseMineEmail", email.value.trim());
+    } else {
+      sessionStorage.removeItem("pulseMineEmail");
+    }
+  });
 
-email.addEventListener("input", () => {
-  if (lembrarMe.checked) {
-    localStorage.setItem("pulseMineEmail", email.value.trim());
-  }
-});
+  email.addEventListener("input", () => {
+    if (lembrarMe.checked) {
+      sessionStorage.setItem("pulseMineEmail", email.value.trim());
+    }
+  });
 
-olho.addEventListener("click", () => {
-  if (senha.type === "password") {
-    senha.type = "text";
+  olho.addEventListener("click", () => {
+    const mostrar = senha.type === "password";
 
-    olho.classList.remove("bi-eye");
-    olho.classList.add("bi-eye-slash");
-  } else {
-    senha.type = "password";
+    senha.type = mostrar ? "text" : "password";
 
-    olho.classList.remove("bi-eye-slash");
-    olho.classList.add("bi-eye");
-  }
-});
+    olho.classList.toggle("bi-eye", !mostrar);
+    olho.classList.toggle("bi-eye-slash", mostrar);
+  });
 
-formulario.addEventListener("submit", (event) => {
-  event.preventDefault();
+  formulario.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  const emailValor = email.value.trim();
-  const senhaValor = senha.value.trim();
+    erroEmail.textContent = "";
+    erroSenha.textContent = "";
+    mensagem.textContent = "";
 
-  erroEmail.textContent = "";
-  erroSenha.textContent = "";
+    email.classList.remove("erro", "sucesso");
+    senha.classList.remove("erro", "sucesso");
 
-  email.classList.remove("erro", "sucesso");
-  senha.classList.remove("erro", "sucesso");
+    const emailValor = email.value.trim();
+    const senhaValor = senha.value;
 
-  let formularioValido = true;
+    let valido = true;
 
-  if (emailValor === "") {
-    erroEmail.textContent = "Preencha o e-mail.";
-    email.classList.add("erro");
+    if (!emailValor) {
+      erroEmail.textContent = "Preencha o e-mail.";
+      email.classList.add("erro");
+      valido = false;
+    } else if (!validarEmail(emailValor)) {
+      erroEmail.textContent = "Digite um e-mail válido.";
+      email.classList.add("erro");
+      valido = false;
+    }
 
-    formularioValido = false;
-  } else if (!validarEmail(emailValor)) {
-    erroEmail.textContent = "Digite um e-mail válido.";
-    email.classList.add("erro");
+    if (!senhaValor) {
+      erroSenha.textContent = "Preencha a senha.";
+      senha.classList.add("erro");
+      valido = false;
+    }
 
-    formularioValido = false;
-  }
+    if (!valido) return;
 
-  if (senhaValor === "") {
-    erroSenha.textContent = "Preencha a senha.";
-    senha.classList.add("erro");
+    botao.disabled = true;
+    botao.textContent = "Entrando...";
 
-    formularioValido = false;
-  } else if (senhaValor.length < 8) {
-    erroSenha.textContent = "A senha deve ter pelo menos 8 caracteres.";
-    senha.classList.add("erro");
+    try {
+      const resposta = await window.PulseMineUsuarioService.entrar({
+        email: emailValor,
+        senha: senhaValor,
+      });
 
-    formularioValido = false;
-  }
+      const token = resposta?.token || resposta?.accessToken;
 
-  if (!formularioValido) {
-    return;
-  }
+      if (!token) {
+        throw new Error("O servidor não retornou o token de acesso.");
+      }
 
-  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+      sessionStorage.setItem("pulseMineToken", token);
 
-  if (usuarios.length === 0) {
-    erroEmail.textContent = "Nenhum usuário foi cadastrado.";
+      if (lembrarMe.checked) {
+        sessionStorage.setItem("pulseMineEmail", emailValor);
+      } else {
+        sessionStorage.removeItem("pulseMineEmail");
+      }
 
-    email.classList.add("erro");
-    senha.classList.add("erro");
+      email.classList.add("sucesso");
+      senha.classList.add("sucesso");
 
-    return;
-  }
-
-  const usuarioEncontrado = usuarios.find((user) => user.email === emailValor);
-
-  if (!usuarioEncontrado) {
-    erroEmail.textContent = "E-mail incorreto.";
-    email.classList.add("erro");
-
-    return;
-  }
-
-  if (usuarioEncontrado.senha !== senhaValor) {
-    erroSenha.textContent = "Senha incorreta.";
-    senha.classList.add("erro");
-
-    return;
-  }
-
-  if (lembrarMe.checked) {
-    localStorage.setItem("pulseMineEmail", emailValor);
-  } else {
-    localStorage.removeItem("pulseMineEmail");
-  }
-
-  email.classList.add("sucesso");
-  senha.classList.add("sucesso");
-
-  localStorage.setItem("usuarioLogado", JSON.stringify(usuarioEncontrado));
-
-  window.location.href = "../dashboard/dashboard.html";
+      window.location.href = "../dashboard/dashboard.html";
+    } catch (erro) {
+      mensagem.textContent = erro.message;
+    } finally {
+      botao.disabled = false;
+      botao.textContent = "Login";
+    }
+  });
 });

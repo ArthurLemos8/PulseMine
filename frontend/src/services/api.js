@@ -1,10 +1,14 @@
 (() => {
-  const API_BASE_URL = (
-    window.PULSEMINE_API_URL || "http://localhost:3000/api"
-  ).replace(/\/+$/, "");
+  const API_BASE_URL = (window.PULSEMINE_API_URL || "").replace(/\/+$/, "");
 
   async function requisicao(endpoint, opcoes = {}) {
+    if (!API_BASE_URL) {
+      throw new Error("O endereço do servidor ainda não foi configurado.");
+    }
+
     const caminho = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+
+    const token = sessionStorage.getItem("pulseMineToken");
 
     const configuracao = {
       method: opcoes.method || "GET",
@@ -13,6 +17,7 @@
         ...(opcoes.body !== undefined
           ? { "Content-Type": "application/json" }
           : {}),
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...opcoes.headers,
       },
     };
@@ -45,7 +50,7 @@
       if (!resposta.ok) {
         const mensagem =
           typeof dados === "object" && dados !== null
-            ? dados.message || dados.mensagem || dados.error
+            ? dados.message || dados.mensagem || dados.error || dados.erro
             : null;
 
         throw new Error(mensagem || `Erro na API: ${resposta.status}`);
@@ -53,12 +58,12 @@
 
       return dados;
     } catch (erro) {
-      if (erro.name === "AbortError") throw erro;
+      if (erro.name === "AbortError") {
+        throw erro;
+      }
 
       if (erro instanceof TypeError) {
-        throw new Error(
-          "Não foi possível conectar ao backend. Verifique o servidor e a URL.",
-        );
+        throw new Error("Não foi possível conectar ao servidor.");
       }
 
       throw erro;

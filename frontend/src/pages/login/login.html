@@ -9,7 +9,7 @@
 
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data:;"
+      content="default-src 'self'; connect-src 'self' https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data:;"
     />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -101,6 +101,7 @@
       </div>
     </div>
 
+    <script src="../../services/config.js"></script>
     <script src="../../services/api.js"></script>
     <script src="../../services/usuarioService.js"></script>
     <script src="login.js"></script>
