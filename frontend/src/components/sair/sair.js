@@ -1,12 +1,14 @@
-document.addEventListener("click", function (event) {
-  const btnSair = event.target.closest(".sair");
+document.addEventListener("click", (evento) => {
+  const botao = evento.target.closest(".sair");
 
-  if (!btnSair) return;
+  if (!botao || botao.dataset.logoutHandled === "true") return;
 
-  event.preventDefault();
+  evento.preventDefault();
 
-  localStorage.removeItem("usuarioLogado");
-  localStorage.removeItem("tipo");
+  botao.dataset.logoutHandled = "true";
 
-  window.location.href = btnSair.href;
+  sessionStorage.removeItem("pulseMineToken");
+  sessionStorage.removeItem("pulseMineEmail");
+
+  window.location.href = botao.href;
 });

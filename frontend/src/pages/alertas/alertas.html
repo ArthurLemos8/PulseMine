@@ -111,114 +111,15 @@
             <span></span>
           </div>
 
-          <div class="linha-alerta" data-nivel="critico">
-            <div>
-              <span class="nivel critico">
-                <i class="bi bi-exclamation-triangle"></i>
-                Crítico
-              </span>
-            </div>
+          <p id="estadoAlertas" class="nenhum-alerta">
+            Aguardando conexão com o servidor.
+          </p>
 
-            <div class="mensagem">
-              <strong>Vibração acima do limite crítico</strong>
-              <p>Nível de vibração excedeu o limite seguro</p>
-            </div>
-
-            <div class="valor">
-              <strong>12,45 mm/s</strong>
-              <p>Limite: 10,00 mm/s</p>
-            </div>
-
-            <div class="sensor">
-              <strong>Sensor SN-001</strong>
-              <p>Motor Principal</p>
-            </div>
-
-            <div class="hora">14:28:15</div>
-
-            <button class="btn-menu" type="button" aria-label="Mais opções">
-              <i class="bi bi-three-dots-vertical"></i>
-            </button>
-          </div>
-
-          <div class="linha-alerta" data-nivel="critico">
-            <div>
-              <span class="nivel critico">
-                <i class="bi bi-exclamation-triangle"></i>
-                Crítico
-              </span>
-            </div>
-
-            <div class="mensagem">
-              <strong>Vibração crítica detectada</strong>
-              <p>Valor acima do limite configurado</p>
-            </div>
-
-            <div class="valor">
-              <strong>15,20 mm/s RMS</strong>
-              <p>Limite: 10,00 mm/s RMS</p>
-            </div>
-
-            <div class="hora">13:45:33</div>
-
-            <button class="btn-menu" type="button" aria-label="Mais opções">
-              <i class="bi bi-three-dots-vertical"></i>
-            </button>
-          </div>
-
-          <div class="linha-alerta" data-nivel="normal">
-            <div>
-              <span class="nivel normal">
-                <i class="bi bi-check-circle"></i>
-                Normal
-              </span>
-            </div>
-
-            <div class="mensagem">
-              <strong>Vibração dentro do limite seguro</strong>
-              <p>Nível de vibração está abaixo do limite configurado</p>
-            </div>
-
-            <div class="valor">
-              <strong>4 mm/s RMS</strong>
-              <p>Limite: 5 mm/s RMS</p>
-            </div>
-
-            <div class="hora">11:10:42</div>
-
-            <button class="btn-menu" type="button" aria-label="Mais opções">
-              <i class="bi bi-three-dots-vertical"></i>
-            </button>
-          </div>
-
-          <div class="linha-alerta" data-nivel="critico">
-            <div>
-              <span class="nivel critico">
-                <i class="bi bi-exclamation-triangle"></i>
-                Crítico
-              </span>
-            </div>
-
-            <div class="mensagem">
-              <strong>Pressão acima do limite crítico</strong>
-              <p>Pressão excedeu o valor permitido</p>
-            </div>
-
-            <div class="valor">
-              <strong>8,75 bar</strong>
-              <p>Limite: 7,00 bar</p>
-            </div>
-
-            <div class="hora">11:10:42</div>
-
-            <button class="btn-menu" type="button" aria-label="Mais opções">
-              <i class="bi bi-three-dots-vertical"></i>
-            </button>
-          </div>
+          <div id="listaAlertasDados"></div>
         </section>
       </main>
     </div>
-
+    <script src="../../services/config.js"></script>
     <script src="../../services/api.js"></script>
     <script src="../../services/alertasService.js"></script>
     <script src="alertas.js"></script>
