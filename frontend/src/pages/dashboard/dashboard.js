@@ -296,20 +296,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!linhaGrafico) return;
 
+    const marcacoesY = document.querySelectorAll(".eixo-y span");
+
     if (registros.length === 0) {
       linhaGrafico.setAttribute("d", "");
       areaGrafico?.setAttribute("d", "");
+
+      marcacoesY.forEach((marcacao, indice) => {
+        marcacao.textContent = [10, 7.5, 5, 2.5, 0][indice] ?? "—";
+      });
+
+      atualizarEixoX([]);
       return;
     }
 
     const largura = 600;
-    const linhaBase = 190;
-    const alturaUtil = 155;
+    const linhaBase = 250;
+    const alturaUtil = 250;
 
-    const valorMaximo = Math.max(
+    const maiorValor = Math.max(
       10,
       ...registros.map((leitura) => obterValor(leitura)),
     );
+
+    const valorMaximo = Math.ceil(maiorValor / 2.5) * 2.5;
+
+    marcacoesY.forEach((marcacao, indice) => {
+      const valor = valorMaximo - (valorMaximo / 4) * indice;
+
+      marcacao.textContent = valor.toLocaleString("pt-BR", {
+        maximumFractionDigits: 1,
+      });
+    });
 
     const pontos = registros.map((leitura, indice) => {
       const valor = obterValor(leitura);
@@ -474,7 +492,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       leituras = dados
         .filter((leitura) => obterValor(leitura) !== null)
-        .reverse();
+        .sort((a, b) => {
+          const dataA = obterDataLeitura(a);
+          const dataB = obterDataLeitura(b);
+
+          if (!dataA && !dataB) return 0;
+          if (!dataA) return -1;
+          if (!dataB) return 1;
+
+          return dataA.getTime() - dataB.getTime();
+        });
 
       analisarNovasLeituras();
       atualizarIndicadores();
