@@ -24,6 +24,7 @@
 
     const configuracao = {
       method: opcoes.method || "GET",
+      ...(opcoes.cache ? { cache: opcoes.cache } : {}),
       headers: {
         Accept: "application/json",
         ...(opcoes.body !== undefined

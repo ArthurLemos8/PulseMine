@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const estado = document.getElementById("estadoAlertas");
   const lista = document.getElementById("listaAlertasDados");
 
+  const INTERVALO_ATUALIZACAO = 5000;
+
   let alertas = [];
   let carregando = false;
 
@@ -55,7 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function formatarValor(valor) {
-    const numero = Number(String(valor ?? "").replace(",", "."));
+    if (valor === null || valor === undefined || String(valor).trim() === "") {
+      return "—";
+    }
+
+    const numero = Number(String(valor).replace(",", "."));
 
     if (!Number.isFinite(numero)) return "—";
 
@@ -107,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
       linha.dataset.nivel = nivel;
 
       const colunaNivel = document.createElement("div");
+
       colunaNivel.appendChild(
         criarElemento(
           "span",
@@ -183,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function carregarAlertas() {
-    if (carregando) return;
+    if (carregando || document.visibilityState === "hidden") return;
 
     carregando = true;
 
@@ -201,12 +208,9 @@ document.addEventListener("DOMContentLoaded", () => {
       alertas = dados;
       renderizar();
     } catch (erro) {
-      console.error("Erro ao carregar alertas:", erro);
+      console.error("Erro ao atualizar alertas:", erro);
 
-      alertas = [];
-      renderizar();
-
-      if (estado) {
+      if (estado && alertas.length === 0) {
         estado.hidden = false;
         estado.textContent = `Não foi possível carregar os avisos: ${erro.message}`;
       }
@@ -220,5 +224,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   carregarAlertas();
 
-  setInterval(carregarAlertas, 10000);
+  const intervalo = window.setInterval(carregarAlertas, INTERVALO_ATUALIZACAO);
+
+  window.addEventListener("focus", carregarAlertas);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+      carregarAlertas();
+    }
+  });
+
+  window.addEventListener("pagehide", () => {
+    window.clearInterval(intervalo);
+  });
 });
