@@ -1333,3 +1333,90 @@ body {
     right: 35px;
   }
 }
+.lista-alertas {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+}
+
+.origem-alertas {
+  margin: 0 0 18px;
+  color: var(--texto-secundario);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.cabecalho-tabela,
+.linha-alerta {
+  display: grid;
+  grid-template-columns:
+    100px
+    minmax(220px, 1.8fr)
+    minmax(110px, 0.8fr)
+    minmax(150px, 1.1fr)
+    150px;
+  align-items: center;
+  column-gap: 12px;
+  min-width: 850px;
+}
+
+.cabecalho-tabela {
+  padding: 12px 18px;
+}
+
+.linha-alerta {
+  min-height: 70px;
+  padding: 12px 18px;
+}
+
+.cabecalho-tabela span {
+  white-space: nowrap;
+}
+
+.linha-alerta > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.linha-alerta .mensagem {
+  color: var(--texto);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.linha-alerta .valor {
+  color: var(--texto);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.linha-alerta .hora {
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.lista-alertas::-webkit-scrollbar {
+  height: 8px;
+}
+
+.lista-alertas::-webkit-scrollbar-thumb {
+  background: var(--cinza-300);
+  border-radius: 10px;
+}
+
+.lista-alertas::-webkit-scrollbar-track {
+  background: var(--cinza-100);
+}
+
+@media (max-width: 750px) {
+  .lista-alertas {
+    padding: 18px 12px 10px;
+  }
+
+  .cabecalho-tabela,
+  .linha-alerta {
+    min-width: 850px;
+  }
+}

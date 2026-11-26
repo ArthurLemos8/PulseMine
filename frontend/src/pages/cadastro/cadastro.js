@@ -1,27 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const formulario = document.querySelector("form");
+  const formulario = document.getElementById("formCadastro");
 
   const nome = document.getElementById("nome");
   const email = document.getElementById("email");
   const senha = document.getElementById("senha");
   const confirmarSenha = document.getElementById("confirme-senha");
 
-  const olhos = document.querySelectorAll(".olho");
-
   const erroNome = document.getElementById("erroNome");
   const erroEmail = document.getElementById("erroEmail");
   const erroSenha = document.getElementById("erroSenha");
   const erroConfirmarSenha = document.getElementById("erroConfirmarSenha");
 
+  const mensagemCadastro = document.getElementById("mensagemCadastro");
+
   const botao = formulario.querySelector('button[type="submit"]');
-
-  let mensagemCadastro = document.getElementById("mensagemCadastro");
-
-  if (!mensagemCadastro) {
-    mensagemCadastro = document.createElement("small");
-    mensagemCadastro.id = "mensagemCadastro";
-    formulario.appendChild(mensagemCadastro);
-  }
 
   function validarEmail(valor) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor);
@@ -34,20 +26,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
     [nome, email, senha, confirmarSenha].forEach((campo) => {
       campo.classList.remove("erro", "sucesso");
+      campo.removeAttribute("aria-invalid");
     });
 
     mensagemCadastro.textContent = "";
+    mensagemCadastro.className = "";
   }
 
-  olhos.forEach((olho, index) => {
-    olho.addEventListener("click", () => {
-      const campo = index === 0 ? senha : confirmarSenha;
+  function mostrarErro(campo, elementoErro, texto) {
+    elementoErro.textContent = texto;
+    campo.classList.add("erro");
+    campo.setAttribute("aria-invalid", "true");
+  }
+
+  document.querySelectorAll(".olho").forEach((olho, indice) => {
+    const campo = indice === 0 ? senha : confirmarSenha;
+
+    function alternarVisibilidade() {
       const mostrar = campo.type === "password";
 
       campo.type = mostrar ? "text" : "password";
 
       olho.classList.toggle("bi-eye", !mostrar);
       olho.classList.toggle("bi-eye-slash", mostrar);
+
+      olho.setAttribute(
+        "aria-label",
+        mostrar ? "Ocultar senha" : "Mostrar senha",
+      );
+    }
+
+    olho.addEventListener("click", alternarVisibilidade);
+
+    olho.addEventListener("keydown", (evento) => {
+      if (evento.key === "Enter" || evento.key === " ") {
+        evento.preventDefault();
+        alternarVisibilidade();
+      }
     });
   });
 
@@ -62,41 +77,43 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const confirmacao = confirmarSenha.value;
+
     let valido = true;
 
     if (!dados.nome) {
-      erroNome.textContent = "Preencha o nome completo.";
-      nome.classList.add("erro");
+      mostrarErro(nome, erroNome, "Preencha o nome completo.");
       valido = false;
     }
 
     if (!dados.email) {
-      erroEmail.textContent = "Preencha o e-mail.";
-      email.classList.add("erro");
+      mostrarErro(email, erroEmail, "Preencha o e-mail.");
       valido = false;
     } else if (!validarEmail(dados.email)) {
-      erroEmail.textContent = "Digite um e-mail válido.";
-      email.classList.add("erro");
+      mostrarErro(email, erroEmail, "Digite um e-mail válido.");
       valido = false;
     }
 
     if (!dados.senha) {
-      erroSenha.textContent = "Preencha a senha.";
-      senha.classList.add("erro");
+      mostrarErro(senha, erroSenha, "Preencha a senha.");
       valido = false;
     } else if (dados.senha.length < 8) {
-      erroSenha.textContent = "A senha deve ter pelo menos 8 caracteres.";
-      senha.classList.add("erro");
+      mostrarErro(
+        senha,
+        erroSenha,
+        "A senha deve ter pelo menos 8 caracteres.",
+      );
       valido = false;
     }
 
     if (!confirmacao) {
-      erroConfirmarSenha.textContent = "Confirme sua senha.";
-      confirmarSenha.classList.add("erro");
+      mostrarErro(confirmarSenha, erroConfirmarSenha, "Confirme sua senha.");
       valido = false;
     } else if (dados.senha !== confirmacao) {
-      erroConfirmarSenha.textContent = "As senhas não coincidem.";
-      confirmarSenha.classList.add("erro");
+      mostrarErro(
+        confirmarSenha,
+        erroConfirmarSenha,
+        "As senhas não coincidem.",
+      );
       valido = false;
     }
 
@@ -106,6 +123,10 @@ document.addEventListener("DOMContentLoaded", () => {
     botao.textContent = "Cadastrando...";
 
     try {
+      if (!window.PulseMineUsuarioService) {
+        throw new Error("O serviço de usuário não foi carregado.");
+      }
+
       const resposta = await window.PulseMineUsuarioService.cadastrar(dados);
 
       if (resposta?.success === false) {
@@ -116,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       mensagemCadastro.className = "sucesso";
       mensagemCadastro.textContent =
-        "Solicitação enviada. Faça login após a confirmação do cadastro.";
+        "Cadastro enviado com sucesso. Você poderá fazer login após a confirmação do servidor.";
 
       formulario.reset();
     } catch (erro) {

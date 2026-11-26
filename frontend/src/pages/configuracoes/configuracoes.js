@@ -1,35 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
   const $ = (id) => document.getElementById(id);
 
-  let timeoutToast;
-  let sensoresDisponiveis = [];
-
-  function mensagem(texto) {
-    const toast = $("toast");
-
-    if (!toast) return;
-
-    toast.textContent = texto;
-    toast.hidden = false;
-
-    clearTimeout(timeoutToast);
-
-    timeoutToast = setTimeout(() => {
-      toast.hidden = true;
-    }, 3200);
-  }
-
-  function erro(id, texto) {
-    const campo = $(id);
-
-    if (!campo) return;
-
-    campo.textContent = texto;
-    campo.hidden = !texto;
-  }
-
   const linksIndice = document.querySelectorAll(".indice a");
   const secoes = document.querySelectorAll(".paineis .painel");
+
+  const formEquipamento = $("formEquipamento");
+  const formSensor = $("formSensor");
+
+  const listaSensores = $("listaSensores");
+  const estadoSensores = $("estadoSensores");
+
+  let carregandoSensores = false;
 
   function atualizarIndice(idSecao) {
     linksIndice.forEach((link) => {
@@ -71,152 +52,312 @@ document.addEventListener("DOMContentLoaded", () => {
     secoes.forEach((secao) => observador.observe(secao));
   }
 
-  const formConfiguracoes = $("formConfiguracoes");
+  function mostrarMensagem(id, texto, tipo) {
+    const elemento = $(id);
 
-  formConfiguracoes?.addEventListener("submit", (evento) => {
-    evento.preventDefault();
+    if (!elemento) return;
 
-    const atencao = Number($("limiteAtencao").value);
-    const critico = Number($("limiteCritico").value);
+    elemento.textContent = texto;
+    elemento.className = `mensagem-formulario ${tipo}`;
+    elemento.hidden = false;
+  }
 
-    if (
-      !Number.isFinite(atencao) ||
-      !Number.isFinite(critico) ||
-      atencao < 0.1 ||
-      critico > 100 ||
-      critico <= atencao
-    ) {
-      erro(
-        "erroConfiguracao",
-        "Informe limites válidos. O limite crítico deve ser maior que o de atenção.",
+  function limparMensagem(id) {
+    const elemento = $(id);
+
+    if (!elemento) return;
+
+    elemento.textContent = "";
+    elemento.hidden = true;
+    elemento.className = "mensagem-formulario";
+  }
+
+  function obterIdPlanta(valor) {
+    if (!valor) return null;
+
+    const id = Number(valor);
+
+    if (!Number.isInteger(id) || id <= 0) {
+      throw new Error("Informe um ID de planta válido.");
+    }
+
+    return id;
+  }
+
+  function validarResposta(resposta, mensagemPadrao) {
+    if (resposta?.success === false) {
+      throw new Error(resposta.message || resposta.mensagem || mensagemPadrao);
+    }
+
+    return resposta;
+  }
+
+  async function enviarFormulario({
+    formulario,
+    endpoint,
+    dados,
+    idMensagem,
+    botaoTexto,
+    mensagemSucesso,
+  }) {
+    const botao = formulario.querySelector('button[type="submit"]');
+
+    const textoOriginal = botao.innerHTML;
+
+    botao.disabled = true;
+    botao.innerHTML = "Enviando...";
+    limparMensagem(idMensagem);
+
+    try {
+      if (!window.PulseMineAPI) {
+        throw new Error("O serviço de API não foi carregado.");
+      }
+
+      const resposta = await window.PulseMineAPI.post(endpoint, dados);
+
+      validarResposta(resposta, "O servidor não confirmou o cadastro.");
+
+      mostrarMensagem(idMensagem, mensagemSucesso, "sucesso");
+
+      formulario.reset();
+
+      return true;
+    } catch (erro) {
+      console.error(`Erro no cadastro ${botaoTexto}:`, erro);
+
+      mostrarMensagem(
+        idMensagem,
+        `Não foi possível cadastrar. ${erro.message}`,
+        "erro",
       );
 
+      return false;
+    } finally {
+      botao.disabled = false;
+      botao.innerHTML = textoOriginal;
+    }
+  }
+
+  formEquipamento?.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+
+    limparMensagem("mensagemEquipamento");
+
+    const nome = $("nomeEquipamento").value.trim();
+    const tipo = $("tipoEquipamento").value.trim();
+    const status = $("statusEquipamento").value;
+
+    if (!nome) {
+      mostrarMensagem(
+        "mensagemEquipamento",
+        "Informe o nome do equipamento.",
+        "erro",
+      );
+
+      $("nomeEquipamento").focus();
       return;
     }
 
-    erro(
-      "erroConfiguracao",
-      "O backend atual ainda não possui uma rota para salvar os limites.",
-    );
-  });
+    let idPlanta;
 
-  const selectSensor = $("sensorSelecionado");
-
-  const nomeSensor = $("sensorNome");
-  const localSensor = $("sensorLocal");
-  const statusSensor = $("sensorStatus");
-
-  function limparSensor() {
-    if (selectSensor) {
-      selectSensor.value = "";
+    try {
+      idPlanta = obterIdPlanta($("plantaEquipamento").value.trim());
+    } catch (erro) {
+      mostrarMensagem("mensagemEquipamento", erro.message, "erro");
+      return;
     }
 
-    if (nomeSensor) nomeSensor.value = "";
-    if (localSensor) localSensor.value = "";
-    if (statusSensor) statusSensor.value = "ativo";
+    const dados = {
+      nome_equipamento: nome,
+      tipo: tipo || null,
+      status_equi: status,
+      id_planta_fk: idPlanta,
+    };
 
-    erro("erroSensor", "");
+    await enviarFormulario({
+      formulario: formEquipamento,
+      endpoint: "/equipamentos",
+      dados,
+      idMensagem: "mensagemEquipamento",
+      botaoTexto: "equipamento",
+      mensagemSucesso: "Equipamento cadastrado com sucesso.",
+    });
+  });
+
+  formSensor?.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+
+    limparMensagem("mensagemSensor");
+
+    const tipoSensor = $("tipoSensor").value.trim();
+    const situacao = $("situacaoSensor").value;
+
+    if (!tipoSensor) {
+      mostrarMensagem("mensagemSensor", "Informe o tipo do sensor.", "erro");
+
+      $("tipoSensor").focus();
+      return;
+    }
+
+    if (!["true", "false"].includes(situacao)) {
+      mostrarMensagem(
+        "mensagemSensor",
+        "Selecione uma situação válida para o sensor.",
+        "erro",
+      );
+      return;
+    }
+
+    let idPlanta;
+
+    try {
+      idPlanta = obterIdPlanta($("plantaSensor").value.trim());
+    } catch (erro) {
+      mostrarMensagem("mensagemSensor", erro.message, "erro");
+      return;
+    }
+
+    const dados = {
+      tipo_sensor: tipoSensor,
+      situacao: situacao === "true",
+      id_planta_fk: idPlanta,
+    };
+
+    const cadastrado = await enviarFormulario({
+      formulario: formSensor,
+      endpoint: "/sensores",
+      dados,
+      idMensagem: "mensagemSensor",
+      botaoTexto: "sensor",
+      mensagemSucesso: "Sensor cadastrado com sucesso.",
+    });
+
+    if (cadastrado) {
+      carregarSensores();
+    }
+  });
+
+  function mostrarEstadoSensor(texto, tipo = "") {
+    if (!estadoSensores) return;
+
+    estadoSensores.textContent = texto;
+    estadoSensores.className = `estado-sensores ${tipo}`.trim();
+  }
+
+  function criarItemSensor(sensor) {
+    const item = document.createElement("article");
+    item.className = "sensor-item";
+
+    const informacoes = document.createElement("div");
+    informacoes.className = "sensor-item-info";
+
+    const nome = document.createElement("strong");
+    nome.textContent = `Sensor ${sensor.id}`;
+
+    const dispositivo = document.createElement("span");
+    dispositivo.textContent = sensor.dispositivo
+      ? `Dispositivo: ${sensor.dispositivo}`
+      : "Dispositivo não identificado";
+
+    const descricao = document.createElement("small");
+    descricao.textContent = "Identificado nas leituras recebidas do servidor";
+
+    informacoes.append(nome, dispositivo, descricao);
+
+    const icone = document.createElement("i");
+    icone.className = "fa-solid fa-microchip";
+    icone.setAttribute("aria-hidden", "true");
+
+    item.append(informacoes, icone);
+
+    return item;
   }
 
   async function carregarSensores() {
-    if (!selectSensor) return;
+    if (!listaSensores || carregandoSensores) return;
+
+    carregandoSensores = true;
+    listaSensores.replaceChildren();
+
+    mostrarEstadoSensor("Carregando sensores...");
 
     try {
-      sensoresDisponiveis = await window.PulseMineSensoresService.listar();
+      if (!window.PulseMineDashboardService) {
+        throw new Error("O serviço de leituras não foi carregado.");
+      }
 
-      selectSensor.replaceChildren();
+      const leituras = await window.PulseMineDashboardService.obterLeituras();
 
-      const opcaoInicial = document.createElement("option");
-
-      opcaoInicial.value = "";
-      opcaoInicial.textContent = "Novo sensor";
-
-      selectSensor.appendChild(opcaoInicial);
-
-      sensoresDisponiveis.forEach((sensor) => {
-        const opcao = document.createElement("option");
-
-        opcao.value = sensor.id;
-        opcao.textContent = `${sensor.nome} (ID ${sensor.id})`;
-
-        selectSensor.appendChild(opcao);
-      });
-
-      if (sensoresDisponiveis.length === 0) {
-        erro(
-          "erroSensor",
-          "Nenhum sensor foi identificado nas leituras recebidas.",
-        );
-      } else {
-        erro(
-          "erroSensor",
-          "Sensores identificados nas leituras do banco de dados.",
+      if (!Array.isArray(leituras)) {
+        throw new Error(
+          "O servidor não retornou uma lista válida de leituras.",
         );
       }
-    } catch (erroApi) {
-      erro(
-        "erroSensor",
-        `Não foi possível carregar os sensores: ${erroApi.message}`,
+
+      const sensores = new Map();
+
+      leituras.forEach((leitura) => {
+        const id = leitura.id_sensor_fk;
+
+        if (id === undefined || id === null) {
+          return;
+        }
+
+        const identificador = String(id);
+
+        if (!sensores.has(identificador)) {
+          sensores.set(identificador, {
+            id: identificador,
+            dispositivo: leitura.dispositivo || "",
+          });
+        } else if (
+          !sensores.get(identificador).dispositivo &&
+          leitura.dispositivo
+        ) {
+          sensores.get(identificador).dispositivo = leitura.dispositivo;
+        }
+      });
+
+      const lista = Array.from(sensores.values()).sort(
+        (a, b) => Number(a.id) - Number(b.id),
       );
+
+      if (lista.length === 0) {
+        mostrarEstadoSensor(
+          "Nenhum sensor foi identificado nas leituras recebidas.",
+        );
+        return;
+      }
+
+      lista.forEach((sensor) => {
+        listaSensores.appendChild(criarItemSensor(sensor));
+      });
+
+      mostrarEstadoSensor(
+        `${lista.length} sensor(es) identificado(s) nas leituras.`,
+        "sucesso",
+      );
+    } catch (erro) {
+      console.error("Erro ao carregar sensores:", erro);
+
+      mostrarEstadoSensor(
+        `Não foi possível carregar os sensores: ${erro.message}`,
+        "erro",
+      );
+    } finally {
+      carregandoSensores = false;
     }
   }
 
-  selectSensor?.addEventListener("change", () => {
-    const sensor = sensoresDisponiveis.find(
-      (item) => String(item.id) === String(selectSensor.value),
-    );
-
-    if (!sensor) {
-      limparSensor();
-      return;
-    }
-
-    nomeSensor.value = sensor.nome;
-    localSensor.value = sensor.localizacao;
-    statusSensor.value = sensor.status;
-
-    erro(
-      "erroSensor",
-      "Este sensor foi identificado nas leituras. A edição ainda não está disponível no backend.",
-    );
+  formEquipamento?.addEventListener("reset", () => {
+    limparMensagem("mensagemEquipamento");
   });
 
-  $("btnNovoSensor")?.addEventListener("click", limparSensor);
-
-  $("formSensor")?.addEventListener("submit", async (evento) => {
-    evento.preventDefault();
-
-    const dados = {
-      nome: nomeSensor.value.trim(),
-      localizacao: localSensor.value.trim(),
-      status: statusSensor.value,
-    };
-
-    if (
-      !dados.nome ||
-      !dados.localizacao ||
-      !["ativo", "inativo"].includes(dados.status)
-    ) {
-      erro("erroSensor", "Preencha os dados do sensor corretamente.");
-      return;
-    }
-
-    try {
-      if (selectSensor.value) {
-        await window.PulseMineSensoresService.atualizar(
-          selectSensor.value,
-          dados,
-        );
-      } else {
-        await window.PulseMineSensoresService.criar(dados);
-      }
-
-      mensagem("Sensor atualizado.");
-      await carregarSensores();
-    } catch (erroApi) {
-      erro("erroSensor", erroApi.message);
-    }
+  formSensor?.addEventListener("reset", () => {
+    limparMensagem("mensagemSensor");
   });
 
   carregarSensores();
+
+  window.setInterval(carregarSensores, 10000);
 });

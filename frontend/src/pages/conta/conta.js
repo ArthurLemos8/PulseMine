@@ -6,9 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const mensagemSenha = document.getElementById("mensagemSenha");
 
   const nome = document.getElementById("nome");
-  const telefone = document.getElementById("telefone");
   const email = document.getElementById("email");
-  const cargo = document.getElementById("cargo");
 
   const senhaAtual = document.getElementById("senhaAtual");
   const novaSenha = document.getElementById("novaSenha");
@@ -19,61 +17,58 @@ document.addEventListener("DOMContentLoaded", () => {
     elemento.className = `mensagem ${tipo}`;
   }
 
-  function formatarTelefone(valor) {
-    const numeros = valor.replace(/\D/g, "").slice(0, 11);
-
-    if (!numeros) return "";
-
-    if (numeros.length <= 2) return `(${numeros}`;
-
-    const ddd = numeros.slice(0, 2);
-    const restante = numeros.slice(2);
-
-    if (numeros.length <= 10) {
-      return restante.length <= 4
-        ? `(${ddd}) ${restante}`
-        : `(${ddd}) ${restante.slice(0, 4)}-${restante.slice(4)}`;
-    }
-
-    return restante.length <= 5
-      ? `(${ddd}) ${restante}`
-      : `(${ddd}) ${restante.slice(0, 5)}-${restante.slice(5)}`;
+  function obterPerfil(resposta) {
+    return (
+      resposta?.data?.usuario || resposta?.data || resposta?.usuario || resposta
+    );
   }
 
-  telefone.addEventListener("input", () => {
-    telefone.value = formatarTelefone(telefone.value);
-  });
+  function alternarSenha(botao) {
+    const campo = document.getElementById(botao.getAttribute("data-target"));
+
+    const icone = botao.querySelector("i");
+
+    if (!campo || !icone) return;
+
+    const mostrar = campo.type === "password";
+
+    campo.type = mostrar ? "text" : "password";
+
+    icone.classList.toggle("bi-eye", !mostrar);
+    icone.classList.toggle("bi-eye-slash", mostrar);
+
+    botao.setAttribute(
+      "aria-label",
+      mostrar ? "Ocultar senha" : "Mostrar senha",
+    );
+  }
 
   document.querySelectorAll(".olho").forEach((botao) => {
     botao.addEventListener("click", () => {
-      const campo = document.getElementById(botao.getAttribute("data-target"));
-
-      const icone = botao.querySelector("i");
-
-      if (!campo || !icone) return;
-
-      const mostrar = campo.type === "password";
-
-      campo.type = mostrar ? "text" : "password";
-      icone.classList.toggle("bi-eye", !mostrar);
-      icone.classList.toggle("bi-eye-slash", mostrar);
+      alternarSenha(botao);
     });
   });
 
+  function definirCarregamento(botao, carregando, textoOriginal) {
+    botao.disabled = carregando;
+    botao.textContent = carregando ? "Enviando..." : textoOriginal;
+  }
+
   async function carregarDados() {
     try {
+      if (!window.PulseMineUsuarioService) {
+        throw new Error("O serviço de usuário não foi carregado.");
+      }
+
       const resposta = await window.PulseMineUsuarioService.obterPerfil();
-      const perfil =
-        resposta?.data?.usuario ||
-        resposta?.data ||
-        resposta?.usuario ||
-        resposta;
+
+      const perfil = obterPerfil(resposta);
 
       nome.value = perfil.nome || "";
       email.value = perfil.email || "";
-      telefone.value = perfil.telefone || "";
-      cargo.value = perfil.cargo || "";
     } catch (erro) {
+      console.error("Erro ao carregar perfil:", erro);
+
       mostrarMensagem(
         mensagemConta,
         `Não foi possível carregar o perfil: ${erro.message}`,
@@ -84,6 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   formConta.addEventListener("submit", async (evento) => {
     evento.preventDefault();
+
+    mensagemConta.textContent = "";
 
     const dados = {
       nome: nome.value.trim(),
@@ -105,9 +102,15 @@ document.addEventListener("DOMContentLoaded", () => {
         "Digite um endereço de e-mail válido.",
         "erro",
       );
+
       email.focus();
       return;
     }
+
+    const botao = formConta.querySelector('button[type="submit"]');
+    const textoOriginal = botao.textContent;
+
+    definirCarregamento(botao, true, textoOriginal);
 
     try {
       await window.PulseMineUsuarioService.atualizarPerfil(dados);
@@ -118,16 +121,22 @@ document.addEventListener("DOMContentLoaded", () => {
         "sucesso",
       );
     } catch (erro) {
+      console.error("Erro ao atualizar perfil:", erro);
+
       mostrarMensagem(
         mensagemConta,
         `Não foi possível atualizar o perfil: ${erro.message}`,
         "erro",
       );
+    } finally {
+      definirCarregamento(botao, false, textoOriginal);
     }
   });
 
   formSenha.addEventListener("submit", async (evento) => {
     evento.preventDefault();
+
+    mensagemSenha.textContent = "";
 
     const atual = senhaAtual.value;
     const nova = novaSenha.value;
@@ -169,6 +178,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    const botao = formSenha.querySelector('button[type="submit"]');
+    const textoOriginal = botao.textContent;
+
+    definirCarregamento(botao, true, textoOriginal);
+
     try {
       await window.PulseMineUsuarioService.alterarSenha({
         senhaAtual: atual,
@@ -183,11 +197,15 @@ document.addEventListener("DOMContentLoaded", () => {
         "sucesso",
       );
     } catch (erro) {
+      console.error("Erro ao alterar senha:", erro);
+
       mostrarMensagem(
         mensagemSenha,
         `Não foi possível alterar a senha: ${erro.message}`,
         "erro",
       );
+    } finally {
+      definirCarregamento(botao, false, textoOriginal);
     }
   });
 

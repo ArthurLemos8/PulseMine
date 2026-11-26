@@ -38,7 +38,7 @@
       <main class="alertas-container">
         <section class="cabecalho-alertas">
           <h1>Alertas</h1>
-          <p>Monitore e acompanhe todos os alertas ativos do sistema</p>
+          <p>Acompanhe os avisos identificados nas leituras de vibração.</p>
         </section>
 
         <section class="resumo-alertas">
@@ -50,9 +50,9 @@
             <div class="informacoes-alerta">
               <h3>Alertas Críticos</h3>
               <strong class="numero critico-texto" id="alertasCriticos"
-                >3</strong
+                >0</strong
               >
-              <p>Requerem atenção imediata</p>
+              <p>Leituras que exigem atenção imediata</p>
             </div>
 
             <i class="bi bi-activity grafico critico-grafico"></i>
@@ -60,13 +60,13 @@
 
           <div class="card-alerta">
             <div class="icone-alerta sucesso">
-              <i class="bi bi-check-circle"></i>
+              <i class="bi bi-activity"></i>
             </div>
 
             <div class="informacoes-alerta">
               <h3>Total de Alertas</h3>
-              <strong class="numero" id="totalAlertas">4</strong>
-              <p>Todos os alertas</p>
+              <strong class="numero" id="totalAlertas">0</strong>
+              <p>Total de avisos identificados</p>
             </div>
 
             <i class="bi bi-activity grafico sucesso-grafico"></i>
@@ -76,6 +76,7 @@
         <section class="filtros-alertas">
           <div class="campo-pesquisa">
             <i class="bi bi-search"></i>
+
             <input
               type="text"
               id="buscarAlertas"
@@ -87,31 +88,35 @@
 
           <div class="campo-filtro">
             <i class="bi bi-funnel"></i>
+
             <select id="filtronivel" aria-label="Filtrar por nível">
               <option value="todos">Todos</option>
               <option value="critico">Crítico</option>
               <option value="aviso">Aviso</option>
-              <option value="normal">Normal</option>
             </select>
           </div>
-
-          <button id="btnExcluirTodos" class="btn-excluir-todos" type="button">
-            <i class="bi bi-trash"></i>
-            Excluir todos
-          </button>
         </section>
 
         <section class="lista-alertas">
+          <p class="origem-alertas">
+            Os avisos são identificados a partir das leituras de vibração
+            recebidas do servidor.
+          </p>
+
           <div class="cabecalho-tabela">
             <span>NÍVEL</span>
             <span>MENSAGEM</span>
             <span>VALOR</span>
             <span>SENSOR</span>
             <span>HORA</span>
-            <span></span>
           </div>
 
-          <p id="estadoAlertas" class="nenhum-alerta">
+          <p
+            id="estadoAlertas"
+            class="nenhum-alerta"
+            role="status"
+            aria-live="polite"
+          >
             Aguardando conexão com o servidor.
           </p>
 
@@ -119,10 +124,11 @@
         </section>
       </main>
     </div>
+
     <script src="../../services/config.js"></script>
     <script src="../../services/api.js"></script>
     <script src="../../services/alertasService.js"></script>
     <script src="alertas.js"></script>
-    <script src="../sair/sair.js"></script>
+    <script src="../../components/sair/sair.js"></script>
   </body>
 </html>

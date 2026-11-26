@@ -1,28 +1,34 @@
 <!doctype html>
-<html lang="pt-Br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Conta - PulseMine</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
+
     <link rel="stylesheet" href="conta.css" />
     <link rel="stylesheet" href="../../components/barra-lateral/menu.css" />
-    <script src="../../components/barra-lateral/menu.js" defer></script>
     <link rel="stylesheet" href="../../components/tema/tema.css" />
+
     <script src="../../components/tema/tema.js"></script>
+    <script src="../../components/barra-lateral/menu.js" defer></script>
   </head>
 
   <body data-pagina="conta">
@@ -32,7 +38,7 @@
       <main class="conteudo">
         <header class="cabecalho">
           <h1>Conta</h1>
-          <p>Gerencie suas informações pessoais</p>
+          <p>Gerencie suas informações pessoais e sua senha.</p>
         </header>
 
         <section class="card">
@@ -41,7 +47,7 @@
               <i class="bi bi-person"></i>
             </div>
 
-            <h2>Informações Pessoais</h2>
+            <h2>Informações pessoais</h2>
           </div>
 
           <div class="linha"></div>
@@ -49,54 +55,78 @@
           <form id="formConta">
             <div class="grid-campos">
               <div class="campo">
-                <label for="nome">Nome Completo</label>
+                <label for="nome">Nome completo</label>
 
                 <input
                   type="text"
                   id="nome"
                   name="nome"
                   placeholder="Digite seu nome completo"
+                  autocomplete="name"
+                  maxlength="40"
+                  required
                 />
               </div>
 
               <div class="campo">
-                <label for="telefone"> Telefone</label>
+                <label for="telefone">Telefone</label>
+
                 <input
                   type="tel"
                   id="telefone"
                   name="telefone"
-                  placeholder="(00) 00000-0000"
+                  placeholder="Não disponível no cadastro atual"
+                  readonly
+                  aria-readonly="true"
                 />
               </div>
 
               <div class="campo">
                 <label for="email">E-mail</label>
+
                 <input
                   type="email"
                   id="email"
                   name="email"
                   placeholder="Digite seu e-mail"
+                  autocomplete="email"
+                  maxlength="40"
+                  required
                 />
               </div>
 
               <div class="campo">
                 <label for="cargo">Cargo/Função</label>
+
                 <input
                   type="text"
                   id="cargo"
                   name="cargo"
-                  placeholder="Digite seu cargo ou função"
+                  placeholder="Não disponível no cadastro atual"
+                  readonly
+                  aria-readonly="true"
                 />
               </div>
             </div>
 
+            <p class="aviso-conta">
+              Telefone e cargo não estão disponíveis para edição porque esses
+              campos ainda não existem na estrutura atual do cadastro de
+              usuário.
+            </p>
+
             <div class="acoes">
               <button type="submit" class="botao-principal">
-                Salvar Alterações
+                Salvar alterações
               </button>
             </div>
 
-            <p class="mensagem" id="mensagemConta"></p>
+            <p
+              class="mensagem"
+              id="mensagemConta"
+              role="status"
+              aria-live="polite"
+            ></p>
           </form>
         </section>
 
@@ -105,46 +135,57 @@
             <div class="icone-titulo">
               <i class="bi bi-lock"></i>
             </div>
-            <h1>Alterar Senha</h1>
+
+            <h2>Alterar senha</h2>
           </div>
+
           <div class="linha"></div>
 
           <form id="formSenha">
             <div class="grid-senha">
               <div class="campo">
-                <label for="senhaAtual"> Senha Atual </label>
+                <label for="senhaAtual">Senha atual</label>
 
                 <div class="campo-senha">
                   <input
                     type="password"
                     id="senhaAtual"
+                    name="senhaAtual"
                     placeholder="Digite sua senha atual"
+                    autocomplete="current-password"
+                    required
                   />
 
                   <button
                     type="button"
                     class="olho"
                     data-target="senhaAtual"
-                    aria-label="mostrar senha atual"
+                    aria-label="Mostrar senha atual"
                   >
                     <i class="bi bi-eye"></i>
                   </button>
                 </div>
               </div>
+
               <div class="campo">
-                <label for="novaSenha"> Nova Senha </label>
+                <label for="novaSenha">Nova senha</label>
 
                 <div class="campo-senha">
                   <input
                     type="password"
                     id="novaSenha"
+                    name="novaSenha"
                     placeholder="Digite sua nova senha"
+                    autocomplete="new-password"
+                    minlength="8"
+                    required
                   />
+
                   <button
                     type="button"
                     class="olho"
                     data-target="novaSenha"
-                    aria-label="mostrar nova senha"
+                    aria-label="Mostrar nova senha"
                   >
                     <i class="bi bi-eye"></i>
                   </button>
@@ -152,13 +193,17 @@
               </div>
 
               <div class="campo">
-                <label for="confirmarSenha"> confirmar Nova Senha </label>
+                <label for="confirmarSenha">Confirmar nova senha</label>
 
                 <div class="campo-senha">
                   <input
                     type="password"
                     id="confirmarSenha"
+                    name="confirmarSenha"
                     placeholder="Confirme sua nova senha"
+                    autocomplete="new-password"
+                    minlength="8"
+                    required
                   />
 
                   <button
@@ -175,17 +220,25 @@
 
             <div class="acoes acoes-senha">
               <button type="submit" class="botao-secundario">
-                Atualizar Senha
+                Atualizar senha
               </button>
             </div>
-            <p class="mensagem" id="mensagemSenha"></p>
+
+            <p
+              class="mensagem"
+              id="mensagemSenha"
+              role="status"
+              aria-live="polite"
+            ></p>
           </form>
         </section>
       </main>
     </div>
+
+    <script src="../../services/config.js"></script>
+    <script src="../../services/api.js"></script>
+    <script src="../../services/usuarioService.js"></script>
+    <script src="conta.js"></script>
+    <script src="../../components/sair/sair.js"></script>
   </body>
-  <script src="../../services/config.js"></script>
-  <script src="../../services/api.js"></script>
-  <script src="../../services/usuarioService.js"></script>
-  <script src="conta.js" defer></script>
 </html>

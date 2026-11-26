@@ -46,7 +46,7 @@
           <label for="email">E-mail</label>
 
           <div class="input-box">
-            <i class="bi bi-envelope"></i>
+            <i class="bi bi-envelope" aria-hidden="true"></i>
 
             <input
               type="email"
@@ -64,7 +64,7 @@
           <label for="senha">Senha</label>
 
           <div class="input-box">
-            <i class="bi bi-lock"></i>
+            <i class="bi bi-lock" aria-hidden="true"></i>
 
             <input
               type="password"
@@ -76,16 +76,28 @@
               required
             />
 
-            <i class="bi bi-eye olho" id="olhoSenha"></i>
+            <i
+              class="bi bi-eye olho"
+              id="olhoSenha"
+              role="button"
+              tabindex="0"
+              aria-label="Mostrar senha"
+            ></i>
           </div>
 
           <small id="erroSenha" class="erro" aria-live="polite"></small>
 
           <div class="lembrar-me">
             <input type="checkbox" id="lembrarMe" name="lembrarMe" />
-
-            <label for="lembrarMe">Lembrar-me</label>
+            <label for="lembrarMe">Lembrar e-mail nesta sessão</label>
           </div>
+
+          <small
+            id="mensagemLogin"
+            class="erro"
+            role="status"
+            aria-live="polite"
+          ></small>
 
           <button type="submit">Login</button>
         </form>

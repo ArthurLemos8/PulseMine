@@ -6,19 +6,22 @@
     <title>Cadastro - PulseMine</title>
 
     <link rel="icon" href="../../public/logo.png" type="image/png" />
+
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data:;"
+      content="default-src 'self'; connect-src 'self' https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data:;"
     />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
     <link rel="stylesheet" href="cadastro.css" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -41,75 +44,112 @@
 
         <p class="subtitulo">Crie sua conta para continuar</p>
 
-        <form>
-          <label for="nome"> Nome completo </label>
+        <form id="formCadastro">
+          <label for="nome">Nome completo</label>
 
           <div class="input-box">
-            <i class="bi bi-person"></i>
+            <i class="bi bi-person" aria-hidden="true"></i>
 
             <input
               type="text"
               id="nome"
               name="nome"
               placeholder="Seu nome completo"
+              autocomplete="name"
+              maxlength="40"
+              aria-describedby="erroNome"
+              required
             />
           </div>
-          <small id="erroNome" class="erro"></small>
 
-          <label for="email"> Seu email </label>
+          <small id="erroNome" class="erro" aria-live="polite"></small>
+
+          <label for="email">Seu e-mail</label>
 
           <div class="input-box">
-            <i class="bi bi-envelope"></i>
+            <i class="bi bi-envelope" aria-hidden="true"></i>
 
             <input
               type="email"
               id="email"
               name="email"
-              placeholder="Seu email"
+              placeholder="Seu e-mail"
+              autocomplete="email"
+              maxlength="40"
+              aria-describedby="erroEmail"
+              required
             />
           </div>
-          <small id="erroEmail" class="erro"></small>
 
-          <label for="senha"> Crie uma senha </label>
+          <small id="erroEmail" class="erro" aria-live="polite"></small>
+
+          <label for="senha">Crie uma senha</label>
 
           <div class="input-box">
-            <i class="bi bi-lock"></i>
+            <i class="bi bi-lock" aria-hidden="true"></i>
 
             <input
               type="password"
               id="senha"
               name="senha"
               placeholder="Crie uma senha"
+              autocomplete="new-password"
+              minlength="8"
+              aria-describedby="erroSenha"
+              required
             />
-            <i class="bi bi-eye olho"></i>
+
+            <i
+              class="bi bi-eye olho"
+              role="button"
+              tabindex="0"
+              aria-label="Mostrar senha"
+            ></i>
           </div>
 
-          <small id="erroSenha" class="erro"></small>
+          <small id="erroSenha" class="erro" aria-live="polite"></small>
 
-          <label for="confirme-senha"> Confirme sua senha </label>
+          <label for="confirme-senha">Confirme sua senha</label>
 
           <div class="input-box">
-            <i class="bi bi-lock"></i>
+            <i class="bi bi-lock" aria-hidden="true"></i>
 
             <input
               type="password"
               id="confirme-senha"
               name="confirme-senha"
               placeholder="Confirme sua senha"
+              autocomplete="new-password"
+              aria-describedby="erroConfirmarSenha"
+              required
             />
-            <i class="bi bi-eye olho"></i>
+
+            <i
+              class="bi bi-eye olho"
+              role="button"
+              tabindex="0"
+              aria-label="Mostrar confirmação da senha"
+            ></i>
           </div>
-          <small id="erroConfirmarSenha" class="erro"></small>
+
+          <small
+            id="erroConfirmarSenha"
+            class="erro"
+            aria-live="polite"
+          ></small>
+
+          <small id="mensagemCadastro" role="status" aria-live="polite"></small>
 
           <button type="submit">CADASTRAR</button>
         </form>
 
         <p class="login">
-          ja possui conta?
+          Já possui conta?
           <a href="../login/login.html">Fazer login</a>
         </p>
       </div>
     </div>
+
     <script src="../../services/config.js"></script>
     <script src="../../services/api.js"></script>
     <script src="../../services/usuarioService.js"></script>

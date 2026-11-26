@@ -2,7 +2,7 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Configurações - PulseMine</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,7 +23,6 @@
     <link rel="stylesheet" href="../../components/tema/tema.css" />
 
     <script src="../../components/tema/tema.js"></script>
-    <script src="configuracoes.js" defer></script>
     <script src="../../components/barra-lateral/menu.js" defer></script>
   </head>
 
@@ -35,10 +34,7 @@
         <header class="cabecalho">
           <div class="eyebrow">PULSEMINE / SISTEMA</div>
           <h1>Configurações</h1>
-          <p>
-            Personalize os limites de monitoramento e gerencie os sensores
-            cadastrados.
-          </p>
+          <p>Gerencie equipamentos, sensores e preferências do sistema.</p>
         </header>
 
         <div class="layout">
@@ -50,6 +46,11 @@
             >
               <i class="fa-solid fa-wave-square"></i>
               Monitoramento
+            </a>
+
+            <a href="#equipamentos">
+              <i class="fa-solid fa-industry"></i>
+              Equipamentos
             </a>
 
             <a href="#sensores">
@@ -78,57 +79,138 @@
                 <div>
                   <h2>Limites de vibração</h2>
                   <p>
-                    Defina quando uma leitura deve ser classificada como atenção
-                    ou crítica.
+                    Valores utilizados atualmente para classificar as leituras
+                    de vibração.
                   </p>
                 </div>
               </div>
 
-              <form id="formConfiguracoes">
+              <div class="campos">
+                <label for="limiteAtencao">
+                  Limite de atenção
+                  <span>mm/s</span>
+
+                  <input
+                    id="limiteAtencao"
+                    type="number"
+                    value="4"
+                    readonly
+                    aria-readonly="true"
+                  />
+
+                  <small>
+                    Leituras a partir de 4 mm/s são classificadas como atenção.
+                  </small>
+                </label>
+
+                <label for="limiteCritico">
+                  Limite crítico
+                  <span>mm/s</span>
+
+                  <input
+                    id="limiteCritico"
+                    type="number"
+                    value="7"
+                    readonly
+                    aria-readonly="true"
+                  />
+
+                  <small>
+                    Leituras a partir de 7 mm/s são classificadas como críticas.
+                  </small>
+                </label>
+              </div>
+
+              <p class="aviso-configuracao">
+                Os limites são somente para consulta. A edição e o salvamento
+                dependem de uma rota de configurações no Back-end.
+              </p>
+            </section>
+
+            <section class="painel" id="equipamentos">
+              <div class="painel-topo">
+                <div class="icone">
+                  <i class="fa-solid fa-industry"></i>
+                </div>
+
+                <div>
+                  <h2>Cadastrar equipamento</h2>
+                  <p>
+                    Informe os dados do equipamento que será utilizado no
+                    monitoramento.
+                  </p>
+                </div>
+              </div>
+
+              <form id="formEquipamento">
                 <div class="campos">
-                  <label>
-                    Limite de atenção
-                    <span>mm/s</span>
+                  <label for="nomeEquipamento">
+                    Nome do equipamento
 
                     <input
-                      id="limiteAtencao"
-                      type="number"
-                      min="0.1"
-                      max="100"
-                      step="0.1"
-                      value="4"
+                      type="text"
+                      id="nomeEquipamento"
+                      name="nome_equipamento"
+                      maxlength="100"
+                      placeholder="Ex.: Motor principal"
                       required
+                    />
+                  </label>
+
+                  <label for="tipoEquipamento">
+                    Tipo do equipamento
+
+                    <input
+                      type="text"
+                      id="tipoEquipamento"
+                      name="tipo"
+                      maxlength="50"
+                      placeholder="Ex.: Motor elétrico"
+                    />
+                  </label>
+
+                  <label for="statusEquipamento">
+                    Situação do equipamento
+
+                    <select id="statusEquipamento" name="status_equi" required>
+                      <option value="Ativo">Ativo</option>
+                      <option value="Inativo">Inativo</option>
+                      <option value="Em manutenção">Em manutenção</option>
+                    </select>
+                  </label>
+
+                  <label for="plantaEquipamento">
+                    ID da planta
+
+                    <input
+                      type="number"
+                      id="plantaEquipamento"
+                      name="id_planta_fk"
+                      min="1"
+                      step="1"
+                      placeholder="Ex.: 1"
                     />
 
                     <small>
-                      Valores a partir deste limite exigem atenção.
+                      Informe o ID da planta à qual o equipamento pertence.
                     </small>
-                  </label>
-
-                  <label>
-                    Limite crítico
-                    <span>mm/s</span>
-
-                    <input
-                      id="limiteCritico"
-                      type="number"
-                      min="0.2"
-                      max="100"
-                      step="0.1"
-                      value="7"
-                      required
-                    />
-
-                    <small> Deve ser maior que o limite de atenção. </small>
                   </label>
                 </div>
 
-                <p class="erro" id="erroConfiguracao" role="alert" hidden></p>
+                <p
+                  class="mensagem-formulario"
+                  id="mensagemEquipamento"
+                  role="status"
+                  aria-live="polite"
+                  hidden
+                ></p>
 
                 <div class="acoes">
+                  <button type="reset" class="secundario">Limpar campos</button>
+
                   <button type="submit" class="principal">
-                    <i class="fa-solid fa-check"></i>
-                    Salvar limites
+                    <i class="fa-solid fa-plus"></i>
+                    Cadastrar equipamento
                   </button>
                 </div>
               </form>
@@ -141,70 +223,91 @@
                 </div>
 
                 <div>
-                  <h2>Gerenciar sensores</h2>
+                  <h2>Cadastrar sensor</h2>
                   <p>
-                    Cadastre ou edite os sensores utilizados no monitoramento.
+                    Cadastre um sensor para utilizá-lo nas leituras de
+                    monitoramento.
                   </p>
                 </div>
               </div>
 
-              <div class="linha-sensor">
-                <label for="sensorSelecionado">Sensor cadastrado</label>
-
-                <select id="sensorSelecionado">
-                  <option value="">Novo sensor</option>
-                </select>
-              </div>
-
               <form id="formSensor">
                 <div class="campos">
-                  <label>
-                    Nome do sensor
+                  <label for="tipoSensor">
+                    Tipo do sensor
 
                     <input
-                      id="sensorNome"
                       type="text"
-                      maxlength="100"
-                      placeholder="Ex.: Sensor do motor"
+                      id="tipoSensor"
+                      name="tipo_sensor"
+                      maxlength="20"
+                      placeholder="Ex.: Vibração"
                       required
                     />
                   </label>
 
-                  <label>
-                    Localização
+                  <label for="situacaoSensor">
+                    Situação do sensor
 
-                    <input
-                      id="sensorLocal"
-                      type="text"
-                      maxlength="150"
-                      placeholder="Ex.: Motor principal"
-                      required
-                    />
-                  </label>
-
-                  <label>
-                    Estado do sensor
-
-                    <select id="sensorStatus">
-                      <option value="ativo">Ativo</option>
-                      <option value="inativo">Inativo</option>
+                    <select id="situacaoSensor" name="situacao" required>
+                      <option value="true">Ativo</option>
+                      <option value="false">Inativo</option>
                     </select>
+                  </label>
+
+                  <label for="plantaSensor">
+                    ID da planta
+
+                    <input
+                      type="number"
+                      id="plantaSensor"
+                      name="id_planta_fk"
+                      min="1"
+                      step="1"
+                      placeholder="Ex.: 1"
+                    />
+
+                    <small>
+                      Informe o ID da planta à qual o sensor pertence.
+                    </small>
                   </label>
                 </div>
 
-                <p class="erro" id="erroSensor" role="alert" hidden></p>
+                <p
+                  class="mensagem-formulario"
+                  id="mensagemSensor"
+                  role="status"
+                  aria-live="polite"
+                  hidden
+                ></p>
 
                 <div class="acoes">
-                  <button type="button" id="btnNovoSensor" class="secundario">
-                    Novo sensor
-                  </button>
+                  <button type="reset" class="secundario">Limpar campos</button>
 
                   <button type="submit" class="principal">
-                    <i class="fa-solid fa-floppy-disk"></i>
-                    Salvar sensor
+                    <i class="fa-solid fa-plus"></i>
+                    Cadastrar sensor
                   </button>
                 </div>
               </form>
+
+              <div class="separador-sensores"></div>
+
+              <div class="subtitulo-sensores">
+                <h3>Sensores identificados nas leituras</h3>
+                <p>Sensores encontrados nos registros recebidos do servidor.</p>
+              </div>
+
+              <p
+                id="estadoSensores"
+                class="estado-sensores"
+                role="status"
+                aria-live="polite"
+              >
+                Carregando sensores...
+              </p>
+
+              <div id="listaSensores" class="lista-sensores"></div>
             </section>
 
             <section class="painel em-breve" id="notificacoes">
@@ -230,7 +333,7 @@
 
                 <div>
                   <h2>Aparência</h2>
-                  <p>Escolha o tema que fica mais confortável para você.</p>
+                  <p>Escolha o tema visual da interface.</p>
                 </div>
               </div>
 
@@ -254,25 +357,24 @@
                 </label>
               </div>
 
-              <p>
-                A preferência de aparência é salva neste navegador e aplicada às
-                telas do sistema.
+              <p class="descricao-aparencia">
+                A seleção altera o tema visual aplicado às telas do sistema.
               </p>
             </section>
           </div>
         </div>
 
         <p class="rodape">
-          Os dados de sensores e demais configurações dependem da integração com
-          o backend.
+          O cadastro de equipamentos e sensores depende das rotas
+          correspondentes no Back-end.
         </p>
       </main>
     </div>
 
-    <div id="toast" class="toast" role="status" hidden></div>
-
     <script src="../../services/config.js"></script>
     <script src="../../services/api.js"></script>
-    <script src="../../services/sensoresService.js"></script>
+    <script src="../../services/dashboardService.js"></script>
+    <script src="configuracoes.js"></script>
+    <script src="../../components/sair/sair.js"></script>
   </body>
 </html>

@@ -5,19 +5,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const contadorTotal = document.getElementById("totalAlertas");
   const estado = document.getElementById("estadoAlertas");
   const lista = document.getElementById("listaAlertasDados");
-  const btnExcluirTodos = document.getElementById("btnExcluirTodos");
 
   let alertas = [];
+  let carregando = false;
 
   function obterNivel(alerta) {
     const tipo = String(alerta.tipo_alerta || alerta.nivel || "").toLowerCase();
 
     if (tipo.includes("crit")) return "critico";
-    if (tipo.includes("aviso") || tipo.includes("alerta")) {
-      return "aviso";
-    }
 
-    return "normal";
+    return "aviso";
   }
 
   function criarElemento(tag, classe, texto) {
@@ -41,13 +38,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!valor) return null;
 
-    const data =
+    let data;
+
+    if (
       typeof valor === "string" &&
       /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(valor)
-        ? new Date(valor.replace(" ", "T"))
-        : new Date(valor);
+    ) {
+      data = new Date(valor.replace(" ", "T"));
+    } else if (typeof valor === "number") {
+      data = new Date(valor < 1000000000000 ? valor * 1000 : valor);
+    } else {
+      data = new Date(valor);
+    }
 
     return Number.isNaN(data.getTime()) ? null : data;
+  }
+
+  function formatarValor(valor) {
+    const numero = Number(String(valor ?? "").replace(",", "."));
+
+    if (!Number.isFinite(numero)) return "—";
+
+    return `${numero.toFixed(2).replace(".", ",")} mm/s`;
   }
 
   function renderizar() {
@@ -58,18 +70,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const termo = campoBusca?.value.trim().toLowerCase() || "";
     const nivelSelecionado = filtroNivel?.value || "todos";
 
-    const filtrados = alertas.filter((alerta) => {
-      const nivel = obterNivel(alerta);
+    const filtrados = alertas
+      .filter((alerta) => {
+        const nivel = obterNivel(alerta);
 
-      const texto = [alerta.mensagem, alerta.dispositivo, alerta.id_sensor_fk]
-        .join(" ")
-        .toLowerCase();
+        const texto = [
+          alerta.mensagem,
+          alerta.dispositivo,
+          alerta.id_sensor_fk,
+          alerta.valor_vibracao,
+        ]
+          .join(" ")
+          .toLowerCase();
 
-      return (
-        texto.includes(termo) &&
-        (nivelSelecionado === "todos" || nivel === nivelSelecionado)
-      );
-    });
+        return (
+          texto.includes(termo) &&
+          (nivelSelecionado === "todos" || nivel === nivelSelecionado)
+        );
+      })
+      .sort((a, b) => {
+        const dataA = obterData(a);
+        const dataB = obterData(b);
+
+        if (!dataA && !dataB) return 0;
+        if (!dataA) return 1;
+        if (!dataB) return -1;
+
+        return dataB.getTime() - dataA.getTime();
+      });
 
     filtrados.forEach((alerta) => {
       const nivel = obterNivel(alerta);
@@ -79,35 +107,33 @@ document.addEventListener("DOMContentLoaded", () => {
       linha.dataset.nivel = nivel;
 
       const colunaNivel = document.createElement("div");
-
-      const etiqueta = criarElemento(
-        "span",
-        `nivel ${nivel}`,
-        nivel === "critico" ? "Crítico" : "Aviso",
+      colunaNivel.appendChild(
+        criarElemento(
+          "span",
+          `nivel ${nivel}`,
+          nivel === "critico" ? "Crítico" : "Aviso",
+        ),
       );
 
-      colunaNivel.appendChild(etiqueta);
-
-      const colunaMensagem = criarElemento("div", "mensagem", "");
-
-      colunaMensagem.appendChild(
-        criarElemento("strong", "", alerta.mensagem || "Alerta"),
+      const colunaMensagem = criarElemento(
+        "div",
+        "mensagem",
+        alerta.mensagem || "Alerta de vibração",
       );
-
-      const valor = Number(alerta.valor_vibracao);
 
       const colunaValor = criarElemento(
         "div",
         "valor",
-        Number.isFinite(valor)
-          ? `${valor.toFixed(2).replace(".", ",")} mm/s`
-          : "—",
+        formatarValor(alerta.valor_vibracao),
       );
+
+      const identificadorSensor =
+        alerta.id_sensor_fk ?? alerta.id_sensor ?? null;
 
       const nomeSensor =
         alerta.dispositivo ||
-        (alerta.id_sensor_fk
-          ? `Sensor ${alerta.id_sensor_fk}`
+        (identificadorSensor
+          ? `Sensor ${identificadorSensor}`
           : "Não identificado");
 
       const colunaSensor = criarElemento("div", "sensor", nomeSensor);
@@ -115,10 +141,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = obterData(alerta);
 
       const horario = data
-        ? data.toLocaleTimeString("pt-BR")
+        ? data.toLocaleString("pt-BR")
         : alerta.numero_leitura
           ? `Leitura ${alerta.numero_leitura}`
-          : "—";
+          : "Horário não informado";
 
       const colunaHora = criarElemento("div", "hora", horario);
 
@@ -128,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
         colunaValor,
         colunaSensor,
         colunaHora,
-        document.createElement("div"),
       );
 
       lista.appendChild(linha);
@@ -147,20 +172,37 @@ document.addEventListener("DOMContentLoaded", () => {
     if (estado) {
       estado.hidden = filtrados.length > 0;
 
-      if (!filtrados.length && alertas.length) {
-        estado.textContent = "Nenhum alerta corresponde à pesquisa.";
+      if (!filtrados.length && alertas.length > 0) {
+        estado.textContent =
+          "Nenhum aviso corresponde aos filtros selecionados.";
       } else if (!alertas.length) {
-        estado.textContent = "Nenhuma leitura acima do limite de atenção.";
+        estado.textContent =
+          "Nenhuma leitura acima do limite de atenção foi encontrada.";
       }
     }
   }
 
   async function carregarAlertas() {
-    try {
-      alertas = await window.PulseMineAlertasService.listar();
+    if (carregando) return;
 
+    carregando = true;
+
+    try {
+      if (!window.PulseMineAlertasService) {
+        throw new Error("O serviço de alertas não foi carregado.");
+      }
+
+      const dados = await window.PulseMineAlertasService.listar();
+
+      if (!Array.isArray(dados)) {
+        throw new Error("O servidor retornou uma lista inválida.");
+      }
+
+      alertas = dados;
       renderizar();
     } catch (erro) {
+      console.error("Erro ao carregar alertas:", erro);
+
       alertas = [];
       renderizar();
 
@@ -168,17 +210,13 @@ document.addEventListener("DOMContentLoaded", () => {
         estado.hidden = false;
         estado.textContent = `Não foi possível carregar os avisos: ${erro.message}`;
       }
+    } finally {
+      carregando = false;
     }
   }
 
   campoBusca?.addEventListener("input", renderizar);
   filtroNivel?.addEventListener("change", renderizar);
-
-  if (btnExcluirTodos) {
-    btnExcluirTodos.disabled = true;
-    btnExcluirTodos.title =
-      "O backend atual ainda não possui uma rota para excluir alertas.";
-  }
 
   carregarAlertas();
 
