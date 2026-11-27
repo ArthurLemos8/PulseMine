@@ -317,3 +317,100 @@ html[data-tema="escuro"] .tema-opcao:has(input:checked) {
 .tema-opcao input {
   accent-color: var(--azul-primario, #086fd6);
 }
+
+html[data-tema="claro"] body.pagina-autenticacao {
+  background: linear-gradient(135deg, #edf5ff 0%, #f8fbff 55%, #dcecff 100%);
+  color: #101820;
+}
+
+html[data-tema="escuro"] body.pagina-autenticacao {
+  background: linear-gradient(135deg, #020817 0%, #06152b 55%, #0a2342 100%);
+  color: #f2f6fc;
+}
+
+html[data-tema="claro"] body.pagina-autenticacao .card {
+  background: #ffffff;
+  border-color: #e3e8f0;
+  color: #101820;
+}
+
+html[data-tema="escuro"] body.pagina-autenticacao .card {
+  background: #222c3a;
+  border-color: #39485a;
+  color: #f2f6fc;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+html[data-tema="claro"] body.pagina-autenticacao input {
+  background: #ffffff;
+  border-color: #e3e8f0;
+  color: #101820;
+}
+
+html[data-tema="escuro"] body.pagina-autenticacao input {
+  background: #1b2532;
+  border-color: #48586c;
+  color: #f2f6fc;
+}
+
+html[data-tema="escuro"] body.pagina-autenticacao input::placeholder {
+  color: #92a5bc;
+}
+
+html[data-tema="escuro"] body.pagina-autenticacao label,
+html[data-tema="escuro"] body.pagina-autenticacao h1,
+html[data-tema="escuro"] body.pagina-autenticacao h2 {
+  color: #f2f6fc;
+}
+
+html[data-tema="escuro"] body.pagina-autenticacao .cadastrar {
+  color: #a7b7cb;
+}
+
+html[data-tema="escuro"] body.pagina-autenticacao .cadastrar a {
+  color: #65b6ff;
+}
+
+html[data-tema="escuro"] body.pagina-autenticacao .input-box > i,
+html[data-tema="escuro"] body.pagina-autenticacao .olho {
+  color: #a7b7cb;
+}
+
+html[data-tema="claro"] body.pagina-autenticacao .subtitulo {
+  color: #64748b;
+}
+
+html[data-tema="escuro"] body.pagina-autenticacao .subtitulo {
+  color: #a7b7cb;
+}
+
+html[data-tema="escuro"] body.pagina-recuperacao .container {
+  background: #222c3a;
+  border: 1px solid #39485a;
+  color: #f2f6fc;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+html[data-tema="claro"] body.pagina-recuperacao .container {
+  background: #ffffff;
+  border: 1px solid #e3e8f0;
+  color: #101820;
+}
+
+html[data-tema="escuro"] body.pagina-recuperacao h1,
+html[data-tema="escuro"] body.pagina-recuperacao .campo label {
+  color: #f2f6fc;
+}
+
+html[data-tema="escuro"] body.pagina-recuperacao .container > p {
+  color: #a7b7cb;
+}
+
+html[data-tema="escuro"] body.pagina-recuperacao .voltar a {
+  color: #65b6ff;
+}
+
+html[data-tema="escuro"] body.pagina-recuperacao .input-box > i,
+html[data-tema="escuro"] body.pagina-recuperacao .olho {
+  color: #a7b7cb;
+}
